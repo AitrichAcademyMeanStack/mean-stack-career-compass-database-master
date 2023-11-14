@@ -1,0 +1,12 @@
+{
+  "name": "mean-stack-career-compass-database-master",
+  "version": "1.0.0",
+  "description": "This repository is all about introduction to database and data persistence",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
