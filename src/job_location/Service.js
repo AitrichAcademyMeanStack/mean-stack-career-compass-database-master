@@ -1,4 +1,4 @@
-import location from "../models/LocationModel"
+import location from "../models/LocationModel.js"
 
 // fetching all locations
 const getAllLocations = async() => {
