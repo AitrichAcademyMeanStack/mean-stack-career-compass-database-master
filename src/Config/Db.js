@@ -1,5 +1,5 @@
 import mongoose from 'mongoose' //importing mongoose
-import logger from '../middleware/Logger.js'
+import logger from '../middleware/logger.js'
 
 
 //to establish connect to database

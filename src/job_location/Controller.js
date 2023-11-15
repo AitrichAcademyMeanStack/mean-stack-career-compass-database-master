@@ -1,5 +1,5 @@
 import asyncerrorhandler from "../utils/asyncerrorhandler.js";
-import locationService from "./Service.js"
+import locationService from "./service.js"
 
 // fetching all locations
 const getAllLocations = asyncerrorhandler ( async (req,res) => {
