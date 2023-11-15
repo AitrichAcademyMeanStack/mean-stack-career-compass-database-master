@@ -1,5 +1,5 @@
 import asyncerrorhandler from "../middleware/Errorhandler"
-import locationService from "./service"
+import locationService from "./Service"
 
 const getAllLocations = asyncerrorhandler ( async (req,res) => {
     await locationService.getAllLocations();
