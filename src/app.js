@@ -4,10 +4,11 @@ import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './Config/db.js'
 import {errorhandler} from "./middleware/Errorhandler.js";
-import jobcategoryrouter from './job_category/router.js'
-import locationRouter from "./job_location/Service.js"
+import jobcategoryrouter from './job_category/router.js';
+import locationRouter from "./job_location/Router.js";
 
-dotenv.config({     // configuring .env file
+// configuring .env file
+dotenv.config({     
     path:"./env"
 })
 
@@ -37,12 +38,12 @@ const options = {
     apis:[]
 }
 
-const swaggerspecs = swaggerjsdoc(options)
-app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs))
+const swaggerspecs = swaggerjsdoc(options);
+app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 
-app.use('/api/v1/job-categories',jobcategoryrouter);
-app.use('/api/v1/locations',locationRouter);
+app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
+app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 
-app.use(errorhandler)
+app.use(errorhandler); // middleware for global error handler
 
 app.listen(process.env.PORT || 5000 , () => console.log("Server up and running 🚀"));

@@ -1,5 +1,6 @@
 import location from "../models/LocationModel"
 
+// fetching all locations
 const getAllLocations = async() => {
     try {
         return await location.find();
@@ -9,6 +10,7 @@ const getAllLocations = async() => {
 
 }
 
+// fetching location by ID
 const getLocationById = async(id) => {
     try {
         return await location.findById(id)
@@ -17,6 +19,7 @@ const getLocationById = async(id) => {
     }
 }
 
+// Adding new location
 const addLocation = async(data) => {
     try {
         return await location.create(data)
@@ -26,6 +29,7 @@ const addLocation = async(data) => {
 
 }
 
+// Updating location
 const updateLocation = async(id , updateData) => {
     try {
         return await location.findByIdAndUpdate(id,updateData)
@@ -35,6 +39,7 @@ const updateLocation = async(id , updateData) => {
 
 }
 
+// Deleting location
 const deleteLocation = async(id) => {
     try {
         return await location.findByIdAndDelete(id)
@@ -43,4 +48,4 @@ const deleteLocation = async(id) => {
     }
 }
 
-export {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}
+export default {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}
