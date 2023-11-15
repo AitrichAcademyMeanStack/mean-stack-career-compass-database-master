@@ -3,7 +3,7 @@ import logger from '../middleware/Logger.js'
 
 const getallcategories =async()=>{
     try {
-        const result = Category.find()
+        const result = await Category.find()
         if (result) {
             logger.info("all job_categories : ",result)
             return result
@@ -59,12 +59,14 @@ const deletecategory = async(categoryid)=>{
 
 const getcontrollerbyid = async(categoryid)=>{
     try {
-        const result = Category.findOne(useid)
+        const result =await  Category.findById(categoryid)
         if (result) {
             logger.info("job-category with id : ",result)
+            return result
         }else{
             logger.error("job-category not found with specific id")
         }
+        
     } catch (error) {
         throw error
     }
