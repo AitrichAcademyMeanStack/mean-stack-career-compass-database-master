@@ -8,6 +8,6 @@ dotenv.config({     // configuring .env file
 
 const app = express(); 
 
-app.use(express.json()); // Defining miidleware
+app.use(express.json())
 
 app.listen(process.env.PORT || 5000 , () => console.log("Server up and running 🚀"));
