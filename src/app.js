@@ -3,7 +3,8 @@ import dotenv from "dotenv";   // importing .env file
 import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './config/Db.js'
-import {errorhandler} from "./middleware/ErrorHandler.js";
+import {ErrorHandler} from "./middleware/errorhandler.js";
+import locationRoutes from "../src/job_location/router.js"
 
 dotenv.config({     // configuring .env file
     path:"./env"
@@ -38,8 +39,8 @@ const options = {
 const swaggerspecs = swaggerjsdoc(options)
 app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs))
 
+app.use('/api/v1/locations', locationRoutes)
 
-
-app.use(errorhandler)
+app.use(ErrorHandler)
 
 app.listen(process.env.PORT || 5000 , () => console.log("Server up and running 🚀"));
