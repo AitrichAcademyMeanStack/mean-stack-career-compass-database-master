@@ -1,83 +1,83 @@
 {
   "jobCategories": [
     {
-      "name": "Software Development",
+      "category": "Software Development",
       "description": "Designing, coding, testing, and maintaining software applications and systems."
     },
     {
-      "name": "Data Science",
+      "category": "Data Science",
       "description": "Analyzing and interpreting complex data sets to inform business decision-making."
     },
     {
-      "name": "Marketing",
+      "category": "Marketing",
       "description": "Promoting and selling products or services through advertising and strategic campaigns."
     },
     {
-      "name": "Human Resources",
+      "category": "Human Resources",
       "description": "Managing personnel, recruitment, employee relations, and organizational development."
     },
     {
-      "name": "Finance",
+      "category": "Finance",
       "description": "Handling financial transactions, budgeting, forecasting, and financial analysis."
     },
     {
-      "name": "Healthcare",
+      "category": "Healthcare",
       "description": "Providing medical care, treatment, and support to individuals and communities."
     },
     {
-      "name": "Education",
+      "category": "Education",
       "description": "Instructing and educating students at various levels in different subjects."
     },
     {
-      "name": "Customer Service",
+      "category": "Customer Service",
       "description": "Assisting customers, resolving inquiries, and ensuring a positive customer experience."
     },
     {
-      "name": "Sales",
+      "category": "Sales",
       "description": "Selling products or services, managing client relationships, and achieving sales targets."
     },
     {
-      "name": "Engineering",
+      "category": "Engineering",
       "description": "Designing, developing, and maintaining infrastructure, products, or systems."
     },
     {
-      "name": "IT Support",
+      "category": "IT Support",
       "description": "Providing technical assistance, troubleshooting, and resolving IT-related issues."
     },
     {
-      "name": "Project Management",
+      "category": "Project Management",
       "description": "Planning, executing, and closing projects, ensuring they meet organizational goals."
     },
     {
-      "name": "Legal",
+      "category": "Legal",
       "description": "Advising on legal matters, drafting contracts, and representing clients in legal proceedings."
     },
     {
-      "name": "Architecture",
+      "category": "Architecture",
       "description": "Designing and planning the construction of buildings and structures."
     },
     {
-      "name": "Graphic Design",
+      "category": "Graphic Design",
       "description": "Creating visual concepts and designs for various media to communicate a message."
     },
     {
-      "name": "Social Work",
+      "category": "Social Work",
       "description": "Assisting individuals and communities in need, providing social services and support."
     },
     {
-      "name": "Environmental Science",
+      "category": "Environmental Science",
       "description": "Studying and addressing environmental issues and promoting sustainable practices."
     },
     {
-      "name": "Manufacturing",
+      "category": "Manufacturing",
       "description": "Overseeing the production of goods, ensuring efficiency and quality standards are met."
     },
     {
-      "name": "Aerospace",
+      "category": "Aerospace",
       "description": "Designing, testing, and maintaining aircraft and spacecraft."
     },
     {
-      "name": "Fashion Design",
+      "category": "Fashion Design",
       "description": "Creating clothing and accessories, staying updated on fashion trends."
     }
   ]
