@@ -1,5 +1,5 @@
 import Category from '../models/JobCategoryModel.js'
-import logger from '../middleware/Logger.js'
+import logger from '../middleware/logger.js'
 
 const getallcategories =async()=>{
     try {
