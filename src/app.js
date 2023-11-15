@@ -40,9 +40,11 @@ const swaggerDefinition = {
 const options = {
     swaggerDefinition,
     apis: [
-        path.join(__dirname, "src", "job_location" , "router.js")
+        path.join(__dirname,"job_location" , "router.js"),
+        path.join(__dirname,"Job_Category","router.js")
     ],
 };
+
 
 const swaggerspecs = swaggerjsdoc(options);
 app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
