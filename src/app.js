@@ -38,6 +38,8 @@ const options = {
 const swaggerspecs = swaggerjsdoc(options)
 app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs))
 
+
+
 app.use(errorhandler)
 
 app.listen(process.env.PORT || 5000 , () => console.log("Server up and running 🚀"));
