@@ -1,5 +1,5 @@
-import service from './Service.js'
-import asyncerrorhandler from '../utils/Asyncerrorhandler.js'
+import service from './service.js'
+import asyncerrorhandler from '../utils/asyncerrorhandler.js'
 
 const getallcategories = asyncerrorhandler(async(req,res)=>{
     const getcategory = await service.getallcategories()
