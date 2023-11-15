@@ -1,0 +1,82 @@
+[
+      {
+        "name": "Central Park",
+        "description": "A sprawling urban oasis in the heart of New York City, known for its lush greenery, scenic pathways, and iconic landmarks."
+      },
+      {
+        "name": "Eiffel Tower",
+        "description": "A wrought-iron lattice tower located on the Champ de Mars in Paris, France. A symbol of romance and one of the most recognizable structures in the world."
+      },
+      {
+        "name": "Machu Picchu",
+        "description": "An ancient Incan citadel set high in the Andes Mountains of Peru. Known for its breathtaking panoramic views and well-preserved archaeological wonders."
+      },
+      {
+        "name": "Tokyo Skytree",
+        "description": "A modern broadcasting and observation tower in Sumida, Tokyo, Japan. Offers panoramic views of the cityscape and is a prominent landmark."
+      },
+      {
+        "name": "Great Barrier Reef",
+        "description": "The world's largest coral reef system, located in the Coral Sea off the coast of Queensland, Australia. Famous for its stunning marine biodiversity."
+      },
+      {
+        "name": "Serengeti National Park",
+        "description": "A vast wildlife reserve in Tanzania, known for its annual migration of wildebeest and other animals. Offers a unique safari experience."
+      },
+      {
+        "name": "Grand Canyon",
+        "description": "A massive canyon carved by the Colorado River in Arizona, USA. Renowned for its stunning geological formations and vibrant colors."
+      },
+      {
+        "name": "The Louvre",
+        "description": "The world's largest art museum and a historic monument in Paris, France. Home to thousands of works of art, including the Mona Lisa."
+      },
+      {
+        "name": "Sydney Opera House",
+        "description": "An iconic performing arts venue in Sydney, Australia, known for its distinctive shell-like architecture. A UNESCO World Heritage Site."
+      },
+      {
+        "name": "Victoria Falls",
+        "description": "A breathtaking waterfall on the Zambezi River, bordering Zambia and Zimbabwe. One of the largest and most famous waterfalls in the world."
+      },
+      {
+        "name": "Banff National Park",
+        "description": "Canada's oldest national park, located in the Rocky Mountains of Alberta. Known for its stunning alpine landscapes, wildlife, and outdoor activities."
+      },
+      {
+        "name": "Petra",
+        "description": "A historical and archaeological city in southern Jordan, famous for its rock-cut architecture and water conduit system. A UNESCO World Heritage Site."
+      },
+      {
+        "name": "Mount Everest",
+        "description": "The world's highest mountain, part of the Himalayas on the Nepal-Tibet border. A challenging destination for climbers and a symbol of human determination."
+      },
+      {
+        "name": "Venice",
+        "description": "A unique city in northeastern Italy, built on a network of canals. Known for its picturesque waterways, historic architecture, and vibrant culture."
+      },
+      {
+        "name": "Yellowstone National Park",
+        "description": "The first and oldest national park in the world, located primarily in the U.S. states of Wyoming and Montana. Home to diverse ecosystems and geothermal features."
+      },
+      {
+        "name": "Great Wall of China",
+        "description": "A series of fortifications made of stone, brick, tamped earth, wood, and other materials, generally built along an east-to-west line across the northern borders of China."
+      },
+      {
+        "name": "Aoraki / Mount Cook",
+        "description": "The highest mountain in New Zealand, part of the Southern Alps. Surrounded by a national park and offering stunning alpine scenery."
+      },
+      {
+        "name": "Iguazu Falls",
+        "description": "A system of waterfalls on the Iguazu River, located on the border between Argentina and Brazil. Renowned for its breathtaking natural beauty."
+      },
+      {
+        "name": "The Acropolis",
+        "description": "An ancient citadel on a rocky outcrop above the city of Athens, Greece. Home to several ancient buildings of great architectural and historic significance."
+      },
+      {
+        "name": "Niagara Falls",
+        "description": "A group of three waterfalls at the southern end of Niagara Gorge, between the Canadian province of Ontario and the U.S. state of New York. A popular tourist destination."
+      }
+    ]

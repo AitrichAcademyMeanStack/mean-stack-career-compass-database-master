@@ -1,0 +1,82 @@
+[
+    {
+      "name": "Software Development",
+      "description": "Designing, coding, testing, and maintaining software applications and systems."
+    },
+    {
+      "name": "Data Science",
+      "description": "Analyzing and interpreting complex data sets to inform business decision-making."
+    },
+    {
+      "name": "Marketing",
+      "description": "Promoting and selling products or services through advertising and strategic campaigns."
+    },
+    {
+      "name": "Human Resources",
+      "description": "Managing personnel, recruitment, employee relations, and organizational development."
+    },
+    {
+      "name": "Finance",
+      "description": "Handling financial transactions, budgeting, forecasting, and financial analysis."
+    },
+    {
+      "name": "Healthcare",
+      "description": "Providing medical care, treatment, and support to individuals and communities."
+    },
+    {
+      "name": "Education",
+      "description": "Instructing and educating students at various levels in different subjects."
+    },
+    {
+      "name": "Customer Service",
+      "description": "Assisting customers, resolving inquiries, and ensuring a positive customer experience."
+    },
+    {
+      "name": "Sales",
+      "description": "Selling products or services, managing client relationships, and achieving sales targets."
+    },
+    {
+      "name": "Engineering",
+      "description": "Designing, developing, and maintaining infrastructure, products, or systems."
+    },
+    {
+      "name": "IT Support",
+      "description": "Providing technical assistance, troubleshooting, and resolving IT-related issues."
+    },
+    {
+      "name": "Project Management",
+      "description": "Planning, executing, and closing projects, ensuring they meet organizational goals."
+    },
+    {
+      "name": "Legal",
+      "description": "Advising on legal matters, drafting contracts, and representing clients in legal proceedings."
+    },
+    {
+      "name": "Architecture",
+      "description": "Designing and planning the construction of buildings and structures."
+    },
+    {
+      "name": "Graphic Design",
+      "description": "Creating visual concepts and designs for various media to communicate a message."
+    },
+    {
+      "name": "Social Work",
+      "description": "Assisting individuals and communities in need, providing social services and support."
+    },
+    {
+      "name": "Environmental Science",
+      "description": "Studying and addressing environmental issues and promoting sustainable practices."
+    },
+    {
+      "name": "Manufacturing",
+      "description": "Overseeing the production of goods, ensuring efficiency and quality standards are met."
+    },
+    {
+      "name": "Aerospace",
+      "description": "Designing, testing, and maintaining aircraft and spacecraft."
+    },
+    {
+      "name": "Fashion Design",
+      "description": "Creating clothing and accessories, staying updated on fashion trends."
+    }
+  ]
