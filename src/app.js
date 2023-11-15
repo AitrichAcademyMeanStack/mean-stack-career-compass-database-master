@@ -5,7 +5,7 @@ import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './Config/Db.js'
 import {errorhandler} from "./middleware/Errorhandler.js";
 import jobcategoryrouter from './Job_Category/Router.js'
-import locationRouter from "./job_location/router.js"
+import locationRouter from "./job_location/Router.js"
 
 // configuring .env file
 dotenv.config({     
