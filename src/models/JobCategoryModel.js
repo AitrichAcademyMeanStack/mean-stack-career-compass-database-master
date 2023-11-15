@@ -5,9 +5,9 @@ const jobCategory = new Schema (
     {
         name: {type: String , required: true},
         description: {type: String , required: true}
-
-
-    }
+    },{versionKey:false}
 )
 
-export const Category = mongoose.model("Job_Category", jobCategory);
+const Category = mongoose.model("Job_Category", jobCategory);
+
+export default Category
