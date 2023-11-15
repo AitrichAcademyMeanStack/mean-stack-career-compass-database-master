@@ -40,4 +40,4 @@ const deleteLocation = asyncerrorhandler (async (req,res) => {
 
 })
 
-export {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}
+export default {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}
