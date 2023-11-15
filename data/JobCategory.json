@@ -1,5 +1,4 @@
-{
-  "jobCategories": [
+[
     {
       "name": "Software Development",
       "description": "Designing, coding, testing, and maintaining software applications and systems."
@@ -81,4 +80,3 @@
       "description": "Creating clothing and accessories, staying updated on fashion trends."
     }
   ]
-}

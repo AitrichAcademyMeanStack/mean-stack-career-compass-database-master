@@ -1,5 +1,4 @@
-{
-    "locations": [
+[
       {
         "name": "Central Park",
         "description": "A sprawling urban oasis in the heart of New York City, known for its lush greenery, scenic pathways, and iconic landmarks."
@@ -81,5 +80,3 @@
         "description": "A group of three waterfalls at the southern end of Niagara Gorge, between the Canadian province of Ontario and the U.S. state of New York. A popular tourist destination."
       }
     ]
-  }
-  
