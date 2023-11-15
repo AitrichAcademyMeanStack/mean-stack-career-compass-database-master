@@ -2,6 +2,8 @@ import express from "express"; // importing express
 import dotenv from "dotenv";   // importing .env file
 import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
+import connecttodatabase from './config/db.js'
+import errorhandler from "./middleware/errorhandler.js";
 
 dotenv.config({     // configuring .env file
     path:"./env"
@@ -9,6 +11,8 @@ dotenv.config({     // configuring .env file
 
 
 const app = express(); 
+
+connecttodatabase() //connect to database
 
 app.use(express.json()) //defining middleware
 
@@ -25,7 +29,7 @@ const options = {
     },
     servers:[
         {
-            url: "http://localhost:7000"
+            url: process.env.PORT
         }
     ],
     apis:[]
@@ -33,5 +37,7 @@ const options = {
 
 const swaggerspecs = swaggerjsdoc(options)
 app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs))
+
+app.use(errorhandler)
 
 app.listen(process.env.PORT || 5000 , () => console.log("Server up and running 🚀"));
