@@ -1,5 +1,7 @@
 import express from "express"; // importing express
 import dotenv from "dotenv";   // importing .env file
+import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
+import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 
 dotenv.config({     // configuring .env file
     path:"./env"
@@ -8,6 +10,28 @@ dotenv.config({     // configuring .env file
 
 const app = express(); 
 
-app.use(express.json())
+app.use(express.json()) //defining middleware
+
+// Setup swagger
+const options = {
+    definition:{
+        openapi: "3.0.0",
+        info:{
+            title:"JOB_PORTAL API",
+            version:"1.0.0",
+            description:"API FOR MANAGING JOB_PORTAL SYSTEM"
+        }
+
+    },
+    servers:[
+        {
+            url: "http://localhost:7000"
+        }
+    ],
+    apis:[]
+}
+
+const swaggerspecs = swaggerjsdoc(options)
+app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs))
 
 app.listen(process.env.PORT || 5000 , () => console.log("Server up and running 🚀"));
