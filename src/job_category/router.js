@@ -1,7 +1,7 @@
 import express from 'express' //import express
 import controller from './Controller.js'
 
-const router = express()
+const router = express.Router();
 
 /**
  * @swagger
@@ -25,11 +25,11 @@ const router = express()
  *  
  */
 
-router.get('',controller.getallcategories)
-router.post('',controller.createcategory)
-router.put('',controller.updatecategory)
-router.delete('',controller.deletecategory)
-router.get('',controller.getcontrollerbyid)
+router.get('/',controller.getallcategories)
+router.post('/',controller.createcategory)
+router.put('/:id',controller.updatecategory)
+router.delete('/:id',controller.deletecategory)
+router.get('/:id',controller.getcontrollerbyid)
 
 
 

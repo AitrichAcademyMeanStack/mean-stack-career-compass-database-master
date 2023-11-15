@@ -4,6 +4,7 @@ import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './config/Db.js'
 import {errorhandler} from "./middleware/ErrorHandler.js";
+import jobcategoryrouter from '../src/job_category/router.js'
 
 dotenv.config({     // configuring .env file
     path:"./env"
@@ -38,7 +39,7 @@ const options = {
 const swaggerspecs = swaggerjsdoc(options)
 app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs))
 
-
+app.use('/api/v1/job-categories',jobcategoryrouter)
 
 app.use(errorhandler)
 
