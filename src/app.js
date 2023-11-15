@@ -3,7 +3,7 @@ import dotenv from "dotenv";   // importing .env file
 import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './Config/db.js'
-import {errorhandler} from "./middleware/errorhandler.js";
+import {errorhandler} from "./middleware/Errorhandler.js";
 import jobcategoryrouter from './job_category/router.js'
 
 dotenv.config({     // configuring .env file
