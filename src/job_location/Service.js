@@ -1,4 +1,4 @@
-import location from "../models/LocationModel"
+import location from "../models/LocationModel.js"
 
 const getAllLocations = async() => {
     try {
@@ -43,4 +43,4 @@ const deleteLocation = async(id) => {
     }
 }
 
-export {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}
+export default  {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}

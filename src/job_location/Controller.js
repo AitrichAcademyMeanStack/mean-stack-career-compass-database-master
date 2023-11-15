@@ -1,5 +1,5 @@
-import asyncerrorhandler from "../utils/asyncerrorhandler"
-import locationService from "./Service"
+import asyncerrorhandler from "../utils/asyncerrorhandler.js";
+import locationService from "./Service.js"
 
 const getAllLocations = asyncerrorhandler ( async (req,res) => {
     await locationService.getAllLocations();
@@ -35,4 +35,4 @@ const deleteLocation = asyncerrorhandler (async (req,res) => {
 
 })
 
-export {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}
+export default {getAllLocations , getLocationById , addLocation , updateLocation , deleteLocation}
