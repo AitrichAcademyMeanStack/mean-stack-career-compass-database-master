@@ -18,8 +18,8 @@ const createcategory = asyncerrorhandler(async (req, res) => {
 const updatecategory = asyncerrorhandler(async (req, res) => {
     const categoryid = req.params.id
     const data = req.body
-    await service.updatecategory(categoryid, data)
-    res.status(200).json("job-category updated successfully")
+    const updatedata = await service.updatecategory(categoryid, data)
+    res.status(200).json(updatedata)
 })
 
 //delete job-category with specific id
