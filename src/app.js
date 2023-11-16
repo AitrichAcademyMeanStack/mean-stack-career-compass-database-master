@@ -40,7 +40,7 @@ const swaggerDefinition = {
 const options = {
     swaggerDefinition,
     apis: [
-        path.join(__dirname, "src", "job_location" , "router.js")
+        path.join(__dirname, "src", "job_location" , "Router.js")
     ],
 };
 
