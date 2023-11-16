@@ -4,6 +4,7 @@ import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './Config/db.js'
 import path , { dirname }  from 'path';
+import Notfounderror from './Exceptions/Notfounderror.js'
 import { fileURLToPath } from 'url';
 import {errorhandler} from "./middleware/errorhandler.js";
 import jobcategoryrouter from './Job_Category/router.js'
@@ -51,6 +52,11 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
+
+app.all('*',(req,res,next)=>{
+    const error = new Notfounderror("invalid url")
+    next(error)
+})
 
 app.use(errorhandler); // middleware for global error handler
 
