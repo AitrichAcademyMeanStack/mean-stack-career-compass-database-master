@@ -1,6 +1,7 @@
 import Category from '../models/JobCategoryModel.js'
 import logger from '../middleware/logger.js'
 
+// fetching all job-categories
 const getallcategories =async()=>{
     try {
         const result = await Category.find()
@@ -15,6 +16,7 @@ const getallcategories =async()=>{
     }
 }
 
+//create new job-category
 const createcategory = async(data)=>{
     try {
         const result = Category.create(data)
@@ -29,6 +31,7 @@ const createcategory = async(data)=>{
     }
 }
 
+//update job-category with specific id
 const updatecategory = async(categoryid,data)=>{
     try {
         const result = Category.findByIdAndUpdate(categoryid,data)
@@ -43,6 +46,8 @@ const updatecategory = async(categoryid,data)=>{
     }
 }
 
+
+//delete job-category with specific id
 const deletecategory = async(categoryid)=>{
     try {
         const result = Category.findByIdAndDelete(categoryid)
@@ -57,6 +62,7 @@ const deletecategory = async(categoryid)=>{
     }
 }
 
+//fetching job-category with specific id
 const getcontrollerbyid = async(categoryid)=>{
     try {
         const result =await  Category.findById(categoryid)
