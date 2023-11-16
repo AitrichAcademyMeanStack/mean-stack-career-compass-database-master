@@ -22,6 +22,12 @@ const router = express.Router();
  */
 
 router.get("/",locationController.getAllLocations);
+
+/**
+ * @swagger
+ *  components
+ * 
+ */
 router.get("/:id",locationController.getLocationById);
 router.post("/",locationController.addLocation);
 router.put("/:id",locationController.updateLocation);
