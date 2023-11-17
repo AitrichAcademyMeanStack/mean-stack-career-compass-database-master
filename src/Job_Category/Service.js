@@ -31,14 +31,13 @@ const createcategory = async(data)=>{
         } else {
             logger.error("error in create job category")
             throw new Badrequesterror("error in create new job-category")
-
         }
     } catch (error) {
-        console.log(error);
         if (error.name === "ValidationError") {
             logger.error("validation error in create new job category")
             throw new ValidationError("validation error in create new job category")
-        } else {
+        }
+        else {
             throw error
         }
     }
