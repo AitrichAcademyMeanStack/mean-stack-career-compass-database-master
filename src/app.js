@@ -53,6 +53,7 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
+app.use('/api/v1/qualification',qualificationRouter)
 
 // route for unmatched url
 app.all('*',(req,res,next)=>{
