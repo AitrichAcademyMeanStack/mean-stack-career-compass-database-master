@@ -3,14 +3,15 @@ import dotenv from "dotenv";   // importing .env file
 import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './Config/db.js'
-import path , { dirname }  from 'path';
-import Notfounderror from './Exceptions/Notfounderror.js'
-import { fileURLToPath } from 'url';
-import {errorhandler} from "./middleware/errorhandler.js";
-import skillrouter from './Skill/Router.js'
-import jobcategoryrouter from './Job_Category/router.js'
-import locationRouter from "./job_location/router.js"
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import path , { dirname }  from 'path'; // importing path , dirname API'S from path module
+import Notfounderror from './Exceptions/NotFoundError.js' // importing Custom Error Handler
+import { fileURLToPath } from 'url'; // importing url module
+import {errorhandler} from "./middleware/errorhandler.js"; // importing global error handler
+import skillrouter from './Skill/Router.js' // importing routes for skill  module
+import jobcategoryrouter from './Job_Category/router.js' // importing routes for category  module
+import locationRouter from "./job_location/router.js" // importing routes for location  module
+import qualificationRouter from "./Qualification/Router.js" // importing routes for qualification  module
+const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
 
 // configuring .env file
 dotenv.config({     
@@ -40,11 +41,14 @@ const swaggerDefinition = {
     
 }
 
+// Swagger routes
 const options = {
     swaggerDefinition,
     apis: [
         path.join(__dirname,"job_location" , "router.js"),
-        path.join(__dirname,"Job_Category","router.js")
+        path.join(__dirname,"Job_Category","router.js"),
+        path.join(__dirname,"Qualification","Router.js")
+
     ],
 };
 
@@ -52,15 +56,16 @@ const options = {
 const swaggerspecs = swaggerjsdoc(options);
 app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 
+// Defining routes
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
-// app.use('/api/v1/qualification',qualificationRouter)
+app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 
 
-// route for unmatched url
+// Handling unmatched URLs.
 app.all('*',(req,res,next)=>{
-    const error = new Notfounderror("invalid url")
+    const error = new Notfounderror("Invalid Url")
     next(error)
 })
 

@@ -1,4 +1,4 @@
-class Badrequesterror extends Error{
+class BadRequestError extends Error{
     constructor(message){
         super(message)
         this.statuscode = 400
@@ -6,6 +6,6 @@ class Badrequesterror extends Error{
     }
 }
 
-export default Badrequesterror
+export default BadRequestError
 
 // defining cutsom badrequest error handler

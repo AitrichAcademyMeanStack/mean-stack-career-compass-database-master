@@ -1,5 +1,6 @@
 import Joi from 'joi';
 
+// Validating schema
 const authschema = Joi.object({
     name: Joi.string().required().min(3).pattern(/^[a-zA-Z]+$/)
         .messages({

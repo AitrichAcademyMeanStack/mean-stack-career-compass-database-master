@@ -1,4 +1,4 @@
-class Notfounderror extends Error {
+class NotFoundError extends Error {
     constructor(message) {
         super(message)
         this.statuscode = 404
@@ -6,6 +6,6 @@ class Notfounderror extends Error {
     }
 }
 
-export default Notfounderror
+export default NotFoundError
 
-// defining custon not found error handler
+// defining custom not found error handler
