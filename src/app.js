@@ -44,7 +44,8 @@ const options = {
     swaggerDefinition,
     apis: [
         path.join(__dirname,"job_location" , "router.js"),
-        path.join(__dirname,"Job_Category","router.js")
+        path.join(__dirname,"Job_Category","router.js"),
+        path.join(__dirname,"skill","Router.js")
     ],
 };
 
@@ -54,7 +55,7 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
-app.use('/api/v1/qualification',qualificationRouter)
+// app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 
 

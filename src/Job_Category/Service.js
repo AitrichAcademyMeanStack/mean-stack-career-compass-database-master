@@ -35,7 +35,6 @@ const createcategory = async(data)=>{
             throw new Badrequesterror("error in create new job-category")
         }
     } catch (error) {
-        console.log(error);
         if (error.name === "ValidationError") {
             logger.error(`validation error : ${error.message}`)
             throw new ValidationError(error.message)

@@ -42,7 +42,7 @@ router.get('/',controller.getallcategories)
 
 /**
  * @swagger
- * /api/v1/job-categories/{categoryid}:
+ * /api/v1/job-categories/{id}:
  *  get:
  *      summary: get job-category details with specific id
  *      description: this is is used to get category details with specific id
@@ -50,7 +50,7 @@ router.get('/',controller.getallcategories)
  *          - job-category
  *      parameters:
  *          - in: path
- *            name: categoryid
+ *            name: id
  *            required: true
  *            description: numeric id is required
  *            schema:
@@ -96,7 +96,7 @@ router.post('/',controller.createcategory)
 
 /**
  * @swagger
- * /api/v1/job-categories/{categoryid}:
+ * /api/v1/job-categories/{id}:
  *  put:
  *      summary: update category details
  *      description: this api is used to update job category details
@@ -104,7 +104,7 @@ router.post('/',controller.createcategory)
  *          - job-category
  *      parameters:
  *          - in: path
- *            name: categoryid
+ *            name: id
  *            required: true
  *            description: numeric id is required
  *            schema:
@@ -130,7 +130,7 @@ router.put('/:id',controller.updatecategory)
 
 /**
  * @swagger
- * /api/v1/job-categories/{categoryid}:
+ * /api/v1/job-categories/{id}:
  *  delete:
  *      summary: delete category details
  *      description: this api is used to delete category details
@@ -138,7 +138,7 @@ router.put('/:id',controller.updatecategory)
  *          - job-category
  *      parameters:
  *          - in: path
- *            name: categoryid
+ *            name: id
  *            required: true
  *            description: numeric id is required
  *            schema:
