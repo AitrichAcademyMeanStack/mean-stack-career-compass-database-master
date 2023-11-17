@@ -1,9 +1,9 @@
-import Category from '../models/JobCategoryModel.js'
-import logger from '../middleware/logger.js'
-import Badrequesterror from '../Exceptions/Badrequesterror.js'
-import Notfounderror from '../Exceptions/Notfounderror.js'
-import ValidationError from '../Exceptions/ValidationError.js'
-import authschema from '../middleware/ValidationSchema.js'
+import Category from '../models/JobCategoryModel.js' //importing job-category schema
+import logger from '../middleware/logger.js' //importing logger middleware
+import Badrequesterror from '../Exceptions/Badrequesterror.js' //importing badrequest error handler
+import Notfounderror from '../Exceptions/Notfounderror.js' // importing notfound error handler
+import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
+import authschema from '../middleware/ValidationSchema.js' // importing validation schema
 
 
 // fetching all job-categories

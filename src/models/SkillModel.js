@@ -1,5 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
+// schema for skills
 const skillschema = new Schema(
     {
         name: {
