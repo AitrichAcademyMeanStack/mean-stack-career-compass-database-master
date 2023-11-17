@@ -88,7 +88,7 @@ const deletecategory = async(categoryid)=>{
 }
 
 //fetching job-category with specific id
-const getcontrollerbyid = async(categoryid)=>{
+const getcategorybyid = async(categoryid)=>{
     try {
         const result =await  Category.findById(categoryid)
         if (result) {
@@ -100,6 +100,7 @@ const getcontrollerbyid = async(categoryid)=>{
         }
         
     } catch (error) {
+        console.log(error);
         if (error.name === "CastError") {
             logger.error("invalid category id")
             throw new Badrequesterror("invalid category id")
@@ -109,4 +110,4 @@ const getcontrollerbyid = async(categoryid)=>{
     }
 }
 
-export default {getallcategories,createcategory,updatecategory,deletecategory,getcontrollerbyid}
+export default {getallcategories,createcategory,updatecategory,deletecategory,getcategorybyid}

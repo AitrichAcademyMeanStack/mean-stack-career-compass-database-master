@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Bachelor of Science in Computer Science",
+        "description": "A degree program covering the fundamentals of computer science."
+    },
+    {
+        "name": "Master of Business Administration (MBA)",
+        "description": "A master's degree in business administration, emphasizing management and leadership skills."
+    },
+    {
+        "name": "Bachelor of Arts in English Literature",
+        "description": "A degree program focusing on literature and language studies."
+    },
+    {
+        "name": "Doctor of Medicine (MD)",
+        "description": "A doctoral degree for medical professionals."
+    },
+    {
+        "name": "Bachelor of Engineering in Mechanical Engineering",
+        "description": "A degree program in mechanical engineering, covering the design and analysis of mechanical systems."
+    },
+    {
+        "name": "Associate Degree in Graphic Design",
+        "description": "A two-year program focusing on graphic design principles and software."
+    },
+    {
+        "name": "Ph.D. in Astrophysics",
+        "description": "A doctoral degree in astrophysics, involving advanced research in celestial bodies and phenomena."
+    },
+    {
+        "name": "Bachelor of Science in Nursing",
+        "description": "A degree program preparing students for careers in nursing."
+    },
+    {
+        "name": "Certified Public Accountant (CPA)",
+        "description": "A professional certification for accountants, indicating expertise in accounting and financial matters."
+    },
+    {
+        "name": "Master of Fine Arts in Creative Writing",
+        "description": "A master's degree program for aspiring writers, emphasizing creative writing skills."
+    },
+    {
+        "name": "Bachelor of Commerce in Finance",
+        "description": "A degree program focusing on financial management and analysis."
+    },
+    {
+        "name": "Cisco Certified Network Associate (CCNA)",
+        "description": "A certification for network professionals demonstrating skills in networking fundamentals."
+    },
+    {
+        "name": "Bachelor of Science in Environmental Science",
+        "description": "A degree program focusing on environmental issues and sustainable practices."
+    },
+    {
+        "name": "Certified ScrumMaster (CSM)",
+        "description": "A certification for individuals involved in Scrum project management."
+    },
+    {
+        "name": "Master of Public Health (MPH)",
+        "description": "A master's degree in public health, addressing health issues on a broader scale."
+    },
+    {
+        "name": "Bachelor of Arts in Psychology",
+        "description": "A degree program exploring the science of human behavior and mental processes."
+    },
+    {
+        "name": "Oracle Certified Professional, Java SE Programmer",
+        "description": "A certification for Java programmers demonstrating proficiency in Java programming."
+    },
+    {
+        "name": "Bachelor of Science in Electrical Engineering",
+        "description": "A degree program in electrical engineering, covering the design and analysis of electrical systems."
+    },
+    {
+        "name": "Microsoft Certified: Azure Solutions Architect Expert",
+        "description": "A certification for professionals designing solutions on the Microsoft Azure platform."
+    },
+    {
+        "name": "Bachelor of Fine Arts in Film Production",
+        "description": "A degree program focusing on the art and techniques of film production."
+    }
+]

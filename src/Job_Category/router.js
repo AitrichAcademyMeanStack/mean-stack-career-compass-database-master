@@ -65,7 +65,7 @@ router.get('/',controller.getallcategories)
  *                          items:
  *                              $ref: '#/components/schemas/jobcategory' 
  */
-router.get('/:id',controller.getcontrollerbyid)
+router.get('/:id',controller.getcategorybyid)
 
 /**
  * @swagger

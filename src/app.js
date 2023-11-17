@@ -7,6 +7,7 @@ import path , { dirname }  from 'path';
 import Notfounderror from './Exceptions/Notfounderror.js'
 import { fileURLToPath } from 'url';
 import {errorhandler} from "./middleware/errorhandler.js";
+import skillrouter from './Skill/Router.js'
 import jobcategoryrouter from './Job_Category/router.js'
 import locationRouter from "./job_location/router.js"
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -54,6 +55,8 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 app.use('/api/v1/qualification',qualificationRouter)
+app.use('/api/v1/skills',skillrouter); // configuring routes for skill
+
 
 // route for unmatched url
 app.all('*',(req,res,next)=>{
