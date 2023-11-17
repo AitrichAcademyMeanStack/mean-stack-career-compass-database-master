@@ -1,5 +1,4 @@
 import express from 'express'
-import controller from './Controller.js'
 const router = express()
 
 /**
@@ -37,7 +36,7 @@ const router = express()
  *                          items:
  *                              $ref: '#/components/schemas/jobcategory'
  */
-router.get('/',controller.getallcategories)
+
 
 
 

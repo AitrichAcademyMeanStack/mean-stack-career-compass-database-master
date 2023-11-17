@@ -3,6 +3,7 @@ import logger from '../middleware/logger.js'
 import Badrequesterror from '../Exceptions/Badrequesterror.js'
 import Notfounderror from '../Exceptions/Notfounderror.js'
 import ValidationError from '../Exceptions/ValidationError.js'
+import authschema from '../middleware/ValidationSchema.js'
 
 
 // fetching all job-categories
@@ -24,6 +25,7 @@ const getallcategories =async()=>{
 //create new job-category
 const createcategory = async(data)=>{
     try {
+        await authschema.validateAsync(data)
         const result =await Category.create(data)
         if (result) {
             logger.info("job-category created successfully")
@@ -33,11 +35,11 @@ const createcategory = async(data)=>{
             throw new Badrequesterror("error in create new job-category")
         }
     } catch (error) {
+        console.log(error);
         if (error.name === "ValidationError") {
-            logger.error("validation error in create new job category")
-            throw new ValidationError("validation error in create new job category")
-        }
-        else {
+            logger.error(`validation error : ${error.message}`)
+            throw new ValidationError(error.message)
+        } else {
             throw error
         }
     }
@@ -46,6 +48,7 @@ const createcategory = async(data)=>{
 //update job-category with specific id
 const updatecategory = async(categoryid,data)=>{
     try {
+        await authschema.validateAsync(data)
         const result = await Category.findByIdAndUpdate(categoryid,data,{new:true})
         if (result) {
             logger.info("job-category updated successfully")
@@ -59,7 +62,10 @@ const updatecategory = async(categoryid,data)=>{
         if (error.name === "CastError") {
             logger.error("invalid category id")
             throw new Badrequesterror("invalid category id")
-        } else {
+        } else if(error.name === 'ValidationError'){
+            logger.error(`validation Error : ${error.message}`)
+            throw new ValidationError(error.message)
+        }else{
             throw error
         }
     }
