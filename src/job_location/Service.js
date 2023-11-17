@@ -1,12 +1,14 @@
+import Badrequesterror from "../Exceptions/Badrequesterror.js";
 import Notfounderror from "../Exceptions/Notfounderror.js";
-import location from "../models/LocationModel.js"
+import logger from "../middleware/logger.js";
+import Location from "../models/LocationModel.js"
 
 // fetching all locations
 const getAllLocations = async() => {
     try {
-        return await location.find();
+        return await Location.find();
     } catch (error) {
-        throw new Notfounderror("Locations not found")
+        throw new Notfounderror("Locations not found");
     }
 
 }
@@ -14,10 +16,12 @@ const getAllLocations = async() => {
 // fetching location by ID
 const getLocationById = async(id) => {
     try {
-        const result =  await location.findById(id)
+        const result =  await Location.findById(id)
         if (result) {
+            logger.info("location :", result)
             return result
         }else {
+            logger.error("Error while fetching location");
             throw new Notfounderror("Location ID not found")
         }
     } catch (error) {
@@ -28,9 +32,13 @@ const getLocationById = async(id) => {
 // Adding new location
 const addLocation = async(data) => {
     try {
-        const newData =  await location.create(data);
-        if (!newData) {
-            throw new Badrequesterror("Error while Adding location")
+        const newData =  await Location.create(data);
+        if (newData) {
+            logger.info("New location :", newData)
+            return newData;
+        }else {
+            logger.error("Error while adding location");
+            throw new Badrequesterror("Error while adding new location")
         }
 
     } catch (error) {
@@ -42,7 +50,7 @@ const addLocation = async(data) => {
 // Updating location
 const updateLocation = async(id , updateData) => {
     try {
-        const update =  await location.findByIdAndUpdate(id,updateData)
+        const update =  await Location.findByIdAndUpdate(id,updateData)
         if (update) {
             return update
         }else {
@@ -57,7 +65,7 @@ const updateLocation = async(id , updateData) => {
 // Deleting location
 const deleteLocation = async(id) => {
     try {
-        const deleteData = await location.findByIdAndDelete(id)
+        const deleteData = await Location.findByIdAndDelete(id)
         if (deleteData) {
             return deleteData
         }

@@ -7,7 +7,7 @@ const router = express.Router();
  * @swagger
  *  components:
  *      schemas:
- *          location:
+ *          Location:
  *              type: object
  *              required:
  *                  - name
@@ -29,9 +29,9 @@ const router = express.Router();
  *          tags:
  *              - Location
  *          responses: 
- *          200:
- *              description: Return array of locations
- *              content: 
+ *              200:
+ *               description: Return array of locations
+ *               content: 
  *                      application/json:
  *                          schema:
  *                              type: array
@@ -46,7 +46,7 @@ router.get("/",locationController.getAllLocations);
 
 /**
  * @swagger
- *  /api/v1/location:
+ *  /api/v1/locations:
  *      post:
  *          summary: Add a new location
  *          tags:
@@ -59,10 +59,10 @@ router.get("/",locationController.getAllLocations);
  *                              $ref: '#/components/schemas/Location'
  *          responses:
  *              201:
- *                      description: Location Added Successfully
- *                      content:
- *                          application/json:
- *                          schema:
+ *                  description: Location Added Successfully
+ *                  content:
+ *                        application/json:
+ *                            schema:
  *                              $ref: '#/components/schemas/Location'
  *              400:
  *                      description: Bad request , check the request body
@@ -72,7 +72,7 @@ router.get("/",locationController.getAllLocations);
 router.post("/",locationController.addLocation);
 /**
  * @swagger
- *  /api/v1/location/{id}:
+ *  /api/v1/locations/{id}:
  *      get:
  *          summary: Get location by ID
  *          tags:
@@ -100,7 +100,7 @@ router.post("/",locationController.addLocation);
 router.get("/:id",locationController.getLocationById);
 /**
  * @swagger
- *  /api/v1/location/{id}:
+ *  /api/v1/locations/{id}:
  *      put:
  *          summary:    Update location by ID
  *          tags:
@@ -136,7 +136,7 @@ router.get("/:id",locationController.getLocationById);
 router.put("/:id",locationController.updateLocation);
 /**
  * @swagger
- *  /api/v1/location/{id}:
+ *  /api/v1/locations/{id}:
  *      delete:
  *          summary: Delete location by ID
  *          tags:

@@ -3,16 +3,16 @@ import locationService from "./service.js"
 
 // fetching all locations
 const getAllLocations = asyncerrorhandler ( async (req,res) => {
-    await locationService.getAllLocations();
-    res.status(200).json({message: "List of locations"})
+    const locations = await locationService.getAllLocations();
+    res.status(200).json(locations)
 
 })
 
 // fetching location by ID
 const getLocationById = asyncerrorhandler ( async (req,res) => {
     const locationId = req.params.id;
-    await locationService.getLocationById(locationId);
-    res.status(200).json({message: "Fetched location"})
+    const location = await locationService.getLocationById(locationId);
+    res.status(200).json(location)
 
 })
 

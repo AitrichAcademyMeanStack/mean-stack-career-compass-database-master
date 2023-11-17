@@ -10,6 +10,7 @@ import {errorhandler} from "./middleware/errorhandler.js";
 import jobcategoryrouter from './Job_Category/router.js'
 import locationRouter from "./job_location/router.js"
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
 // configuring .env file
 dotenv.config({     
     path:"./env"
@@ -53,6 +54,7 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 
+// route for unmatched url
 app.all('*',(req,res,next)=>{
     const error = new Notfounderror("invalid url")
     next(error)
