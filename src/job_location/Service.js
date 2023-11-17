@@ -1,3 +1,4 @@
+import Notfounderror from "../Exceptions/Notfounderror.js";
 import location from "../models/LocationModel.js"
 
 // fetching all locations
@@ -5,7 +6,7 @@ const getAllLocations = async() => {
     try {
         return await location.find();
     } catch (error) {
-        throw error
+        throw new Notfounderror("Locations not found")
     }
 
 }
@@ -13,7 +14,12 @@ const getAllLocations = async() => {
 // fetching location by ID
 const getLocationById = async(id) => {
     try {
-        return await location.findById(id)
+        const result =  await location.findById(id)
+        if (result) {
+            return result
+        }else {
+            throw new Notfounderror("Location ID not found")
+        }
     } catch (error) {
         throw error
     }
@@ -22,7 +28,11 @@ const getLocationById = async(id) => {
 // Adding new location
 const addLocation = async(data) => {
     try {
-        return await location.create(data)
+        const newData =  await location.create(data);
+        if (!newData) {
+            throw new Badrequesterror("Error while Adding location")
+        }
+
     } catch (error) {
         throw error
     }
@@ -32,7 +42,12 @@ const addLocation = async(data) => {
 // Updating location
 const updateLocation = async(id , updateData) => {
     try {
-        return await location.findByIdAndUpdate(id,updateData)
+        const update =  await location.findByIdAndUpdate(id,updateData)
+        if (update) {
+            return update
+        }else {
+            throw new Badrequesterror("Error while updating Location")
+        }
     } catch (error) {
         throw error
     }
@@ -42,7 +57,14 @@ const updateLocation = async(id , updateData) => {
 // Deleting location
 const deleteLocation = async(id) => {
     try {
-        return await location.findByIdAndDelete(id)
+        const deleteData = await location.findByIdAndDelete(id)
+        if (deleteData) {
+            return deleteData
+        }
+        else {
+            throw new Badrequesterror("Error while deleting Location")
+
+        }
     } catch (error) {
         throw error
     }
