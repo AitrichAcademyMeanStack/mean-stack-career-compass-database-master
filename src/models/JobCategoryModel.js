@@ -1,13 +1,23 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 // Schema for JobCategory
-const jobCategory = new Schema (
+const jobCategorySchema = new Schema(
     {
-        name: {type: String , required: true},
-        description: {type: String , required: true}
-    },{versionKey:false}
-)
+        name: {
+            type: String,
+            required: [true, 'Name is required'],
+            unique: [true, 'Name must be unique'],
+            minlength: [3, 'Name must be at least 3 characters long']
+        },
+        description: {
+            type: String,
+            required: [true, 'Description is required'],
+            minlength: [3, 'Description must be at least 3 characters long']
+        }
+    },
+    { versionKey: false }
+);
 
-const Category = mongoose.model("Job_Category", jobCategory);
+const Category = mongoose.model("Job_Category", jobCategorySchema);
 
-export default Category
+export default Category;

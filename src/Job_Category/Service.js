@@ -1,5 +1,9 @@
 import Category from '../models/JobCategoryModel.js'
 import logger from '../middleware/logger.js'
+import Badrequesterror from '../Exceptions/Badrequesterror.js'
+import Notfounderror from '../Exceptions/Notfounderror.js'
+import ValidationError from '../Exceptions/ValidationError.js'
+
 
 // fetching all job-categories
 const getallcategories =async()=>{
@@ -10,6 +14,7 @@ const getallcategories =async()=>{
             return result
         } else {
             logger.error("job_categories not found")
+            throw new Badrequesterror("job_categories are not found")
         }
     } catch (error) {
         throw error
@@ -19,46 +24,67 @@ const getallcategories =async()=>{
 //create new job-category
 const createcategory = async(data)=>{
     try {
-        const result = Category.create(data)
+        const result =await Category.create(data)
         if (result) {
             logger.info("job-category created successfully")
             return result
         } else {
             logger.error("error in create job category")
+            throw new Badrequesterror("error in create new job-category")
+
         }
     } catch (error) {
-        throw error
+        console.log(error);
+        if (error.name === "ValidationError") {
+            logger.error("validation error in create new job category")
+            throw new ValidationError("validation error in create new job category")
+        } else {
+            throw error
+        }
     }
 }
 
 //update job-category with specific id
 const updatecategory = async(categoryid,data)=>{
     try {
-        const result = Category.findByIdAndUpdate(categoryid,data)
+        const result = await Category.findByIdAndUpdate(categoryid,data,{new:true})
         if (result) {
             logger.info("job-category updated successfully")
             return result
         } else {
             logger.error("category not found with id")
+            throw new Notfounderror("job_category data is not found with specific id")
+
         }
     } catch (error) {
-        throw error
+        if (error.name === "CastError") {
+            logger.error("invalid category id")
+            throw new Badrequesterror("invalid category id")
+        } else {
+            throw error
+        }
     }
 }
-
 
 //delete job-category with specific id
 const deletecategory = async(categoryid)=>{
     try {
-        const result = Category.findByIdAndDelete(categoryid)
+        const result =await Category.findByIdAndDelete(categoryid)
         if (result) {
             logger.info("job-category deleted successfully")
             return result
         } else {
             logger.error("category not found with id")
+            throw new Notfounderror("job_category data is not found with specific id")
         }
+        
     } catch (error) {
-        throw error
+        if (error.name === "CastError") {
+            logger.error("invalid category id")
+            throw new Badrequesterror("invalid category id")
+        } else {
+            throw error
+        }
     }
 }
 
@@ -71,10 +97,16 @@ const getcontrollerbyid = async(categoryid)=>{
             return result
         }else{
             logger.error("job-category not found with specific id")
+            throw new Notfounderror("job_category data is not found with specific id")
         }
         
     } catch (error) {
-        throw error
+        if (error.name === "CastError") {
+            logger.error("invalid category id")
+            throw new Badrequesterror("invalid category id")
+        } else {
+            throw error
+        }
     }
 }
 
