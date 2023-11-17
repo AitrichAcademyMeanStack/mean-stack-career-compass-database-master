@@ -1,0 +1,82 @@
+[
+    {
+        "name": "JavaScript",
+        "description": "A versatile scripting language for the web."
+    },
+    {
+        "name": "Python",
+        "description": "A general-purpose, high-level programming language."
+    },
+    {
+        "name": "React.js",
+        "description": "A JavaScript library for building user interfaces."
+    },
+    {
+        "name": "Node.js",
+        "description": "A JavaScript runtime for server-side development."
+    },
+    {
+        "name": "Java",
+        "description": "A widely used, object-oriented programming language."
+    },
+    {
+        "name": "HTML5",
+        "description": "The latest version of the Hypertext Markup Language."
+    },
+    {
+        "name": "CSS3",
+        "description": "The latest version of Cascading Style Sheets."
+    },
+    {
+        "name": "SQL",
+        "description": "Structured Query Language for managing databases."
+    },
+    {
+        "name": "Git",
+        "description": "A distributed version control system."
+    },
+    {
+        "name": "GitHub",
+        "description": "A web-based platform for version control and collaboration."
+    },
+    {
+        "name": "Angular",
+        "description": "A TypeScript-based open-source framework for web applications."
+    },
+    {
+        "name": "Docker",
+        "description": "A platform for automating containerized applications."
+    },
+    {
+        "name": "REST API",
+        "description": "Representational State Transfer for web services."
+    },
+    {
+        "name": "GraphQL",
+        "description": "A query language for APIs and a runtime for executing those queries."
+    },
+    {
+        "name": "MongoDB",
+        "description": "A NoSQL database for modern applications."
+    },
+    {
+        "name": "Firebase",
+        "description": "A mobile and web application development platform."
+    },
+    {
+        "name": "Redux",
+        "description": "A predictable state container for JavaScript applications."
+    },
+    {
+        "name": "Vue.js",
+        "description": "A progressive JavaScript framework for building user interfaces."
+    },
+    {
+        "name": "Express.js",
+        "description": "A web application framework for Node.js."
+    },
+    {
+        "name": "Ruby on Rails",
+        "description": "A web application framework written in Ruby."
+    }
+]

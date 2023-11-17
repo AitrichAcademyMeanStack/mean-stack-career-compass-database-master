@@ -30,10 +30,10 @@ const deletecategory = asyncerrorhandler(async (req, res) => {
 })
 
 //fetching job-category with specific id
-const getcontrollerbyid = asyncerrorhandler(async (req, res) => {
+const getcategorybyid = asyncerrorhandler(async (req, res) => {
     const categoryid = req.params.id
-    const getbyid = await service.getcontrollerbyid(categoryid)
+    const getbyid = await service.getcategorybyid(categoryid)
     res.status(200).json(getbyid)
 })
 
-export default { getallcategories, createcategory, updatecategory, deletecategory, getcontrollerbyid }
+export default { getallcategories, createcategory, updatecategory, deletecategory, getcategorybyid }
