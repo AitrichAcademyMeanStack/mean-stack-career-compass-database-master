@@ -11,7 +11,9 @@ import skillrouter from './Skill/Router.js' // importing routes for skill  modul
 import jobcategoryrouter from './Job_Category/router.js' // importing routes for category  module
 import locationRouter from "./job_location/router.js" // importing routes for location  module
 import qualificationRouter from "./Qualification/Router.js" // importing routes for qualification  module
+import systemuserrouter from './SystemUser/Router.js' //importing routes for systemuser module
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
+
 
 // configuring .env file
 dotenv.config({     
@@ -62,6 +64,7 @@ app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for J
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
+app.use('/api/v1/systemusers',systemuserrouter) //configuring routes for system users
 
 
 // Handling unmatched URLs.

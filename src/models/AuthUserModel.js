@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+//schema for auth user 
 const authUserSchema = new Schema(
   {
     userName: {
