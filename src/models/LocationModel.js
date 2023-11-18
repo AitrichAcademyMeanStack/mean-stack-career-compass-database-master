@@ -18,6 +18,7 @@ const locationSchema = new Schema (
         
     },{versionKey:false}
 )
+
 const collectionName = 'LOCATION';
 const location = mongoose.model("Location", locationSchema, collectionName)
 
