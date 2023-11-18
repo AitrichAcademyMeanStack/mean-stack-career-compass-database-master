@@ -29,7 +29,7 @@ const insertcategorydata = async()=>{
             await JobCategoryModel.insertMany(jobcategory)
             logger.info("job_category added successfully")
         } else {
-            logger.info("Data already exists in the collection.")
+            logger.info("Category Data already exists in the collection.")
         }
 
     } catch (error) {
@@ -45,7 +45,7 @@ const insertLocationData = async() => {
             await locationModel.insertMany(location)
             logger.info("Location data added")
         }else {
-            logger.info("Data already exists in the collection")
+            logger.info("Location Data already exists in the collection")
         }
     } catch (error) {
         logger.error("Error while Inserting Data")
