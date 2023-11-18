@@ -4,7 +4,7 @@ import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
 import connecttodatabase from './Config/db.js'
 import path , { dirname }  from 'path'; // importing path , dirname API'S from path module
-import Notfounderror from './Exceptions/NotFoundError.js' // importing Custom Error Handler
+import Notfounderror from './Exceptions/Notfounderror.js' // importing Custom Error Handler
 import { fileURLToPath } from 'url'; // importing url module
 import {errorhandler} from "./middleware/errorhandler.js"; // importing global error handler
 import skillrouter from './Skill/Router.js' // importing routes for skill  module
