@@ -1,10 +1,11 @@
-import logger from '../middleware/logger.js'
-import Badrequesterror from '../Exceptions/Badrequesterror.js'
-import Notfounderror from '../Exceptions/NotFoundError.js'
-import ValidationError from '../Exceptions/ValidationError.js'
-import skill from '../models/SkillModel.js'
-import authschema from '../middleware/ValidationSchema.js'
+import logger from '../middleware/logger.js' //importing logger middleware
+import Badrequesterror from '../Exceptions/Badrequesterror.js' //importing badrequest error handler
+import Notfounderror from '../Exceptions/Notfounderror.js' // importing notfound error handler
+import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
+import skill from '../models/SkillModel.js' // importing skill module schema
+import authschema from '../middleware/ValidationSchema.js' // importing validation schema
 
+//fetching all skills
 const getallskills = async()=>{
     try {
         const result =await skill.find()
@@ -20,6 +21,7 @@ const getallskills = async()=>{
     }
 }
 
+//fetching skill with specific id
 const getskillbyid = async(skillid)=>{
     try {
         const result = await skill.findById(skillid)
@@ -40,6 +42,7 @@ const getskillbyid = async(skillid)=>{
     }
 }
 
+// create new skill
 const createskill = async(skilldata)=>{
     try {
         await authschema.validateAsync(skilldata)
@@ -61,6 +64,7 @@ const createskill = async(skilldata)=>{
     }
 }
 
+//update skill
 const updateskill = async(skillid,skilldata)=>{
     try {
         await authschema.validateAsync(skilldata)
@@ -86,6 +90,7 @@ const updateskill = async(skillid,skilldata)=>{
     }
 }
 
+//delete skill
 const deleteskill = async(skillid)=>{
     try {
         const result =await skill.findByIdAndDelete(skillid)

@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from 'joi'; //importing joi
 
 // Validating schema
 const authschema = Joi.object({

@@ -1,5 +1,5 @@
-import service from './service.js' 
-import asyncerrorhandler from '../utils/asyncerrorhandler.js'
+import service from './service.js'  //importing service
+import asyncerrorhandler from '../utils/asyncerrorhandler.js' // importing asynchoronous error handler
 
 // fetching all job-categories
 const getallcategories = asyncerrorhandler(async (req, res) => {
