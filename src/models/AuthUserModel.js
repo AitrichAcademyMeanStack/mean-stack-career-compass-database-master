@@ -3,6 +3,10 @@ import mongoose, { Schema } from "mongoose";
 //schema for auth user 
 const authUserSchema = new Schema(
   {
+    _id: {
+      type: mongoose.Types.ObjectId,
+      ref:'SystemUser'
+    },
     userName: {
       type: String,
     },
@@ -10,19 +14,24 @@ const authUserSchema = new Schema(
       type: String,
     },
     firstName: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref:'SystemUser'
     },
     role: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref:'SystemUser'
     },
     lastName: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref:'SystemUser'
     },
     email: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref:'SystemUser'
     },
     phone: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref:'SystemUser'
     },
   },
   { versionKey: false }

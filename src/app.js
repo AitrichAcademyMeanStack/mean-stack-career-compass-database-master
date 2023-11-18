@@ -12,6 +12,7 @@ import jobcategoryrouter from './Job_Category/router.js' // importing routes for
 import locationRouter from "./job_location/router.js" // importing routes for location  module
 import qualificationRouter from "./Qualification/Router.js" // importing routes for qualification  module
 import systemuserrouter from './SystemUser/Router.js' //importing routes for systemuser module
+import authuserrouter from './AuthUser/Router.js' //importing routes for auth user
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
 
 
@@ -65,6 +66,7 @@ app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/systemusers',systemuserrouter) //configuring routes for system users
+app.use('/api/v1/authusers',authuserrouter)
 
 
 // Handling unmatched URLs.
