@@ -1,6 +1,6 @@
 import logger from '../middleware/logger.js'
 import Badrequesterror from '../Exceptions/Badrequesterror.js'
-import Notfounderror from '../Exceptions/Notfounderror.js'
+import Notfounderror from '../Exceptions/NotFoundError.js'
 import ValidationError from '../Exceptions/ValidationError.js'
 import skill from '../models/SkillModel.js'
 import authschema from '../middleware/ValidationSchema.js'

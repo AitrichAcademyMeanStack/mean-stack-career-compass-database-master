@@ -18,7 +18,7 @@ const locationSchema = new Schema (
         
     },{versionKey:false}
 )
-
-const location = mongoose.model("Location", locationSchema)
+const collectionName = 'LOCATION';
+const location = mongoose.model("Location", locationSchema, collectionName)
 
 export default location
