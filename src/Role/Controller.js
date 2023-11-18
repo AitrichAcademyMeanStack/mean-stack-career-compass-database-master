@@ -6,4 +6,10 @@ const getRoles = asyncerrorhandler( async(req,res) => {
     res.status(200).json(roles);
 })
 
-export default getRoles
+const addDescription = asyncerrorhandler( async (req,res) => {
+    const desc = req.body;
+    const addDes = await roleService.addDescription(desc)
+    res.status(201).json(addDes)
+})
+
+export default {getRoles , addDescription}
