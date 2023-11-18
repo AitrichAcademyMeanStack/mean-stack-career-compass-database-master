@@ -1,7 +1,7 @@
 import mongoose from 'mongoose' //importing mongoose
-import logger from '../middleware/logger.js'
-import JobCategoryModel from '../models/JobCategoryModel.js'
-import jobcategory from '../../data/JobCategory.json' assert{type:'json'}
+import logger from '../middleware/logger.js' // importing logger
+import JobCategoryModel from '../models/JobCategoryModel.js' // importing job category model
+import jobcategory from '../../data/JobCategory.json' assert{type:'json'} // importing job category json data
 
 
 
@@ -18,6 +18,7 @@ const connecttodatabase = async()=>{
     }
 }
 
+//importing json data
 const insertcategorydata = async()=>{
     try {
         const existingdata = await JobCategoryModel.find()

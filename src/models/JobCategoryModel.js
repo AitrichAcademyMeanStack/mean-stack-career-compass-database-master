@@ -13,6 +13,7 @@ const jobCategorySchema = new Schema(
     { versionKey: false }
 );
 
-const Category = mongoose.model("Job_Category", jobCategorySchema);
+const collectionname = 'Job_Category'
+const Category = mongoose.model("Job_Category", jobCategorySchema,collectionname);
 
 export default Category;
