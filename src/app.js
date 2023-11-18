@@ -11,6 +11,7 @@ import skillrouter from './Skill/Router.js' // importing routes for skill  modul
 import jobcategoryrouter from './Job_Category/router.js' // importing routes for category  module
 import locationRouter from "./job_location/router.js" // importing routes for location  module
 import qualificationRouter from "./Qualification/Router.js" // importing routes for qualification  module
+import rolesRouter from "./Role/Router.js" // importing routes for Role  module
 import systemuserrouter from './SystemUser/Router.js' //importing routes for systemuser module
 import authuserrouter from './AuthUser/Router.js' //importing routes for auth user
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
@@ -50,9 +51,10 @@ const options = {
     apis: [
         path.join(__dirname,"job_location" , "router.js"),
         path.join(__dirname,"Job_Category","router.js"),
-        path.join(__dirname,"Qualification","Router.js")
-,
-        path.join(__dirname,"skill","Router.js")
+        path.join(__dirname,"Qualification","Router.js"),
+        path.join(__dirname,"skill","Router.js"),
+        path.join(__dirname,"Role","Router.js")
+
     ],
 };
 
@@ -65,6 +67,7 @@ app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for J
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
+app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
 app.use('/api/v1/systemusers',systemuserrouter) //configuring routes for system users
 app.use('/api/v1/authusers',authuserrouter)
 
