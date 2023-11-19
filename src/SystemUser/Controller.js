@@ -8,5 +8,22 @@ const createsystemuser =asyncerrorhandler(async(req,res)=>{
     res.status(201).json(newuser)
 })
 
+//update system user
+const updatesystemuser =asyncerrorhandler(async(req,res)=>{
+    const userid = req.params.id
+    const systemdata = req.body
+    const updateuser = await service.updatesystemuser(systemdata,userid)
+    res.status(200).json(updateuser)
+})
 
-export default {createsystemuser}
+//delete system user
+const deletesystemuser =asyncerrorhandler(async(req,res)=>{
+    const userid = req.params.id
+    await service.deletesystemuser(userid)
+    res.status(200).json("system user deleted successfully")
+})
+
+
+
+
+export default {createsystemuser,updatesystemuser,deletesystemuser}

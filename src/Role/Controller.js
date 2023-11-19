@@ -1,5 +1,5 @@
-import asyncerrorhandler from "../utils/asyncerrorhandler";
-import roleService from './Service'
+import asyncerrorhandler from "../utils/asyncerrorhandler.js";
+import roleService from './Service.js'
 
 const getRoles = asyncerrorhandler( async(req,res) => {
     const roles = await roleService.getAllRoles();

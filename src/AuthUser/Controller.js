@@ -1,5 +1,5 @@
-import service from './Service.js'
-import asyncerrorhandler from '../utils/asyncerrorhandler.js'
+import service from './Service.js' //importing service
+import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynchronous error handler
 
 const createauthuser = asyncerrorhandler(async(req,res)=>{
     const authdata = req.body

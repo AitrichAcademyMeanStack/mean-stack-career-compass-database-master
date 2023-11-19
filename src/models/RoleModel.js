@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { RolesEnum } from "../Config/rolesEnums";
+import { RolesEnum } from "../Config/rolesEnums.js";
 
 const roleSchema = new Schema(
     {

@@ -1,38 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
-//schema for auth user 
 const authUserSchema = new Schema(
   {
-    _id: {
-      type: mongoose.Types.ObjectId,
-      ref:'SystemUser'
-    },
-    userName: {
-      type: String,
-    },
-    password: {
-      type: String,
-    },
-    firstName: {
-      type: mongoose.Types.ObjectId,
-      ref:'SystemUser'
-    },
-    role: {
-      type: mongoose.Types.ObjectId,
-      ref:'SystemUser'
-    },
-    lastName: {
-      type: mongoose.Types.ObjectId,
-      ref:'SystemUser'
-    },
-    email: {
-      type: mongoose.Types.ObjectId,
-      ref:'SystemUser'
-    },
-    phone: {
-      type: mongoose.Types.ObjectId,
-      ref:'SystemUser'
-    },
+    _id: {type: mongoose.Types.ObjectId,ref: 'systemuser',required: true},
+    userName: { type: String, required: true },
+    password: { type: String, required: true },
+    firstName: { type: String, required: true },
+    role: { type: String, required: true },
+    lastName: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
   },
   { versionKey: false }
 );

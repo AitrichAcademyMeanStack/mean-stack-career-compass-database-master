@@ -5,12 +5,12 @@ import { RolesEnum } from '../Config/rolesEnums.js'
 //schema for systemuser
 const systemuserschema = new Schema (
     {
-        firstName: {type:String},
-        Role: {type:String,enum:Object.values(RolesEnum)},
-        lastName: {type:String},
-        email: {type:String},
-        phone: {type:String},
-    },{
+        firstName: { type: String, required: true },
+        role: { type: String, enum: Object.values(RolesEnum), required: true },
+        lastName: { type: String, required: true },
+        email: { type: String, required: true },
+        phone: { type: String, required: true },
+      },{
         versionKey:false
     }
 )
