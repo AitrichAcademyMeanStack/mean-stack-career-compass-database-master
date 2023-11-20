@@ -5,11 +5,11 @@ const roleSchema = new Schema(
     {
         name: {
             type: String,
-            enum: Object.values(RolesEnum)
+            enum: Object.keys(RolesEnum) // Fetching roles
         },
         description:{type: String}
 
-    }
+    },{versionKey: false}
 )
 
 const collectionName = "Role"
