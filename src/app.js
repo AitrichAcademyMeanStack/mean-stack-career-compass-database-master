@@ -14,7 +14,8 @@ import qualificationRouter from "./Qualification/Router.js" // importing routes 
 import rolesRouter from "./Role/Router.js" // importing routes for Role  module
 import systemuserrouter from './SystemUser/Router.js' //importing routes for systemuser module
 import authuserrouter from './AuthUser/Router.js' //importing routes for auth user
-import industryRouter from './Industry/Router.js'
+import industryRouter from './Industry/Router.js'  //importing routes for Industry
+import jobProviderCompanyRouter from './JobProviderCompany/Router.js' //importing routes for JobProviderCompany
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
 
 
@@ -55,7 +56,8 @@ const options = {
         path.join(__dirname,"Qualification","Router.js"),
         path.join(__dirname,"skill","Router.js"),
         path.join(__dirname,"Role","Router.js"),
-        path.join(__dirname,"Industry","Router.js")
+        path.join(__dirname,"Industry","Router.js"),
+        path.join(__dirname,"JobProviderCompany","Router.js")
 
     ],
 };
@@ -72,7 +74,9 @@ app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
 app.use('/api/v1/systemusers',systemuserrouter) //configuring routes for system users
 app.use('/api/v1/authusers',authuserrouter)
-app.use('/api/v1/industries', industryRouter) // Configuring routes fro industry
+app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
+app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
+
 
 
 // Handling unmatched URLs.
