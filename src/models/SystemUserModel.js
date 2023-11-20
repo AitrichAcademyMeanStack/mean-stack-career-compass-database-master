@@ -5,11 +5,11 @@ import mongoose ,{Schema} from 'mongoose'
 const systemuserschema = new Schema (
     {
        _id:{type : mongoose.Types.ObjectId,ref:'jobseeker',required:true},
-        firstName: { type: mongoose.Types.String,ref:'jobseeker', required: true },
+        firstName: { type: String,ref:'jobseeker', required: true },
         role: { type: String, enum: ["Platform Admin","Company Admin","Hiring Manager", "Job Seeker"], required: true },
-        lastName: { type: mongoose.Types.String,ref:'jobseeker', required: true },
-        email:{ type: mongoose.Types.String,ref:'jobseeker', required: true },
-        phone: { type: mongoose.Types.String,ref:'jobseeker', required: true }
+        lastName: { type: String,ref:'jobseeker', required: true },
+        email:{ type: String,ref:'jobseeker', required: true },
+        phone: { type: String,ref:'jobseeker', required: true }
       },{
         versionKey:false
     }

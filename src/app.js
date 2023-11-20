@@ -72,8 +72,6 @@ app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
 app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker
-app.use('/api/v1/systemusers',systemuserrouter) //configuring routes for system users
-app.use('/api/v1/authusers',authuserrouter)
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
 

@@ -46,10 +46,26 @@ const createseeker = async(seekerdata)=>{
         const seekerresult = await jobseeker.create(seekerdata)
         logger.info("job seeker created successfully")
         if (seekerresult) {
-            const systemresult = await systemuser.create(seekerdata)
+            const systemresult = await systemuser.create({
+                _id :seekerresult._id,
+                firstName: seekerresult.firstName,
+                lastName: seekerresult.lastName,
+                email: seekerresult.email,
+                phone: seekerresult.phone,
+                role: "Job Seeker",
+            })
             logger.info("system user created successfully")
             if (systemresult) {
-                await AuthUser.create(seekerdata)
+                await AuthUser.create({
+                    _id: systemresult._id,
+                    userName: seekerresult.userName,
+                    password: "12345",
+                    firstName: systemresult.firstName,
+                    lastName: systemresult.lastName,
+                    email: systemresult.email,
+                    phone: systemresult.phone,
+                    role: systemresult.role,
+                })
                 logger.info("auth user created successfully")
             } else {
                 logger.error("error in creating system user")
@@ -57,6 +73,7 @@ const createseeker = async(seekerdata)=>{
         } else {
          logger.error("error in creating job seeker")   
         }
+        return seekerresult
     } catch (error) {
         console.log(error);
         throw error
