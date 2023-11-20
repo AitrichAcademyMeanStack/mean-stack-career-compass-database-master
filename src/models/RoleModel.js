@@ -1,15 +1,14 @@
 import mongoose, { Schema } from "mongoose";
-import { RolesEnum } from "../Config/rolesEnums.js";
 
 const roleSchema = new Schema(
     {
         name: {
             type: String,
-            enum: Object.values(RolesEnum)
+            enum: ['Platform Admin', 'Company Admin', 'Hiring Manager', 'Job Seeker']
         },
         description:{type: String}
 
-    }
+    },{versionKey: false}
 )
 
 const collectionName = "Role"
