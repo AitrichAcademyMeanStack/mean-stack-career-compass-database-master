@@ -13,8 +13,6 @@ import locationRouter from "./job_location/router.js" // importing routes for lo
 import qualificationRouter from "./Qualification/Router.js" // importing routes for qualification  module
 import rolesRouter from "./Role/Router.js" // importing routes for Role  module
 import seekerrouter from './JobSeeker/Router.js' //importing routes for seeker module
-import systemuserrouter from './SystemUser/Router.js' //importing routes for systemuser module
-import authuserrouter from './AuthUser/Router.js' //importing routes for auth user
 import industryRouter from './Industry/Router.js'  //importing routes for Industry
 import jobProviderCompanyRouter from './JobProviderCompany/Router.js' //importing routes for JobProviderCompany
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path

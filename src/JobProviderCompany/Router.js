@@ -9,12 +9,30 @@ const router = express.Router()
  *          JobProviderCompany:
  *              type: object
  *              required:
- *                  - name
- *                  - description
+ *                  - legalName
+ *                  - summary
+ *                  - industry
+ *                  - email
+ *                  - phone
+ *                  - address
+ *                  - website
+ *                  - location
  *              properties:
- *                  name:
+ *                  legalName:
  *                      type: string
- *                  description:
+ *                  summary:
+ *                      type: string
+ *                  industry:
+ *                      type: string
+ *                  email:
+ *                      type: string
+ *                  phone:
+ *                      type: string
+ *                  address:
+ *                      type: string
+ *                  website:
+ *                      type: string
+ *                  location:
  *                      type: string
  * 
  * 
