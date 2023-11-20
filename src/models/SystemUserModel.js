@@ -1,15 +1,15 @@
 import mongoose ,{Schema} from 'mongoose'
-import { RolesEnum } from '../Config/rolesEnums.js'
 
 
 //schema for systemuser
 const systemuserschema = new Schema (
     {
-        firstName: { type: String, required: true },
-        role: { type: String, enum: Object.values(RolesEnum), required: true },
-        lastName: { type: String, required: true },
-        email: { type: String, required: true },
-        phone: { type: String, required: true },
+       _id:{type : mongoose.Types.ObjectId,ref:'jobseeker',required:true},
+        firstName: { type: mongoose.Types.String,ref:'jobseeker', required: true },
+        role: { type: String, enum: ["Platform Admin","Company Admin","Hiring Manager", "Job Seeker"], required: true },
+        lastName: { type: mongoose.Types.String,ref:'jobseeker', required: true },
+        email:{ type: mongoose.Types.String,ref:'jobseeker', required: true },
+        phone: { type: mongoose.Types.String,ref:'jobseeker', required: true }
       },{
         versionKey:false
     }

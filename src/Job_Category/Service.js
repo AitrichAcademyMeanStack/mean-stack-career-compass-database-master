@@ -15,7 +15,7 @@ const getallcategories =async()=>{
             return result
         } else {
             logger.error("job_categories not found")
-            throw new Badrequesterror("job_categories are not found")
+            throw new Notfounderror("job_categories are not found")
         }
     } catch (error) {
         throw error
