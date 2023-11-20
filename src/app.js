@@ -13,8 +13,6 @@ import locationRouter from "./job_location/router.js" // importing routes for lo
 import qualificationRouter from "./Qualification/Router.js" // importing routes for qualification  module
 import rolesRouter from "./Role/Router.js" // importing routes for Role  module
 import seekerrouter from './JobSeeker/Router.js' //importing routes for seeker module
-import systemuserrouter from './SystemUser/Router.js' //importing routes for systemuser module
-import authuserrouter from './AuthUser/Router.js' //importing routes for auth user
 import industryRouter from './Industry/Router.js'  //importing routes for Industry
 import jobProviderCompanyRouter from './JobProviderCompany/Router.js' //importing routes for JobProviderCompany
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
@@ -74,8 +72,6 @@ app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
 app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker
-app.use('/api/v1/systemusers',systemuserrouter) //configuring routes for system users
-app.use('/api/v1/authusers',authuserrouter)
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
 
