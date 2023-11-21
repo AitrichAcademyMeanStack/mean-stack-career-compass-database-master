@@ -2,7 +2,7 @@ import logger from "../middleware/logger.js" //importing logger middleware
 import AuthUser from "../models/AuthUserModel.js" // importing authetication model
 import systemuser from "../models/SystemUserModel.js" //importing system user model
 import BadRequestError from "../Exceptions/Badrequesterror.js" //importing bad request error handler
-import NotFoundError from "../Exceptions/Notfounderror.js" //importing not found error handler
+import NotFoundError from "../Exceptions/NotFoundError.js" //importing not found error handler
 import ValidationError from "../Exceptions/ValidationError.js" // importing validation error handler
 import jobseeker from "../models/JobSeekerModel.js" //importing job seeker
 

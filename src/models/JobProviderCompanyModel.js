@@ -8,7 +8,7 @@ const JobProviderCompanySchema = new Schema(
         email:{type: String},
         phone: {type: String},
         address: {type: String},
-        websile:{type: String},
+        website:{type: String},
         location:{type: Schema.Types.ObjectId,ref:"Location"}
     }
 )
