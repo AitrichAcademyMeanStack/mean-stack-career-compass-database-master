@@ -41,22 +41,25 @@ const getseekerbyid = async(seekerid)=>{
 }
 
 //create new job seeker
-const createseeker = async(seekerdata)=>{
+const createseeker = async(seekerdata) => {
     try {
-        const seekerresult = await jobseeker.create(seekerdata)
-        logger.info("job seeker created successfully")
+        const seekerresult = await jobseeker.create(seekerdata);
+        logger.info("Job seeker created successfully");
+
         if (seekerresult) {
-            const systemresult = await systemuser.create({
-                _id :seekerresult._id,
+            const systemuserdata = {
+                _id: seekerresult._id,
                 firstName: seekerresult.firstName,
                 lastName: seekerresult.lastName,
                 email: seekerresult.email,
                 phone: seekerresult.phone,
                 role: "Job Seeker",
-            })
-            logger.info("system user created successfully")
+            };
+            const systemresult = await systemuser.create(systemuserdata);
+            logger.info("System user created successfully");
+
             if (systemresult) {
-                await AuthUser.create({
+                const authuserdata = {
                     _id: systemresult._id,
                     userName: seekerresult.userName,
                     password: "12345",
@@ -65,30 +68,70 @@ const createseeker = async(seekerdata)=>{
                     email: systemresult.email,
                     phone: systemresult.phone,
                     role: systemresult.role,
-                })
-                logger.info("auth user created successfully")
+                };
+                await AuthUser.create(authuserdata);
+                logger.info("Auth user created successfully");
             } else {
-                logger.error("error in creating system user")
+                logger.error("Error in creating system user");
+                return null;
             }
         } else {
-         logger.error("error in creating job seeker")   
+            logger.error("Error in creating job seeker");
+        }
+
+        return seekerresult;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+
+// // //update job seeker with specific id
+const updateseeker = async(seekerid,seekerdata)=>{
+    try {
+        const seekerresult = await jobseeker.findByIdAndUpdate(seekerid,seekerdata)
+        logger.info("job seeker updated successfully")
+        if (seekerresult) {
+            const systemresult = await systemuser.findByIdAndUpdate(seekerid,seekerdata)
+            logger.info("system user updated successfully")
+            if (systemresult) {
+                await AuthUser.findByIdAndUpdate(seekerid,seekerdata)
+                logger.info("auth user updated successfully")
+            } else {
+                logger.error("error in updating system user")
+            }
+        } else {
+            logger.info("error in updating job seeker")
         }
         return seekerresult
     } catch (error) {
-        console.log(error);
         throw error
     }
 }
 
-// //update job seeker with specific id
-// const updateseeker = async(seekerid,seekerdata)=>{
-    
-// }
-
 // //delete job seeker with specific id
-// const deleteseeker = async(seekerid)=>{
-    
-// }
+const deleteseeker = async(seekerid)=>{
+    try {
+        const seekerresult = await jobseeker.findByIdAndDelete(seekerid)
+        logger.info("job seeker deleted successfully")
+        if (seekerresult) {
+            const systemresult = await systemuser.findByIdAndDelete(seekerid)
+            logger.info("system user deleted successfully")
+            if (systemresult) {
+                await AuthUser.findByIdAndDelete(seekerid)
+                logger.info("auth user deleted successfully")
+            } else {
+                logger.error("error in deleting system user")
+            }
+        } else {
+            logger.info("error in deleting job seeker")
+        }
+        return seekerresult
+    } catch (error) {
+        throw error
+    }
+}
 
 
-export default {getallseekers,getseekerbyid,createseeker}
+export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker}
