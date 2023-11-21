@@ -24,9 +24,17 @@ const createprofile = async(seekerid,profiledata)=>{
     try {
         const seekerresult = await jobseeker.findById(seekerid)
         if (seekerresult) {
+            profiledata.jobSeeker ={
+                firstName: seekerresult.firstName,
+                lastName: seekerresult.lastName,
+                userName: seekerresult.userName,
+                email: seekerresult.email,
+                phone: seekerresult.phone,
+            }
             const profileresult = await seekerProfile.create(profiledata)
             if (profileresult) {
                 logger.info("job seeker profile created successfully")
+                return profileresult
             } else {
                 logger.error("error in creating job seeker profile")
             }

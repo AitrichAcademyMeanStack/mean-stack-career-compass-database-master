@@ -115,39 +115,39 @@ router.get('/:id/profiles',controller.getallprofiles)
  */
 router.get('/:id1/profiles/:id2',controller.getprofilebyid)
 
-// /**
-//  * @swagger
-//  * /api/v1/jobseekers/{seekerid}/profiles:
-//  *  post:
-//  *      summary: create new job seeker profile details
-//  *      description: this api is used to create new job seeker profile
-//  *      tags:
-//  *          - jobseeker-profile
-//  *      parameters:
-//  *          - in: path
-//  *            name: seekerid
-//  *            required: true
-//  *            description: numeric id is required
-//  *            schema:
-//  *                  type: string
-//  *      requestBody:
-//  *          required: true
-//  *          content:
-//  *              application/json:
-//  *                  schema:
-//  *                      $ref: '#/components/schemas/jobseekerprofile'
-//  *      responses:
-//  *          201:
-//  *              description: job-seeker profile created successfully
-//  *              content:
-//  *                  application/json:
-//  *                      schema:
-//  *                          $ref: '#/components/schemas/jobseekerprofile'
-//  *          400:
-//  *              description: not found error, check request body
-//  * 
-//  */
-// router.post('/:id/profiles',controller.createprofile)
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles:
+ *  post:
+ *      summary: create new job seeker profile details
+ *      description: this api is used to create new job seeker profile
+ *      tags:
+ *          - jobseeker-profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseekerprofile'
+ *      responses:
+ *          201:
+ *              description: job-seeker profile created successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error, check request body
+ * 
+ */
+router.post('/:id/profiles',controller.createprofile)
 
 // /**
 //  * @swagger
