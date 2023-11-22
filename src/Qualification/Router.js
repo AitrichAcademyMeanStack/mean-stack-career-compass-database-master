@@ -48,7 +48,7 @@ router.get("/",qualificationController.getAllQualifications);
  * @swagger
  *  /api/v1/qualifications:
  *      post:
- *          summary: Add a new location
+ *          summary: Add a new qualification
  *          tags:
  *              - Qualification
  *          requestBody:

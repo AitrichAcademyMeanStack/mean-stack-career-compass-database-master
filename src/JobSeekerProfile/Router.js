@@ -24,11 +24,6 @@ const router = express.Router();
  *                      type: array
  *                      items:
  *                          type: object
- *                          properties:
- *                              name:
- *                                  type: String
- *                              description:
- *                                  type: String
  *                  workExperiences:
  *                      type: array
  *                      items:
@@ -48,11 +43,6 @@ const router = express.Router();
  *                      type: array
  *                      items:
  *                          type: object
- *                          properties:
- *                              name:
- *                                  type: String
- *                              description:
- *                                  type: String
  */
 
 /**
