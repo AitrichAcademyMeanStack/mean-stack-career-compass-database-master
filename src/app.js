@@ -74,7 +74,7 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs));
 // Defining routes
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
-app.use('/api/v1/qualification',qualificationRouter)
+app.use('/api/v1/qualifications',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
 app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker

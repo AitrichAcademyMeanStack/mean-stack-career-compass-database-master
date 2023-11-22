@@ -10,7 +10,8 @@ const qualificationSchema = new Schema({
     type: String,
     required: true,
   },
-});
+},{versionKey:false}
+);
 
 const Qualification = mongoose.model("Qualification", qualificationSchema);
 
