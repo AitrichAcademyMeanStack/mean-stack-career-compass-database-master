@@ -17,7 +17,7 @@ const getJobProviderById = asyncerrorhandler(async (req, res) => {
 // Adding JobProvider
 const addJobProvider = asyncerrorhandler(async (req, res) => {
   const newJobProvider = req.body;
-  const provider = await jobProviderService.addIndustry(newJobProvider);
+  const provider = await jobProviderService.addJobProvider(newJobProvider);
   res.status(201).json(provider);
 });
 
