@@ -58,7 +58,9 @@ const options = {
         path.join(__dirname,"Role","Router.js"),
         path.join(__dirname,"Industry","Router.js"),
         path.join(__dirname,"JobProviderCompany","Router.js"),
-        path.join(__dirname,"JobSeeker","Router.js")
+        path.join(__dirname,"JobSeeker","Router.js"),
+        path.join(__dirname,"JobSeekerProfile","Router.js")
+
     ],
 };
 
@@ -73,7 +75,6 @@ app.use('/api/v1/qualification',qualificationRouter)
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
 app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker
-// app.use('/api/v1/jobseekerprofiles',seekerprofile) //configuring routes for seeker profile
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
 
