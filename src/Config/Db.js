@@ -4,6 +4,10 @@ import JobCategoryModel from '../models/JobCategoryModel.js' // importing job ca
 import locationModel from '../models/LocationModel.js' // importing location model
 import jobcategory from '../../data/JobCategory.json' assert{type:'json'} //importing job category json data
 import location from '../../data/Location.json' assert{type: 'json'}// importing location json data
+import skillmodel from '../models/SkillModel.js'
+import Qualificationmodel from '../models/QualificationModel.js'
+import skill from '../../data/Skill.json' assert{type: 'json'}
+import qualification from '../../data/Qualification.json' assert{type: 'json'}
  
 
 
@@ -15,6 +19,8 @@ const connecttodatabase = async()=>{
         logger.info("Mongo Db Connected Successfully")
         await insertcategorydata() // inserting data into collection
         await insertLocationData() // inserting data into collection
+        await insertqualificationsdata()
+        await insertskillsdata()
     } catch (error) {
         logger.error("Error In Coonnecting database")
         process.exit()
@@ -50,6 +56,36 @@ const insertLocationData = async() => {
     } catch (error) {
         logger.error("Error while Inserting Data")
         
+    }
+}
+
+const insertskillsdata = async()=>{
+    try {
+        const existingdata = await skillmodel.find()
+        if (existingdata.length === 0) {
+            await skillmodel.insertMany(skill)
+            logger.info("skills added successfully")
+        } else {
+            logger.info("skills Data already exists in the collection.")
+        }
+
+    } catch (error) {
+        logger.error("error inserting data")
+    }
+}
+
+const insertqualificationsdata = async()=>{
+    try {
+        const existingdata = await Qualificationmodel.find()
+        if (existingdata.length === 0) {
+            await Qualificationmodel.insertMany(qualification)
+            logger.info("qualifications added successfully")
+        } else {
+            logger.info("qualifications Data already exists in the collection.")
+        }
+
+    } catch (error) {
+        logger.error("error inserting data")
     }
 }
 

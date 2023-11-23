@@ -16,7 +16,7 @@ const jobSeekerProfileSchema = new Schema(
       serviceStart: Date,
       serviceEnd: Date,  
     }],
-    skills: [],
+    skills: String,
     jobSeeker: {
       firstName: String,  
       lastName: String,
