@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const WorkExperienceSchema = new Schema(
     {
-      jobSeekerProfile: { type: Schema.Types.ObjectId, ref: 'JobSeekerProfile' },
+      _id: { type: mongoose.Types.ObjectId, ref: 'JobSeekerProfile' },
       jobTitle: { type: String },
       companyName: { type: String },
       summary: { type: String },

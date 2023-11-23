@@ -8,17 +8,21 @@ const jobSeekerProfileSchema = new Schema(
       title: String,
       resume: Buffer,
     },
-    qualifications:[],
+    qualifications: [{
+      type: String,
+    }],
     workExperiences: [{
       jobTitle: String,
       companyName: String,
       summary: String,
       serviceStart: Date,
-      serviceEnd: Date,  
+      serviceEnd: Date,
     }],
-    skills: String,
+    skills: [{
+      type: String,
+    }],
     jobSeeker: {
-      firstName: String,  
+      firstName: String,
       lastName: String,
       userName: String,
       email: String,

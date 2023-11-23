@@ -14,12 +14,12 @@ import service from './Service.js'
 //     res.status(200).json(profilebyid)
 // })
 
-// const createprofile =asyncerrorhandler(async(req,res)=>{
-//     const seekerid = req.params.id
-//     const profiledata = req.body
-//     const newprofile = await service.createprofile(seekerid,profiledata)
-//     res.status(201).json(newprofile)
-// })
+const createprofile =asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.id
+    const profiledata = req.body
+    const newprofile = await service.createprofile(seekerid,profiledata)
+    res.status(201).json(newprofile)
+})
 
 const getallskills = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.id
@@ -41,4 +41,4 @@ const getallqualifications =asyncerrorhandler(async(req,res)=>{
 // })
 
 
-export default {getallskills,getallqualifications}
+export default {getallskills,getallqualifications,createprofile}
