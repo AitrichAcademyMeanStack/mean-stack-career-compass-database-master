@@ -3,6 +3,8 @@ import NotFoundError from "../Exceptions/NotFoundError.js";
 import BadRequestError from "../Exceptions/Badrequesterror.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 import logger from "../middleware/logger.js";
+import systemuser from "../models/SystemUserModel.js";
+import AuthUser from "../models/AuthUserModel.js";
 
 // Fetchng all CompanyUser
 const getAllCompanyUsers = async () => {
@@ -33,16 +35,48 @@ const getCompanyUserById = async (id) => {
 // Adding new CompanyUser
 const addCompanyUser = async (data) => {
   try {
-    const addNewUser = await CompanyUser.create(data);
-    if (addNewUser) {
-      logger.info("New CompanyUser :", addNewUser);
+    const newCompanyUser = await CompanyUser.create(data);
+    logger.info("New Company Registered");
+    if (newCompanyUser) {
+      const systemUser = {
+        _id: newCompanyUser._id,
+        firstName: newCompanyUser.firstName,
+        lastName: newCompanyUser.lastName,
+        email: newCompanyUser.email,
+        phone: newCompanyUser.phone,
+        role: "Hiring Manager",
+      }
 
-      return addNewUser;
+      const newSystemUser = await systemuser.create(systemUser)
+      logger.info("System user created successfully");
+      
+      if (newSystemUser) {
+        const authUser = {
+          _id: newSystemUser._id,
+          userName: newSystemUser.userName,
+          password: "12345",
+          firstName: newSystemUser.firstName,
+          lastName: newSystemUser.lastName,
+          email: newSystemUser.email,
+          phone: newSystemUser.phone,
+          role: newSystemUser.role,
+      };
+
+      const companyUser = await AuthUser.create(authUser)
+      logger.info("Auth user created successfully", companyUser);
+
+      }else {
+        logger.error("Error while creating system user")
+        return null;
+      }
+
+
+      
     } else {
-      logger.error("Error while adding CompanyUser");
+      logger.error("Error while creating CompanyUser");
 
-      throw new BadRequestError("Error while creating new CompanyUser");
     }
+    return newCompanyUser
   } catch (error) {
     if (error.name === "ValidationError") {
       logger.error(`validation error ${error.message}`);
