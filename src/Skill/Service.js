@@ -3,12 +3,12 @@ import Badrequesterror from '../Exceptions/Badrequesterror.js' //importing badre
 import Notfounderror from '../Exceptions/Notfounderror.js' // importing notfound error handler
 import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
 import skill from '../models/SkillModel.js' // importing skill module schema
-import authschema from '../middleware/ValidationSchema.js' // importing validation schema
+import {authschema} from '../middleware/ValidationSchema.js' // importing validation schema
 
 //fetching all skills
 const getallskills = async()=>{
     try {
-        const result =await skill.find()
+        const result =await skill.find({},{name:true,_id:false})
         if (result) {
             logger.info("all skills : ",result)
             return result

@@ -1,11 +1,11 @@
-import logger from "../middleware/logger.js"
-import seekerProfile from "../models/JobSeekerProfileModel.js"
-import jobseeker from "../models/JobSeekerModel.js"
-import Qualification from "../models/QualificationModel.js"
-import workexperience from "../models/WorkExperienceModel.js"
-import skill from "../models/SkillModel.js"
+import logger from "../middleware/logger.js" // importing logger
+import seekerProfile from "../models/JobSeekerProfileModel.js" //importing job seeker profile model
+import jobseeker from "../models/JobSeekerModel.js" //importing job seeker model
+import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
+import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad request error handler
+import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
-
+//create new job seeker profile
 const createprofile = async (seekerid, profiledata) => {
   try {
     const seekerresult = await jobseeker.findById(seekerid);
@@ -25,8 +25,7 @@ const createprofile = async (seekerid, profiledata) => {
       const profileresult = await seekerProfile.create(profiledata);
 
       if (profileresult) {
-        const workExperienceIds = await workexperience.insertMany(profiledata.workExperiences);  
-        workExperienceIds._id = profiledata.workExperiences._id
+        await workexperience.insertMany(profiledata.workExperiences);  
         logger.info("Job seeker profile created successfully");
         return profileresult;
       } else {
@@ -40,47 +39,43 @@ const createprofile = async (seekerid, profiledata) => {
   }
 };
 
-  
-
-  const getallskills = async (seekerid) => {
-    try {
-      const findseeker = await jobseeker.findById(seekerid)
-      if (findseeker) {
-        const allskillresult = await skill.find({},{name:true,_id:false})
-      if (allskillresult) {
-        logger.info("successfully getting all skills")
-        return allskillresult;
+//update job seeker profile
+const profileupdate = async(seekerid,profileid,updatedata) =>{
+  try {
+    const seekerdata = await jobseeker.findById(seekerid)
+    if (seekerdata) {
+      const profiledata = await seekerProfile.findByIdAndUpdate(profileid,updatedata)
+      if (profiledata) {
+        logger.info("seeker profile updated successfully")
       } else {
-        logger.error("error in getting all skills")
+        logger.error("error in updating seeker profile")
       }
-      } else {
-        logger.error("error for finding seeker with specific id")
-      }
-      
-    } catch (error) {
-      throw error;
+    } else {
+      logger.error("seeker not found with specific id")
     }
-  };
-  
+  } catch (error) {
+    throw error
+  }
+}
 
-  const getallqualifications = async (seekerid) => {
-    try {
-      const findseeker = await jobseeker.findById(seekerid)
-      if (findseeker) {
-        const allqualificationsresult = await Qualification.find({},{name:true,_id:false})
-      if (allqualificationsresult) {
-        logger.info("successfully getting all qualifications")
-        return allqualificationsresult;
+//delete job seeker profile
+const deleteprofile = async(seekerid,profileid) =>{
+  try {
+    const seekerdata = await jobseeker.findById(seekerid)
+    if (seekerdata) {
+      const profiledata = await seekerProfile.findByIdAndDelete(profileid)
+      if (profiledata) {
+        logger.info("seeker profile deleted successfully")
+        return profiledata
       } else {
-        logger.error("error in getting all qualifications")
+        logger.error("error in deleting seeker profile")        
       }
-      } else {
-        logger.error("error for finding seeker with specific id")
-      }
-      
-    } catch (error) {
-      throw error;
+    } else {
+      logger.error("seeker not found with specific id")
     }
-  };
-  
-export default {getallskills,getallqualifications,createprofile}
+  } catch (error) {
+    throw error
+  }
+}
+
+export default {createprofile,deleteprofile,profileupdate}

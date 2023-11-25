@@ -1,5 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose'; //importing mongoose
 
+
+//schema for job seeker profile
 const jobSeekerProfileSchema = new Schema(
   {
     profileName: { type: String, required: true },
@@ -9,7 +11,8 @@ const jobSeekerProfileSchema = new Schema(
       resume: Buffer,
     },
     qualifications: [{
-      type: String,
+      name:String,
+      description:String
     }],
     workExperiences: [{
       jobTitle: String,
@@ -19,7 +22,8 @@ const jobSeekerProfileSchema = new Schema(
       serviceEnd: Date,
     }],
     skills: [{
-      type: String,
+      name:String,
+      description:String
     }],
     jobSeeker: {
       firstName: String,

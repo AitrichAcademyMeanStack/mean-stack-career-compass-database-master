@@ -1,13 +1,13 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose'; //importing mongoose
 
+//schema for work experience
 const WorkExperienceSchema = new Schema(
     {
-      _id: { type: mongoose.Types.ObjectId, ref: 'JobSeekerProfile' },
-      jobTitle: { type: String },
-      companyName: { type: String },
-      summary: { type: String },
-      serviceStart: { type: Date },
-      serviceEnd: { type: Date }
+      jobTitle: { type: String ,required:true},
+      companyName: { type: String ,required:true},
+      summary: { type: String ,required:true},
+      serviceStart: { type: Date ,required:true},
+      serviceEnd: { type: Date,required:true }
     },
     { versionKey: false }
   );

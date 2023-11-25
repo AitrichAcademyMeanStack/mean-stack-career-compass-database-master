@@ -8,7 +8,7 @@ import Qualification from "../models/QualificationModel.js"; // importing Schema
 // Fetching all qualifications
 const getAllQualifications = async () => {
   try {
-    const data = await Qualification.find();
+    const data = await Qualification.find({},{name:true,_id:false});
     if (data) {
       logger.info("List of Qualifications: ", data);
       return data;

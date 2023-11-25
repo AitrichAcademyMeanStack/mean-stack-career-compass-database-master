@@ -1,19 +1,7 @@
-import asyncerrorhandler from "../utils/asyncerrorhandler.js";
-import service from './Service.js'
+import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing asynchronous error handler
+import service from './Service.js' //importing service
 
-// const getallprofiles =asyncerrorhandler(async(req,res)=>{
-//     const seekerid = req.params.id
-//     const allprofiles = await service.getallprofiles(seekerid)
-//     res.status(200).json(allprofiles)
-// })
-
-// const getprofilebyid =asyncerrorhandler(async(req,res)=>{
-//     const seekerid = req.params.id1
-//     const profileid = req.params.id2
-//     const profilebyid = await service.getprofilebyid(seekerid,profileid)
-//     res.status(200).json(profilebyid)
-// })
-
+//create new job seeker profile
 const createprofile =asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.id
     const profiledata = req.body
@@ -21,24 +9,22 @@ const createprofile =asyncerrorhandler(async(req,res)=>{
     res.status(201).json(newprofile)
 })
 
-const getallskills = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id
-    const allskills = await service.getallskills(seekerid)
-    res.status(200).json(allskills)
+//update job seeker profile
+const profileupdate =asyncerrorhandler(async(req,res)=>{
+        const seekerid = req.params.id1
+        const profileid = req.params.id2
+        const updatedata = req.body
+        const updateprofile = await service.profileupdate(seekerid,profileid,updatedata)
+        res.status(200).json(updateprofile)
 })
 
-const getallqualifications =asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id
-    const allqualifications = await service.getallqualifications(seekerid)
-    res.status(200).json(allqualifications)
+//delete job seeker profile
+const deleteprofile =asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.id1
+    const profileid = req.params.id2
+    await service.deleteprofile(seekerid,profileid)
+    res.status(200).json("seeker profile deleted successfully")
 })
-// const profileupdate =asyncerrorhandler(async(req,res)=>{
-
-// })
-
-// const deleteprofile =asyncerrorhandler(async(req,res)=>{
-
-// })
 
 
-export default {getallskills,getallqualifications,createprofile}
+export default {createprofile,profileupdate,deleteprofile}

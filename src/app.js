@@ -12,6 +12,7 @@ import jobcategoryrouter from './Job_Category/router.js' // importing routes for
 import locationRouter from "./job_location/router.js" // importing routes for location  module
 import qualificationRouter from "./Qualification/Router.js" // importing routes for qualification  module
 import rolesRouter from "./Role/Router.js" // importing routes for Role  module
+import workexperience from './WorkExperience/Router.js' //importing routes for work experience module
 import seekerrouter from './JobSeeker/Router.js' //importing routes for seeker module
 import seekerprofile from './JobSeekerProfile/Router.js' //importing routes for job seeker profile module
 import userRouter from './CompanyUser/Router.js'
@@ -61,9 +62,8 @@ const options = {
         path.join(__dirname,"JobProviderCompany","Router.js"),
         path.join(__dirname,"JobSeeker","Router.js"),
         path.join(__dirname,"JobSeekerProfile","Router.js"),
-        path.join(__dirname,"CompanyUser","Router.js")
-
-
+        path.join(__dirname,"CompanyUser","Router.js"),
+        path.join(__dirname,"WorkExperience","Router.js")
     ],
 };
 
@@ -82,6 +82,7 @@ app.use('/api/v1/jobseekers',seekerprofile) //configuring routes for seeker prof
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/companyUsers', userRouter) // Configuring routes for JobProviderCompany
+app.use('/api/v1/workexperiences',workexperience) //configuring routes for work experience
 
 
 

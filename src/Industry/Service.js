@@ -2,7 +2,7 @@ import Badrequesterror from "../Exceptions/Badrequesterror.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import Industry from "../models/IndustryModel.js";
-import authschema from "../middleware/ValidationSchema.js";
+import {authschema} from "../middleware/ValidationSchema.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 
 // fetching all Industries

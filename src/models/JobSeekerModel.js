@@ -1,6 +1,6 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, {Schema} from "mongoose"; //importing mongoose
 
-
+//schema for job seeker
 const jobseekerschema = new Schema (
     {
         firstName: { type: String, required: true },

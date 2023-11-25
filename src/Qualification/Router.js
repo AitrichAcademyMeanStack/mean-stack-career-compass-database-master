@@ -149,7 +149,7 @@ router.put("/:id",qualificationController.updateQualification);
  *                  type: string
  *                description: ID of the Qualification to delete
  *          responses:
- *              204:
+ *              200:
  *                  description: Qualification Deleted Successfully
  *              404:
  *                  description: Qualification ID not found
