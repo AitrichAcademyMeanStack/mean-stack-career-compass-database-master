@@ -2,7 +2,6 @@ import mongoose, { Schema } from "mongoose";
 
 const authUserSchema = new Schema(
   {
-        _id:{type : mongoose.Types.ObjectId,ref:'systemuser',required:true},
         userName:{type : String,ref:'systemuser',required:true},
         password:{type : String,required:true},
         firstName: { type: String,ref:'systemuser', required: true },

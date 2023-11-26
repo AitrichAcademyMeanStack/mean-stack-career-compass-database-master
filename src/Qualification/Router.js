@@ -41,7 +41,7 @@ const router = express.Router();
  *  
  * 
  */
-router.get("/",qualificationController.getAllQualifications);
+router.get("/:key",qualificationController.getAllQualifications);
 
 
 /**

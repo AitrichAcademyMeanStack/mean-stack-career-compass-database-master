@@ -1,4 +1,7 @@
 import logger from "../middleware/logger.js" // importing logger
+import SkillModel from '../models/SkillModel.js' //importing skill model
+import qualification from '../models/QualificationModel.js'//importing qualification model
+import Workexperience from '../models/WorkExperienceModel.js' //importing work experience model
 import seekerProfile from "../models/JobSeekerProfileModel.js" //importing job seeker profile model
 import jobseeker from "../models/JobSeekerModel.js" //importing job seeker model
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
@@ -19,13 +22,9 @@ const createprofile = async (seekerid, profiledata) => {
         phone: seekerresult.phone,
       };
 
-      profiledata.skills = [];
-      profiledata.qualifications = [];
-
       const profileresult = await seekerProfile.create(profiledata);
 
       if (profileresult) {
-        await workexperience.insertMany(profiledata.workExperiences);  
         logger.info("Job seeker profile created successfully");
         return profileresult;
       } else {

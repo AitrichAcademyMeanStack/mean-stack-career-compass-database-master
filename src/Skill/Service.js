@@ -6,9 +6,11 @@ import skill from '../models/SkillModel.js' // importing skill module schema
 import {authschema} from '../middleware/ValidationSchema.js' // importing validation schema
 
 //fetching all skills
-const getallskills = async()=>{
+const getallskills = async(skillkey)=>{
     try {
-        const result =await skill.find({},{name:true,_id:false})
+        const result =await skill.find({
+            "$or":[{name:{$regex:skillkey, $options: 'i' }}]
+        }).limit(10)
         if (result) {
             logger.info("all skills : ",result)
             return result

@@ -3,7 +3,8 @@ import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynch
 
 //fetching all skills
 const getallskills = asyncerrorhandler(async(req,res)=>{
-    const getskills = await service.getallskills()
+    const skillkey = req.params.key
+    const getskills = await service.getallskills(skillkey)
     res.status(200).json(getskills)
 })
 

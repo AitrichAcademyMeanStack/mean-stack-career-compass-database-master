@@ -7,8 +7,13 @@ const jobseekerschema = new Schema (
         lastName: { type: String, required: true },
         userName: {type: String,required:true},
         email: { type: String, required: true },
-        phone: { type: String, required: true },
-
+        phone: { type: Number, required: true },
+        role: {
+            type: String,
+            default: "Job Seeker",
+            select: false
+          }
+          
     },{versionKey:false}
 )
 

@@ -37,7 +37,7 @@ const router = express()
  *                          items:
  *                              $ref: '#/components/schemas/skill'
  */
-router.get('/',controller.getallskills)
+router.get('/:key',controller.getallskills)
 
 /**
  * @swagger

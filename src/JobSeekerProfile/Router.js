@@ -23,7 +23,7 @@ const router = express.Router();
  *                  qualifications:
  *                      type: array
  *                      items:
- *                          type: object
+ *                          type: String
  *                  workExperiences:
  *                      type: array
  *                      items:
@@ -42,7 +42,7 @@ const router = express.Router();
  *                  skills:
  *                      type: array
  *                      items:
- *                          type: object
+ *                          type: String
  */
 
 

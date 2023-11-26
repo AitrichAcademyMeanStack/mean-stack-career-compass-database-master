@@ -3,7 +3,8 @@ import qualificationService from "./Service.js" // importing service
 
 // fetching all Qualifications
 const getAllQualifications = asyncerrorhandler(async (req, res) => {
-  const Qualifications = await qualificationService.getAllQualifications();
+  const qualificationkey = req.params.key
+  const Qualifications = await qualificationService.getAllQualifications(qualificationkey);
   res.status(200).json(Qualifications);
 });
 

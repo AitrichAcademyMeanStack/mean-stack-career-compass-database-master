@@ -43,45 +43,49 @@ const getseekerbyid = async(seekerid)=>{
 //create new job seeker
 const createseeker = async(seekerdata) => {
     try {
-        const seekerresult = await jobseeker.create(seekerdata);
-        logger.info("Job seeker created successfully");
-
-        if (seekerresult) {
-            const systemuserdata = {
-                _id: seekerresult._id,
-                firstName: seekerresult.firstName,
-                lastName: seekerresult.lastName,
-                email: seekerresult.email,
-                phone: seekerresult.phone,
-                role: "Job Seeker",
-            };
-            const systemresult = await systemuser.create(systemuserdata);
-            logger.info("System user created successfully");
-
-            if (systemresult) {
-                const authuserdata = {
-                    _id: systemresult._id,
-                    userName: seekerresult.userName,
-                    password: "12345",
-                    firstName: systemresult.firstName,
-                    lastName: systemresult.lastName,
-                    email: systemresult.email,
-                    phone: systemresult.phone,
-                    role: systemresult.role,
+        const findseeker = await jobseeker.findOne({email:seekerdata.email})
+        if (!findseeker) {
+            const seekerresult = await jobseeker.create(seekerdata);
+            logger.info("Job seeker created successfully");
+    
+            if (seekerresult) {
+                const systemuserdata = {
+                    _id: seekerresult._id,
+                    firstName: seekerresult.firstName,
+                    lastName: seekerresult.lastName,
+                    email: seekerresult.email,
+                    phone: seekerresult.phone,
+                    role: seekerresult.role,
                 };
-                await AuthUser.create(authuserdata);
-                logger.info("Auth user created successfully");
+                const systemresult = await systemuser.create(systemuserdata);
+                logger.info("System user created successfully");
+    
+                if (systemresult) {
+                    const authuserdata = {
+                        _id: systemresult._id,
+                        userName: seekerresult.userName,
+                        password: "12345",
+                        firstName: systemresult.firstName,
+                        lastName: systemresult.lastName,
+                        email: systemresult.email,
+                        phone: systemresult.phone,
+                        role: systemresult.role,
+                    };
+                    await AuthUser.create(authuserdata);
+                    logger.info("Auth user created successfully");
+                } else {
+                    logger.error("Error in creating system user");
+                    return null;
+                }
             } else {
-                logger.error("Error in creating system user");
-                return null;
+                logger.error("Error in creating job seeker");
             }
+            return seekerresult;
         } else {
-            logger.error("Error in creating job seeker");
+            logger.error("email already existing")
+            throw new ValidationError("email already existing")
         }
-
-        return seekerresult;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 };

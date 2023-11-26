@@ -6,9 +6,13 @@ import Qualification from "../models/QualificationModel.js"; // importing Schema
 
 
 // Fetching all qualifications
-const getAllQualifications = async () => {
+const getAllQualifications = async (qualificationkey) => {
   try {
-    const data = await Qualification.find({},{name:true,_id:false});
+    const data = await Qualification.find({
+      "$or":[ 
+        {name:{$regex:qualificationkey, $options: 'i' }}
+      ]
+    }).limit(10)
     if (data) {
       logger.info("List of Qualifications: ", data);
       return data;
