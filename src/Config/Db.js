@@ -8,6 +8,8 @@ import skillmodel from '../models/SkillModel.js'
 import Qualificationmodel from '../models/QualificationModel.js'
 import skill from '../../data/Skill.json' assert{type: 'json'}
 import qualification from '../../data/Qualification.json' assert{type: 'json'}
+import Industry from '../models/IndustryModel.js'
+import industryData from '../../data/Industry.json' assert{type: 'json'}
  
 
 
@@ -19,8 +21,9 @@ const connecttodatabase = async()=>{
         logger.info("🍀 MongoDb Connected Successfully")
         await insertcategorydata() // inserting data into collection
         await insertLocationData() // inserting data into collection
-        await insertqualificationsdata()
-        await insertskillsdata()
+        await insertqualificationsdata() // inserting data into collection
+        await insertskillsdata() // inserting data into collection
+        await insertIndustryData()  // inserting data into collection
     } catch (error) {
         logger.error("Error In Coonnecting database")
         process.exit()
@@ -86,6 +89,20 @@ const insertqualificationsdata = async()=>{
 
     } catch (error) {
         logger.error("error inserting data")
+    }
+}
+
+const insertIndustryData = async() => {
+    try {
+        const existingData = await Industry.find()
+        if (existingData.length === 0) {
+            await Industry.insertMany(industryData)
+            logger.info("Industry added successfull")
+        }else {
+            logger.error("Industry Data Already Exists in the Collection")
+        }
+    } catch (error) {
+        logger.error("Error while loading data")
     }
 }
 

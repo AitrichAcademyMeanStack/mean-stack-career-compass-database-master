@@ -1,0 +1,43 @@
+[
+    {
+      "name": "Technology",
+      "description": "The technology industry encompasses companies involved in the development and production of hardware, software, and services related to computing and information technology."
+    },
+    {
+      "name": "Healthcare",
+      "description": "The healthcare industry involves the provision of medical goods and services, including hospitals, pharmaceutical companies, and healthcare providers, focused on the well-being of individuals."
+    },
+    {
+      "name": "Automotive",
+      "description": "The automotive industry comprises companies engaged in the design, manufacturing, and sale of motor vehicles, including cars, trucks, and motorcycles."
+    },
+    {
+      "name": "Finance",
+      "description": "The finance industry covers a wide range of financial services, including banking, investment, insurance, and other related activities involved in managing and distributing money."
+    },
+    {
+      "name": "Retail",
+      "description": "The retail industry involves the sale of goods and services to consumers through various channels, including brick-and-mortar stores, e-commerce, and mobile platforms."
+    },
+    {
+      "name": "Energy",
+      "description": "The energy industry encompasses the production, distribution, and consumption of energy resources, including oil, gas, electricity, and renewable energy sources."
+    },
+    {
+      "name": "Agriculture",
+      "description": "The agriculture industry involves the cultivation of crops, livestock farming, and related activities to produce food, fiber, and other products."
+    },
+    {
+      "name": "Entertainment",
+      "description": "The entertainment industry includes companies engaged in the creation, production, and distribution of media and entertainment content, such as movies, music, and video games."
+    },
+    {
+      "name": "Telecommunications",
+      "description": "The telecommunications industry provides communication services, including voice, data, and video transmission, through various technologies such as wired and wireless networks."
+    },
+    {
+      "name": "Construction",
+      "description": "The construction industry involves the planning, design, and execution of building projects, including residential, commercial, and infrastructure development."
+    }
+  ]
+  
