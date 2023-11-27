@@ -38,13 +38,22 @@ const addCompanyUser = async (data) => {
     const newCompanyUser = await CompanyUser.create(data);
     logger.info("New Company Registered");
     if (newCompanyUser) {
+      let systemUserRole;
+
+      // Check the role of the new company user
+      if (newCompanyUser.role === "Company Admin") {
+        systemUserRole = "Company Admin";
+      } else if (newCompanyUser.role === "Hiring Manager") {
+        systemUserRole = "Hiring Manager";
+      }
+
       const systemUser = {
         _id: newCompanyUser._id,
         firstName: newCompanyUser.firstName,
         lastName: newCompanyUser.lastName,
         email: newCompanyUser.email,
         phone: newCompanyUser.phone,
-        role: "Hiring Manager",
+        role: systemUserRole,
       }
 
       const newSystemUser = await systemuser.create(systemUser)
@@ -53,7 +62,7 @@ const addCompanyUser = async (data) => {
       if (newSystemUser) {
         const authUser = {
           _id: newSystemUser._id,
-          userName: newSystemUser.userName,
+          userName: newCompanyUser.userName,
           password: "12345",
           firstName: newSystemUser.firstName,
           lastName: newSystemUser.lastName,
@@ -62,8 +71,8 @@ const addCompanyUser = async (data) => {
           role: newSystemUser.role,
       };
 
-      const companyUser = await AuthUser.create(authUser)
-      logger.info("Auth user created successfully", companyUser);
+      const companyAuthUser = await AuthUser.create(authUser)
+      logger.info("Auth user created successfully", companyAuthUser);
 
       }else {
         logger.error("Error while creating system user")

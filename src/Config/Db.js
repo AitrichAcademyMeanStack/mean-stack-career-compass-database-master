@@ -16,7 +16,7 @@ const connecttodatabase = async()=>{
     try {
         // mongoose connection setup
         await mongoose.connect(process.env.MONGO_URL)
-        logger.info("Mongo Db Connected Successfully")
+        logger.info("🍀 MongoDb Connected Successfully")
         await insertcategorydata() // inserting data into collection
         await insertLocationData() // inserting data into collection
         await insertqualificationsdata()

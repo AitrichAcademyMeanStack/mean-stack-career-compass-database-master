@@ -24,7 +24,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirnam
 
 // configuring .env file
 dotenv.config({     
-    path:"./env"
+    path:"./.env"
 })
 
 
