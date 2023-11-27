@@ -3,8 +3,8 @@ import mongoose,{Schema} from "mongoose";
 const resumeSchema = new Schema(
     {
         title:{type: String},
-        resume:{type:Buffer}
-    }
+        resume:{type:String}
+    },{versionKey:false}
 )
 
 const collectionName = 'Resume'

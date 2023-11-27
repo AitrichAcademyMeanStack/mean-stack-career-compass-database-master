@@ -6,7 +6,11 @@ const jobSeekerProfileSchema = new Schema(
   {
     profileName: { type: String, required: true },
     profileSummary: { type: String, required: true },
-    qualifications: [],
+    Resume:{
+      title:{type: String},
+      resume:{type:String}
+    },
+    qualifications: [String],
     workExperiences: [{
       _id:{type:mongoose.Schema.ObjectId,ref:"WorkExperience"},
       jobTitle: String,
@@ -15,13 +19,13 @@ const jobSeekerProfileSchema = new Schema(
       serviceStart: Date,
       serviceEnd: Date,
     }],
-    skills:[],
+    skills:[String],
     jobSeeker: {
       firstName: String,
       lastName: String,
       userName: String,
       email: String,
-      phone: String,
+      phone: Number,
     },
   },
   { versionKey: false }

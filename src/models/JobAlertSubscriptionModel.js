@@ -6,7 +6,7 @@ const subscriptionschema = new Schema({
         lastName: String,
         userName: String,
         email: String,
-        phone: String,
+        phone: Number,
       },
     SubscribedCompany:{},
     Industry:{

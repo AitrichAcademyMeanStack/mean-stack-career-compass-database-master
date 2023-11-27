@@ -13,30 +13,32 @@ const createprofile = async (seekerid, profiledata) => {
   try {
     const seekerresult = await jobseeker.findById(seekerid);
 
-    if (seekerresult) {
-      profiledata.jobSeeker = {
-        firstName: seekerresult.firstName,
-        lastName: seekerresult.lastName,
-        userName: seekerresult.userName,
-        email: seekerresult.email,
-        phone: seekerresult.phone,
-      };
+    if (!seekerresult) {
+      logger.error("Seeker not found with id:", seekerid);
+      return;
+    }
+    profiledata.jobSeeker = {
+      firstName: seekerresult.firstName,
+      lastName: seekerresult.lastName,
+      userName: seekerresult.userName,
+      email: seekerresult.email,
+      phone: seekerresult.phone,
+    };
 
-      const profileresult = await seekerProfile.create(profiledata);
+    const profileresult = await seekerProfile.create(profiledata);
 
-      if (profileresult) {
-        logger.info("Job seeker profile created successfully");
-        return profileresult;
-      } else {
-        logger.error("Error in creating job seeker profile");
-      }
+    if (profileresult) {
+      logger.info("Job seeker profile created successfully. Profile ID:", profileresult._id);
+      return { success: true, profile: profileresult };
     } else {
-      logger.error("Error in finding seeker id");
+      logger.error("Error in creating job seeker profile");
     }
   } catch (error) {
+    logger.error("Error in createprofile:", error.message);
     throw error;
   }
 };
+
 
 //update job seeker profile
 const profileupdate = async(seekerid,profileid,updatedata) =>{
