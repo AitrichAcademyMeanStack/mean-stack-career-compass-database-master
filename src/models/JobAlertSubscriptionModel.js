@@ -1,5 +1,6 @@
-import mongoose,{Schema} from "mongoose";
+import mongoose,{Schema} from "mongoose"; //importing mongoose
 
+//importing job alert subscription schema model
 const subscriptionschema = new Schema({
     Subsriber:{
         firstName: String,

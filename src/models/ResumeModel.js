@@ -1,5 +1,7 @@
-import mongoose,{Schema} from "mongoose";
+import mongoose,{Schema} from "mongoose";//importing mongoose
 
+
+//resume schema model
 const resumeSchema = new Schema(
     {
         title:{type: String},

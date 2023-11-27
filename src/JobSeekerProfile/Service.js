@@ -25,6 +25,7 @@ const createprofile = async (seekerid, profiledata) => {
       phone: seekerresult.phone,
     };
 
+
     const profileresult = await seekerProfile.create(profiledata);
 
     if (profileresult) {
