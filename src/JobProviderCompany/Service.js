@@ -4,6 +4,7 @@ import logger from "../middleware/logger.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
 import {authschema} from "../middleware/ValidationSchema.js";
 import ValidationError from "../Exceptions/ValidationError.js";
+import Industry from "../models/IndustryModel.js";
 
 // fetching all JobProviderCompany
 const getAllJobProviders = async () => {
