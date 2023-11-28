@@ -41,7 +41,7 @@ const router = express.Router();
  *  
  * 
  */
-router.get("/",industryController.getAllIndustries);
+router.get("/:key",industryController.getAllIndustries);
 
 
 /**

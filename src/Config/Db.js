@@ -99,7 +99,7 @@ const insertIndustryData = async() => {
             await Industry.insertMany(industryData)
             logger.info("Industry added successfull")
         }else {
-            logger.error("Industry Data Already Exists in the Collection")
+            logger.info("Industry Data Already Exists in the Collection")
         }
     } catch (error) {
         logger.error("Error while loading data")

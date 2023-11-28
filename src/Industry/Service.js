@@ -8,11 +8,18 @@ import ValidationError from "../Exceptions/ValidationError.js";
 // fetching all Industries
 const getAllIndustries = async (industry) => {
   try {
-    const result = await Industry.find({
-    "$or":[{name:{$regex: industry, $option: 'i' }}]
-    });
+    const result = await Industry.find(
+      {"$or":[{name:{$regex: industry, $options: 'i' }}]},{name:true,_id:0}).limit(10)
+      if (result) {
+        logger.info("",result)
+        return result
+      }else {
+        logger.error("Industry Not Found")
+        throw new Notfounderror("Industries not found")
+
+      }
   } catch (error) {
-    throw new Notfounderror("Industries not found");
+    throw error
   }
 };
 

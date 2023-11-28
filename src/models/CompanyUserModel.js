@@ -3,7 +3,20 @@ import mongoose,{Schema} from 'mongoose';
 
 const companyUserSchema = new Schema(
     {
-        company:{type: String}, // company User
+        company:{
+            legalName:{type: String},
+            summary:{type: String},
+            industry:{
+                name:{type: String}
+            },
+            email:{type: String},
+            phone:{type: String},
+            address:{type: String},
+            website:{type: String},
+            location:{
+                name:{type: String}
+            }
+        }, 
         firstName: {type:String},
         role: {
             type: Schema.Types.Mixed,

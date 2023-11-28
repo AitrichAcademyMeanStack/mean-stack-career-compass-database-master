@@ -3,7 +3,8 @@ import industryService from "./Service.js";
 
 // fetching all industries
 const getAllIndustries = asyncerrorhandler(async (req, res) => {
-  const industries = await industryService.getAllIndustries();
+  const industry = req.params.key
+  const industries = await industryService.getAllIndustries(industry);
   res.status(200).json(industries);
 });
 

@@ -6,14 +6,16 @@ const JobProviderCompanySchema = new Schema(
         legalName:{type: String},
         summary:{type: String},
         industry:{
-            name:String,
-            description:String
+            name:{type: String},
+            description:{type: String}
         },
         email:{type: String},
         phone: {type: String},
         address: {type: String},
         website:{type: String},
-        location:{type: Schema.Types.ObjectId,ref:"Location"}
+        location:{
+            name:{type: String}
+        }
     }
 ) 
 
