@@ -6,9 +6,11 @@ import {authschema} from "../middleware/ValidationSchema.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 
 // fetching all Industries
-const getAllIndustries = async () => {
+const getAllIndustries = async (industry) => {
   try {
-    return await Industry.find();
+    const result = await Industry.find({
+    "$or":[{name:{$regex: industry, $option: 'i' }}]
+    });
   } catch (error) {
     throw new Notfounderror("Industries not found");
   }

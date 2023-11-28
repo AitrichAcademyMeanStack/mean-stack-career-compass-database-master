@@ -15,7 +15,7 @@ import rolesRouter from "./Role/Router.js" // importing routes for Role  module
 import workexperience from './WorkExperience/Router.js' //importing routes for work experience module
 import seekerrouter from './JobSeeker/Router.js' //importing routes for seeker module
 import seekerprofile from './JobSeekerProfile/Router.js' //importing routes for job seeker profile module
-import userRouter from './CompanyUser/Router.js' 
+import companyUserRouter from './CompanyUser/Router.js' 
 import resumerouter from "./Resume/Router.js"; //importing routes for resume module
 import industryRouter from './Industry/Router.js'  //importing routes for Industry
 import jobProviderCompanyRouter from './JobProviderCompany/Router.js' //importing routes for JobProviderCompany
@@ -82,7 +82,7 @@ app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker
 app.use('/api/v1/jobseekers',seekerprofile) //configuring routes for seeker profile
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
-app.use('/api/v1/companyUsers', userRouter) // Configuring routes for JobProviderCompany
+app.use('/api/v1/companyUsers', companyUserRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/workexperiences',workexperience) //configuring routes for work experience
 app.use('/api/v1/resume',resumerouter)//configuring routes for resume
 
