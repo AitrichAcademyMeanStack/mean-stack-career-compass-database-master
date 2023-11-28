@@ -4,6 +4,8 @@ import BadRequestError from "../Exceptions/Badrequesterror.js"; // importing bad
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing not found custom error handler
 import WorkExperience from "../models/WorkExperienceModel.js"; //importing work experience schema model
 import {experiencevalid} from '../middleware/ValidationSchema.js' //importing schema validator
+import seekerProfile from "../models/JobSeekerProfileModel.js";
+
 
 // get all work experience
 const getallexp= async()=>{
@@ -49,6 +51,8 @@ const createexp= async(experiencedata)=>{
         const result = await WorkExperience.create(experiencedata)
         if (result) {
             logger.info("work experience created successfully")
+            // seekerProfile.WorkExperiences.push(result._id)
+            // await seekerProfile.save()
             return result
         } else {
             logger.error("error in creating work experience")

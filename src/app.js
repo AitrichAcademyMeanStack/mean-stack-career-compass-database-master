@@ -84,7 +84,7 @@ app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/companyUsers', userRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/workexperiences',workexperience) //configuring routes for work experience
-app.use('api/v1/resume',resumerouter)//configuring routes for resume
+app.use('/api/v1/resume',resumerouter)//configuring routes for resume
 
 
 

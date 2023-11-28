@@ -17,7 +17,7 @@ const getexpbyid = asyncerrorhandler(async(req,res)=>{
 //create new work experience
 const createexp = asyncerrorhandler(async(req,res)=>{
     const experiencedata = req.body
-    const expcreate = await service.createexp(experiencedata)
+    const expcreate = await service.createexp(experiencedata,req)
     res.status(201).json(expcreate)
 })
 
