@@ -16,9 +16,11 @@ import workexperience from './WorkExperience/Router.js' //importing routes for w
 import seekerrouter from './JobSeeker/Router.js' //importing routes for seeker module
 import seekerprofile from './JobSeekerProfile/Router.js' //importing routes for job seeker profile module
 import companyUserRouter from './CompanyUser/Router.js' 
+import savedjobrouter from './SavedJobs/Router.js' //importing routes for saved jobs module
 import resumerouter from "./Resume/Router.js"; //importing routes for resume module
 import industryRouter from './Industry/Router.js'  //importing routes for Industry
 import jobProviderCompanyRouter from './JobProviderCompany/Router.js' //importing routes for JobProviderCompany
+import JobSubscriptionRouter from './JobAlertSubscription/Router.js'//importing routes for job alert subscription
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
 
 
@@ -80,6 +82,8 @@ app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
 app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker
 app.use('/api/v1/jobseekers',seekerprofile) //configuring routes for seeker profile
+app.use('/api/v1/jobseekers',JobSubscriptionRouter) //configuring routes for job alert subscription
+app.use('/api/v1/jobseekers',savedjobrouter) //configuring routes for saved jobs module
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/companyUsers', companyUserRouter) // Configuring routes for JobProviderCompany
