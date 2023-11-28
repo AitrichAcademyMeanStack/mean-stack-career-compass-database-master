@@ -6,9 +6,12 @@ const companyUserSchema = new Schema(
         company:{type: String}, // company User
         firstName: {type:String},
         role: {
-            type: String,
-            default: "Company Admin",
-            select: false
+            type: Schema.Types.Mixed,
+            default: {
+                name: 'Company Admin',
+                description: ''
+            }
+            
           },
         lastName:{type:String},
         userName:{type: String},
