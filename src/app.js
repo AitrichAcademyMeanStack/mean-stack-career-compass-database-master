@@ -2,7 +2,7 @@ import express from "express"; // importing express
 import dotenv from "dotenv";   // importing .env file
 import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
-import connecttodatabase from './Config/db.js' // importing connection to database
+import connecttodatabase from './Config/Db.js' // importing connection to database
 import path , { dirname }  from 'path'; // importing path , dirname API'S from path module
 import Notfounderror from './Exceptions/NotFoundError.js' // importing Custom Error Handler
 import { fileURLToPath } from 'url'; // importing url module

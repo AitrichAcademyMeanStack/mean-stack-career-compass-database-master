@@ -1,6 +1,6 @@
 import logger from '../middleware/logger.js' //importing logger middleware
 import Badrequesterror from '../Exceptions/Badrequesterror.js' //importing badrequest error handler
-import Notfounderror from '../Exceptions/Notfounderror.js' // importing notfound error handler
+import Notfounderror from '../Exceptions/NotFoundError.js' // importing notfound error handler
 import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
 import skill from '../models/SkillModel.js' // importing skill module schema
 import {authschema} from '../middleware/ValidationSchema.js' // importing validation schema
