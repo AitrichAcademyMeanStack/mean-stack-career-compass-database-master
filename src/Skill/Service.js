@@ -8,9 +8,7 @@ import {authschema} from '../middleware/ValidationSchema.js' // importing valida
 //fetching all skills
 const getallskills = async(skillkey)=>{
     try {
-        const result =await skill.find({
-            "$or":[{name:{$regex:skillkey, $options: 'i' }}]
-        }).limit(10)
+        const result =await skill.find({"$or":[{name:{$regex:skillkey, $options: 'i' }}]},{name:true,_id:0}).limit(10)
         if (result) {
             logger.info("all skills : ",result)
             return result

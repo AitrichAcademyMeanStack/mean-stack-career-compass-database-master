@@ -4,7 +4,6 @@ import BadRequestError from "../Exceptions/Badrequesterror.js"; // importing bad
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing not found custom error handler
 import WorkExperience from "../models/WorkExperienceModel.js"; //importing work experience schema model
 import {experiencevalid} from '../middleware/ValidationSchema.js' //importing schema validator
-import seekerProfile from "../models/JobSeekerProfileModel.js";
 
 
 // get all work experience
