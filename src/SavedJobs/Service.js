@@ -2,7 +2,7 @@ import logger from "../middleware/logger.js"; //importing logger
 import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker model
 import savedjobs from "../models/SavedJobsModel.js"; //importing saved jobs model
 
-
+//create saved jobs
 const createsavedjobs = async(seekerid,savedjobdata)=>{
     try {
         const existingseeker = await jobseeker.findById(seekerid)
@@ -17,6 +17,7 @@ const createsavedjobs = async(seekerid,savedjobdata)=>{
         const newsavedjob = await savedjobs.create(savedjobdata)
         if (newsavedjob) {
             logger.info("jobs are saved successfully")
+            return newsavedjob
         } else {
             logger.error("error occured in saving jobs")
         }
@@ -29,6 +30,7 @@ const createsavedjobs = async(seekerid,savedjobdata)=>{
     }
 }
 
+// get all saved jobs
 const getallsavedjobs = async(seekerid)=>{
     try {
         const existingseeker = await jobseeker.findById(seekerid)
@@ -36,6 +38,7 @@ const getallsavedjobs = async(seekerid)=>{
             const getalljobs = await savedjobs.find()
             if (getalljobs) {
                 logger.info("getting all saved jobs successfull")
+                return getalljobs
             } else {
                 logger.error("error occured in getting all savedjobs")
             }
@@ -47,6 +50,7 @@ const getallsavedjobs = async(seekerid)=>{
     }
 }
 
+//deleting saved jobs
 const deletesavedjobs = async(seekerid,savedjobid)=>{
     try {
         const existingseeker = await jobseeker.findById(seekerid)
