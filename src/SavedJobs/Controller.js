@@ -12,18 +12,16 @@ const createsavedjobs = asyncerrorhandler(async(req,res)=>{
 
 // get all saved jobs
 const getallsavedjobs = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const jobpostid = req.params.id2
-    const getsavedjob = await service.getallsavedjobs(seekerid,jobpostid)
+    const seekerid = req.params.id
+    const getsavedjob = await service.getallsavedjobs(seekerid)
     res.status(200).json(getsavedjob)
 })
 
 //deleting saved jobs
 const deletesavedjobs = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.id1
-    const jobpostid = req.params.id2
-    const savedjobid = req.params.id3
-    await service.deletesavedjobs(seekerid,savedjobid,jobpostid)
+    const savedjobid = req.params.id2
+    await service.deletesavedjobs(seekerid,savedjobid)
     res.status(200).json("Saved Job deleted successfully")
 })
 

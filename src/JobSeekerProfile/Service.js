@@ -9,14 +9,15 @@ import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad 
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 //create new job seeker profile
-const createprofile = async (seekerid, profiledata) => {
+const createprofile = async (seekerid, profiledata, selectedskills) => {
   try {
     const seekerresult = await jobseeker.findById(seekerid);
 
     if (!seekerresult) {
       logger.error("Seeker not found with id:", seekerid);
-      return;
+      return { success: false, error: "Seeker not found" };
     }
+
     profiledata.jobSeeker = {
       firstName: seekerresult.firstName,
       lastName: seekerresult.lastName,
@@ -25,7 +26,6 @@ const createprofile = async (seekerid, profiledata) => {
       phone: seekerresult.phone,
     };
 
-
     const profileresult = await seekerProfile.create(profiledata);
 
     if (profileresult) {
@@ -33,12 +33,14 @@ const createprofile = async (seekerid, profiledata) => {
       return { success: true, profile: profileresult };
     } else {
       logger.error("Error in creating job seeker profile");
+      return { success: false, error: "Error in creating profile" };
     }
   } catch (error) {
     logger.error("Error in createprofile:", error.message);
     throw error;
   }
 };
+
 
 
 //update job seeker profile
