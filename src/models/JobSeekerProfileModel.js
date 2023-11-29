@@ -6,22 +6,19 @@ const jobSeekerProfileSchema = new Schema(
   {
     profileName: { type: String, required: true },
     profileSummary: { type: String, required: true },
-    Resume:[{
+    Resume:{
       title:String,
       resume:String,
-    }],
-    qualifications: [{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'Qualification'
-    }],
+    },
+    qualifications: [String],
     workExperiences: [{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'WorkExperience'
+       jobTitle: { type: String ,required:true},
+      companyName: { type: String ,required:true},
+      summary: { type: String ,required:true},
+      serviceStart: { type: Date ,required:true},
+      serviceEnd: { type: Date,required:true }
     }],
-    skills:[{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'skills'
-    }],
+    skills:[String],
     jobSeeker: {
       firstName: String,
       lastName: String,

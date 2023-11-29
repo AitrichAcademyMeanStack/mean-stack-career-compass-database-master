@@ -37,8 +37,6 @@ const insertcategorydata = async()=>{
         if (existingdata.length === 0) {
             await JobCategoryModel.insertMany(jobcategory)
             logger.info("job_category added successfully")
-        } else {
-            logger.info("Category Data already exists in the collection.")
         }
 
     } catch (error) {
@@ -53,8 +51,6 @@ const insertLocationData = async() => {
         if (data.length === 0) {
             await locationModel.insertMany(location)
             logger.info("Location data added")
-        }else {
-            logger.info("Location Data already exists in the collection")
         }
     } catch (error) {
         logger.error("Error while Inserting Data")
@@ -68,8 +64,6 @@ const insertskillsdata = async()=>{
         if (existingdata.length === 0) {
             await skillmodel.insertMany(skill)
             logger.info("skills added successfully")
-        } else {
-            logger.info("skills Data already exists in the collection.")
         }
 
     } catch (error) {
@@ -83,8 +77,6 @@ const insertqualificationsdata = async()=>{
         if (existingdata.length === 0) {
             await Qualificationmodel.insertMany(qualification)
             logger.info("qualifications added successfully")
-        } else {
-            logger.info("qualifications Data already exists in the collection.")
         }
 
     } catch (error) {
@@ -98,8 +90,6 @@ const insertIndustryData = async() => {
         if (existingData.length === 0) {
             await Industry.insertMany(industryData)
             logger.info("Industry added successfull")
-        }else {
-            logger.info("Industry Data Already Exists in the Collection")
         }
     } catch (error) {
         logger.error("Error while loading data")
