@@ -4,12 +4,10 @@ import mongoose, { Schema } from "mongoose";
 const locationSchema = new Schema(
   {
     name: {
-      type: String,
-      required: [true, "Name is required"],
+      type: String
     },
     description: {
-      type: String,
-      required: [true, "Description is required"],
+      type: String
     },
   },
   { versionKey: false },
