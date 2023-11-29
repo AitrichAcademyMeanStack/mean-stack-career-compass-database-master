@@ -1,4 +1,4 @@
-import Badrequesterror from "../Exceptions/Badrequesterror.js";
+import Badrequesterror from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import Location from "../models/LocationModel.js";
