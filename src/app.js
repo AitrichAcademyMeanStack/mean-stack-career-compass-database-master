@@ -21,6 +21,7 @@ import resumerouter from "./Resume/Router.js"; //importing routes for resume mod
 import industryRouter from './Industry/Router.js'  //importing routes for Industry
 import jobProviderCompanyRouter from './JobProviderCompany/Router.js' //importing routes for JobProviderCompany
 import JobSubscriptionRouter from './JobAlertSubscription/Router.js'//importing routes for job alert subscription
+import jobPostRouter from "./JobPost/Router.js" // importing routes for Job Post
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
 
 
@@ -66,7 +67,8 @@ const options = {
         path.join(__dirname,"JobSeeker","Router.js"),
         path.join(__dirname,"JobSeekerProfile","Router.js"),
         path.join(__dirname,"CompanyUser","Router.js"),
-        path.join(__dirname,"WorkExperience","Router.js")
+        path.join(__dirname,"WorkExperience","Router.js"),
+        path.join(__dirname,"JobPost","Router.js")
     ],
 };
 
@@ -89,6 +91,7 @@ app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring
 app.use('/api/v1/companyUsers', companyUserRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/workexperiences',workexperience) //configuring routes for work experience
 app.use('/api/v1/resume',resumerouter)//configuring routes for resume
+app.use('/api/v1/jobPosts',jobPostRouter) // configuring routes for JobPosts
 
 
 
