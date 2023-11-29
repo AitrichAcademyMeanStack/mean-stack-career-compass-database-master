@@ -1,9 +1,10 @@
 import logger from "../middleware/logger.js"; //importing logger
 import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker model
 import savedjobs from "../models/SavedJobsModel.js"; //importing saved jobs model
+import JobPost from "../models/JobPostModel.js";
 
 //create saved jobs
-const createsavedjobs = async(seekerid,savedjobdata)=>{
+const createsavedjobs = async(seekerid,savedjobdata,jobpostid)=>{
     try {
         const existingseeker = await jobseeker.findById(seekerid)
         if (existingseeker) {
@@ -14,12 +15,30 @@ const createsavedjobs = async(seekerid,savedjobdata)=>{
                 email:existingseeker.email,
                 phone:existingseeker.phone
             }
-        const newsavedjob = await savedjobs.create(savedjobdata)
-        if (newsavedjob) {
-            logger.info("jobs are saved successfully")
-            return newsavedjob
+        const existingjobpost = await JobPost.findById(jobpostid)
+        if (existingjobpost) {
+            savedjobdata.Job ={
+                jobTitle:existingjobpost.jobTitle,
+                jobSummary:existingjobpost.jobSummary,
+                jobLocation:existingjobpost.jobLocation,
+                company:existingjobpost.company,
+                category:existingjobpost.category,
+                qualifications:existingjobpost.qualifications,
+                skills:existingjobpost.skills,
+                industry:existingjobpost.industry,
+                jobResponsibilities:existingjobpost.jobResponsibilities,
+                postedJob:existingjobpost.postedJob,
+                postedDate:existingjobpost.postedDate
+            }
+            const newsavedjob = await savedjobs.create(savedjobdata)
+            if (newsavedjob) {
+                logger.info("jobs are saved successfully")
+                return newsavedjob
+            } else {
+                logger.error("error occured in saving jobs")
+            }
         } else {
-            logger.error("error occured in saving jobs")
+            logger.error("job post not found with specific id")
         }
         } else {
             logger.error("seeker not found with specific id")
@@ -31,10 +50,12 @@ const createsavedjobs = async(seekerid,savedjobdata)=>{
 }
 
 // get all saved jobs
-const getallsavedjobs = async(seekerid)=>{
+const getallsavedjobs = async(seekerid,jobpostid)=>{
     try {
         const existingseeker = await jobseeker.findById(seekerid)
         if (existingseeker) {
+        const existingjobpost = await JobPost.findById(jobpostid)
+        if (existingjobpost) {
             const getalljobs = await savedjobs.find()
             if (getalljobs) {
                 logger.info("getting all saved jobs successfull")
@@ -42,6 +63,10 @@ const getallsavedjobs = async(seekerid)=>{
             } else {
                 logger.error("error occured in getting all savedjobs")
             }
+        } else {
+            logger.error("job post not found with specific id")
+        }
+            
         } else {
             logger.error("jobseeker not found with specific id")
         }
@@ -51,16 +76,21 @@ const getallsavedjobs = async(seekerid)=>{
 }
 
 //deleting saved jobs
-const deletesavedjobs = async(seekerid,savedjobid)=>{
+const deletesavedjobs = async(seekerid,savedjobid,jobpostid)=>{
     try {
         const existingseeker = await jobseeker.findById(seekerid)
         if (existingseeker) {
-            const deletejobs = await savedjobs.findByIdAndDelete(savedjobid)
-            if (deletejobs) {
-                logger.info("saved job deleted successfully")
+            const existingjobpost = await JobPost.findById(jobpostid)
+            if (existingjobpost) {
+                const deletejobs = await savedjobs.findByIdAndDelete(savedjobid)
+                if (deletejobs) {
+                    logger.info("saved job deleted successfully")
+                } else {
+                    logger.error("error occured in deleting savedjob with specific id")
+                }
             } else {
-                logger.error("error occured in deleting savedjob with specific id")
-            }
+                logger.error("job post not found with specific id")
+            }  
         } else {
             logger.error("jobseeker not found with specific id")
         }
