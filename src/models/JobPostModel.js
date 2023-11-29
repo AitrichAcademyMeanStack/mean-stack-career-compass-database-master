@@ -10,7 +10,7 @@ const jobPostSchema = new Schema(
         company:{type:mongoose.Schema.Types.ObjectId,ref:"JobProviderCompany"},
         category:{type:String},
         qualifications:{type:String},
-        skills:{type:String},
+        skills:{type:String},   
         industry:{type:String},
         jobResponsibilities:{type:String},
         postedBy:{type:String},

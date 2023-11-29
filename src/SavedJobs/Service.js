@@ -9,6 +9,7 @@ const createsavedjobs = async(seekerid,savedjobdata,jobpostid)=>{
         const existingseeker = await jobseeker.findById(seekerid)
         if (existingseeker) {
         savedjobdata.SavedBy={
+                seekerId:existingseeker._id,
                 firstName:existingseeker.firstName,
                 lastName:existingseeker.lastName,
                 userName:existingseeker.userName,
@@ -56,7 +57,8 @@ const getallsavedjobs = async(seekerid,jobpostid)=>{
         if (existingseeker) {
         const existingjobpost = await JobPost.findById(jobpostid)
         if (existingjobpost) {
-            const getalljobs = await savedjobs.find()
+            const getalljobs = await savedjobs.find({seekerId:seekerid})
+            console.log(getalljobs);
             if (getalljobs) {
                 logger.info("getting all saved jobs successfull")
                 return getalljobs
