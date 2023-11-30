@@ -8,6 +8,11 @@ const getallskills = asyncerrorhandler(async(req,res)=>{
     res.status(200).json(getskills)
 })
 
+const getskills = asyncerrorhandler(async(req,res)=>{
+    const getallskills = await service.getskills()
+    res.status(200).json(getallskills)
+})
+
 //fetching skill by specific id
 const getskillbyid = asyncerrorhandler(async(req,res)=>{
     const skillid = req.params.id
@@ -38,4 +43,4 @@ const deleteskill = asyncerrorhandler(async(req,res)=>{
 })
 
 
-export default {getallskills,getskillbyid,createskill,updateskill,deleteskill}
+export default {getallskills,getskillbyid,createskill,updateskill,deleteskill,getskills}

@@ -39,6 +39,8 @@ const router = express()
  */
 router.get('/:key',controller.getallskills)
 
+router.get('/',controller.getskills)
+
 /**
  * @swagger
  * /api/v1/skills/{id}:
