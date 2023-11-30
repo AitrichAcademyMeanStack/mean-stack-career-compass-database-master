@@ -36,7 +36,7 @@ const router = express.Router();
  *      summary: get all job-seekers details
  *      description: this api is used to get all job seekers list
  *      tags:
- *          - job-seeker
+ *          - JobSeeker
  *      responses:
  *          200:
  *              description:  returns an array of job-seekers
@@ -56,7 +56,7 @@ router.get('/',controller.getallseekers)
  *      summary: get job-seeker details with specific id
  *      description: this is is used to get job-seeker details with specific id
  *      tags:
- *          - job-seeker
+ *          - JobSeeker
  *      parameters:
  *          - in: path
  *            name: id
@@ -83,7 +83,7 @@ router.get('/:id',controller.getseekerbyid)
  *      summary: create new job seeker details
  *      description: this api is used to create new job seeker
  *      tags:
- *          - job-seeker
+ *          - JobSeeker
  *      requestBody:
  *          required: true
  *          content:
@@ -110,7 +110,7 @@ router.post('/',controller.createseeker)
  *      summary: update jobseeker details
  *      description: this api is used to update  jobseeker details
  *      tags:
- *          - job-seeker
+ *          - JobSeeker
  *      parameters:
  *          - in: path
  *            name: id
@@ -144,7 +144,7 @@ router.put('/:id',controller.updateseeker)
  *      summary: delete jobseeker details
  *      description: this api is used to delete jobseeker details
  *      tags:
- *          - job-seeker
+ *          - JobSeeker
  *      parameters:
  *          - in: path
  *            name: id

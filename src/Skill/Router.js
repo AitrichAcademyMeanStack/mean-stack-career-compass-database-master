@@ -26,7 +26,7 @@ const router = express()
  *      summary: get all skill details
  *      description: this api is used to get all skills list
  *      tags:
- *          - skill
+ *          - Skill
  *      responses:
  *          200:
  *              description:  returns an array of skills
@@ -39,6 +39,8 @@ const router = express()
  */
 router.get('/:key',controller.getallskills)
 
+router.get('/',controller.getskills)
+
 /**
  * @swagger
  * /api/v1/skills/{id}:
@@ -46,7 +48,7 @@ router.get('/:key',controller.getallskills)
  *      summary: get skill details with specific id
  *      description: this is is used to get skill details with specific id
  *      tags:
- *          - skill
+ *          - Skill
  *      parameters:
  *          - in: path
  *            name: id
@@ -73,7 +75,7 @@ router.get('/:id',controller.getskillbyid)
  *      summary: create new skill details
  *      description: this api is used to create new skill details
  *      tags:
- *          - skill
+ *          - Skill
  *      requestBody:
  *          required: true
  *          content:
@@ -100,7 +102,7 @@ router.post('/',controller.createskill)
  *      summary: update skill details
  *      description: this api is used to update skill details
  *      tags:
- *          - skill
+ *          - Skill
  *      parameters:
  *          - in: path
  *            name: id
@@ -134,7 +136,7 @@ router.put('/:id',controller.updateskill)
  *      summary: delete skill details
  *      description: this api is used to delete skill details
  *      tags:
- *          - skill
+ *          - Skill
  *      parameters:
  *          - in: path
  *            name: id

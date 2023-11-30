@@ -21,6 +21,21 @@ const getallskills = async(skillkey)=>{
     }
 }
 
+const getskills = async()=>{
+    try {
+        const result = await skill.find()
+        if (result) {
+            logger.info("all skills : ",result)
+            return result
+        } else {
+            logger.error("skills not found")
+            throw new Notfounderror("skills not found")
+        }
+    } catch (error) {
+        throw error
+    }
+}
+
 //fetching skill with specific id
 const getskillbyid = async(skillid)=>{
     try {
@@ -112,5 +127,5 @@ const deleteskill = async(skillid)=>{
     }
 }
 
-export default { getallskills,getskillbyid, createskill,updateskill,deleteskill}
+export default { getallskills,getskillbyid, createskill,updateskill,deleteskill,getskills}
 
