@@ -5,6 +5,7 @@ import ValidationError from "../Exceptions/ValidationError.js";
 import logger from "../middleware/logger.js";
 import systemuser from "../models/SystemUserModel.js";
 import AuthUser from "../models/AuthUserModel.js";
+import JobProviderCompany from "../models/JobProviderCompanyModel.js";
 
 // Fetchng all CompanyUser
 const getAllCompanyUsers = async () => {
@@ -33,59 +34,65 @@ const getCompanyUserById = async (id) => {
 };
 
 // Adding new CompanyUser
-const addCompanyUser = async (data) => {
+const addCompanyUser = async (companyId,data) => {
   try {
-    const newCompanyUser = await CompanyUser.create(data);
-    logger.info("New Company Registered");
-    if (newCompanyUser) {
-      let systemUserRole;
-
-      // Check the role of the new company user
-      if (newCompanyUser.role === "Company Admin") {
-        systemUserRole = "Company Admin";
-      } else if (newCompanyUser.role === "Hiring Manager") {
-        systemUserRole = "Hiring Manager";
-      }
-
-      const systemUser = {
-        _id: newCompanyUser._id,
-        firstName: newCompanyUser.firstName,
-        lastName: newCompanyUser.lastName,
-        email: newCompanyUser.email,
-        phone: newCompanyUser.phone,
-        role: systemUserRole,
-      }
-
-      const newSystemUser = await systemuser.create(systemUser)
-      logger.info("System user created successfully");
+    const jobProvider = await JobProviderCompany.findById(companyId)
+    if (jobProvider) {
+      const newCompanyUser = await CompanyUser.create(data);
+      logger.info("New Company Registered");
       
-      if (newSystemUser) {
-        const authUser = {
-          _id: newSystemUser._id,
-          userName: newCompanyUser.userName,
-          password: "12345",
-          firstName: newSystemUser.firstName,
-          lastName: newSystemUser.lastName,
-          email: newSystemUser.email,
-          phone: newSystemUser.phone,
-          role: newSystemUser.role,
-      };
-
-      const companyAuthUser = await AuthUser.create(authUser)
-      logger.info("Auth user created successfully", companyAuthUser);
-
-      }else {
-        logger.error("Error while creating system user")
-        return null;
-      }
-
-
-      
-    } else {
-      logger.error("Error while creating CompanyUser");
-
+      if (newCompanyUser) {
+        let systemUserRole;
+  
+        // Check the role of the new company user
+        if (newCompanyUser.role === "Company Admin") {
+          systemUserRole = "Company Admin";
+        } else if (newCompanyUser.role === "Hiring Manager") {
+          systemUserRole = "Hiring Manager";
+        }
+        const systemUser = {
+          _id: newCompanyUser._id,
+          firstName: newCompanyUser.firstName,
+          lastName: newCompanyUser.lastName,
+          email: newCompanyUser.email,
+          phone: newCompanyUser.phone,
+          role: systemUserRole,
+        }
+        
+              const newSystemUser = await systemuser.create(systemUser)
+              logger.info("System user created successfully");
+              
+              if (newSystemUser) {
+                const authUser = {
+                  _id: newSystemUser._id,
+                  userName: newCompanyUser.userName,
+                  password: "12345",
+                  firstName: newSystemUser.firstName,
+                  lastName: newSystemUser.lastName,
+                  email: newSystemUser.email,
+                  phone: newSystemUser.phone,
+                  role: newSystemUser.role,
+              };
+        
+              const companyAuthUser = await AuthUser.create(authUser)
+              logger.info("Auth user created successfully", companyAuthUser);
+        
+              }else {
+                logger.error("Error while creating system user")
+                return null;
+              }
+        
+        
+              
+            } else {
+              logger.error("Error while creating CompanyUser");
+        
+            }
+            return newCompanyUser
+    }else {
+      throw new NotFoundError("JobProviderComapny Not Found")
     }
-    return newCompanyUser
+
   } catch (error) {
     if (error.name === "ValidationError") {
       logger.error(`validation error ${error.message}`);

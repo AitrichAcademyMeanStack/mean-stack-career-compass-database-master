@@ -94,6 +94,13 @@ router.get("/:id",userController.getCompanyUserById);
  *          summary: Add a new CompanyUser
  *          tags:
  *              - CompanyUser
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description:  ID of the JobProviderComapny
  *          requestBody:
  *              required: true
  *              content:

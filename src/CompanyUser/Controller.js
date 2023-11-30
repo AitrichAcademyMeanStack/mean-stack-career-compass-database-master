@@ -16,8 +16,9 @@ const getCompanyUserById = asyncerrorhandler(async (req, res) => {
 
 // Adding new CompanyUser
 const addCompanyUser = asyncerrorhandler(async (req, res) => {
+  const companyId = req.params.id;
   const data = req.body;
-  const newCompanyUser = await userService.addCompanyUser(data);
+  const newCompanyUser = await userService.addCompanyUser(companyId,data);
   res.status(201).json(newCompanyUser);
 });
 
