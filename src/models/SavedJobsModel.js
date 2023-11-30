@@ -12,7 +12,7 @@ const savedjobsschema = new Schema({
         industry: String,
         jobResponsibilities: [String],
         postedJob: String,
-        postedDate: { type: Date, default: Date.now }
+        postedDate: Date
     },
     savedBy: {
         seekerId: mongoose.Schema.Types.ObjectId,

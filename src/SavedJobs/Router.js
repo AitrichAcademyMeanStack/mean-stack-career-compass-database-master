@@ -11,7 +11,7 @@ const router = express.Router()
  *      summary: getting all saved jobs
  *      description: this api is used to getting all saved jobs
  *      tags:
- *          - savedjobs
+ *          - SavedJobs
  *      parameters:
  *          - in: path
  *            name: seekerid
@@ -39,7 +39,7 @@ router.get('/:id/savedjobs',controller.getallsavedjobs) //getting all savedjobs
  *      summary: jobs are added to the saved jobs
  *      description: this api is used to add the jobs into saved jobs
  *      tags:
- *          - savedjobs
+ *          - SavedJobs
  *      parameters:
  *          - in: path
  *            name: seekerid
@@ -74,7 +74,7 @@ router.post('/:id1/jobpost/:id2/savedjobs',controller.createsavedjobs) //creatin
  *      summary: deleting saved job with id
  *      description: this api is used to delete saved job with id
  *      tags:
- *          - savedjobs
+ *          - SavedJobs
  *      parameters:
  *          - in: path
  *            name: seekerid

@@ -6,7 +6,8 @@ const resumeSchema = new Schema(
     {
         title:{type: String},
         resume:{type:String}
-    },{versionKey:false}
+    }
+    ,{versionKey:false}
 )
 
 const collectionName = 'Resume'

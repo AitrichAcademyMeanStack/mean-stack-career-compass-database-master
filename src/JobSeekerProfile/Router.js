@@ -53,7 +53,7 @@ const router = express.Router();
  *      summary: create new job seeker profile details
  *      description: this api is used to create new job seeker profile
  *      tags:
- *          - jobseeker-profile
+ *          - JobSeeker-Profile
  *      parameters:
  *          - in: path
  *            name: seekerid
@@ -87,7 +87,7 @@ router.post('/:id/profiles',controller.createprofile)
  *      summary: update jobseeker profile details
  *      description: this api is used to update  jobseeker profile details
  *      tags:
- *          - jobseeker-profile
+ *          - JobSeeker-Profile
  *      parameters:
  *          - in: path
  *            name: seekerid
@@ -127,7 +127,7 @@ router.put('/:id1/profiles/:id2',controller.profileupdate)
  *      summary: delete jobseeker profile details
  *      description: this api is used to delete jobseeker profile details
  *      tags:
- *          - jobseeker-profile
+ *          - JobSeeker-Profile
  *      parameters:
  *          - in: path
  *            name: seekerid

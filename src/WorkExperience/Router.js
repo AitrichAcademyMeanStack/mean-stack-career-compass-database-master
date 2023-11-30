@@ -34,7 +34,7 @@ const router = express.Router()
  *      get:
  *          summary: Get all workexperiences
  *          tags:
- *              - workexperience
+ *              - WorkExperience
  *          responses: 
  *              200:
  *               description: Return array of workexperiences
@@ -53,7 +53,7 @@ router.get('/',controller.getallexp) //get all work experiences
  *      get:
  *          summary: Get workexperience by ID
  *          tags:
- *              - workexperience
+ *              - WorkExperience
  *          parameters:
  *              - in: path
  *                name: id
@@ -79,7 +79,7 @@ router.get('/:id',controller.getexpbyid) //get work experience with specific id
  *      post:
  *          summary: Add a new workexperience
  *          tags:
- *              - workexperience
+ *              - WorkExperience
  *          requestBody:
  *              required: true
  *              content:
@@ -105,7 +105,7 @@ router.post('/',controller.createexp) // create new work experience
  *      put:
  *          summary: Update workexperience by ID
  *          tags:
- *              - workexperience
+ *              - WorkExperience
  *          parameters:
  *              - in: path
  *                name: id
@@ -138,7 +138,7 @@ router.put('/:id',controller.updateexp) //update work experience
  *      delete:
  *          summary: Delete workexperience by ID
  *          tags:
- *              - workexperience 
+ *              - WorkExperience 
  *          parameters:
  *              - in: path
  *                name: id
