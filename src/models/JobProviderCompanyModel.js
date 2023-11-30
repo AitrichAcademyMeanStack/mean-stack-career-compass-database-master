@@ -16,7 +16,7 @@ const JobProviderCompanySchema = new Schema(
         location:{
             name:{type: String}
         }
-    }
+    },{versionKey:false}
 ) 
 
 const collectionName = "JobProviderCompany";

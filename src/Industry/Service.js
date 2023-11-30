@@ -27,24 +27,24 @@ const getAllIndustries = async (industry) => {
 
 // Adding new Industry
 const addIndustry = async (data) => {
-  try {
-    await authschema.validateAsync(data);
-    const newData = await Industry.create(data);
-    if (newData) {
-      logger.info("New Industry :", newData);
-      return newData;
-    } else {
-      logger.error("Error while adding industry");
-      throw new Badrequesterror("Error while adding new industry");
-    }
-  } catch (error) {
-    if (error.name === "ValidationError") {
-      logger.error(`validaion error : ${error.message}`);
-      throw new ValidationError(error.message);
-    } else {
-      throw error;
-    }
-  }
+  // try {
+  //   await authschema.validateAsync(data);
+  //   const newData = await Industry.create(data);
+  //   if (newData) {
+  //     logger.info("New Industry :", newData);
+  //     return newData;
+  //   } else {
+  //     logger.error("Error while adding industry");
+  //     throw new Badrequesterror("Error while adding new industry");
+  //   }
+  // } catch (error) {
+  //   if (error.name === "ValidationError") {
+  //     logger.error(`validaion error : ${error.message}`);
+  //     throw new ValidationError(error.message);
+  //   } else {
+  //     throw error;
+  //   }
+  // }
 };
 
 // Updating Industry

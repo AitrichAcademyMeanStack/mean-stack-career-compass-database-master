@@ -37,7 +37,23 @@ const getCompanyUserById = async (id) => {
 const addCompanyUser = async (companyId,data) => {
   try {
     const jobProvider = await JobProviderCompany.findById(companyId)
-    if (jobProvider) {
+    console.log(jobProvider);
+    
+    if (!jobProvider) {
+      logger.error("JobProvider not found with Id:", companyId);
+      return {error: "JobProvider not found" };
+    }
+
+      data.company = {
+        legalName: jobProvider.legalName,
+        summary: jobProvider.summary,
+        industry: jobProvider.industry,
+        email: jobProvider.email,
+        phone: jobProvider.phone,
+        address:jobProvider.address,
+        website:jobProvider.website,
+        location: jobProvider.location
+      }
       const newCompanyUser = await CompanyUser.create(data);
       logger.info("New Company Registered");
       
@@ -89,9 +105,7 @@ const addCompanyUser = async (companyId,data) => {
         
             }
             return newCompanyUser
-    }else {
-      throw new NotFoundError("JobProviderComapny Not Found")
-    }
+   
 
   } catch (error) {
     if (error.name === "ValidationError") {

@@ -10,7 +10,6 @@ const router = express.Router();
  *          CompanyUser:
  *              type: object
  *              required:
- *                  - company
  *                  - firstName
  *                  - role
  *                  - lastName
@@ -18,8 +17,6 @@ const router = express.Router();
  *                  - email
  *                  - phone
  *              properties:
- *                  company:
- *                      type: string
  *                  firstName:
  *                      type: string
  *                  role:
@@ -89,7 +86,7 @@ router.get("/:id",userController.getCompanyUserById);
 
 /**
  * @swagger
- *  /api/v1/CompanyUsers:
+ *  /api/v1/CompanyUsers/{id}:
  *      post:
  *          summary: Add a new CompanyUser
  *          tags:
@@ -119,7 +116,7 @@ router.get("/:id",userController.getCompanyUserById);
  *              
  */
 
-router.post("/",userController.addCompanyUser);
+router.post("/:id",userController.addCompanyUser);
 
 /**
  * @swagger
