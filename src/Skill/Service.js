@@ -23,7 +23,7 @@ const getallskills = async(skillkey)=>{
 
 const getskills = async()=>{
     try {
-        const result = await skill.find({},{name:true,_id:false})
+        const result = await skill.find({},{name:true})
         if (result.length>0) {
             logger.info("all skills : ",result)
             return result
