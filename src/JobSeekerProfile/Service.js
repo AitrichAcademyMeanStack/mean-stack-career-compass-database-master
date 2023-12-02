@@ -12,13 +12,13 @@ import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not fou
 const createprofile = async (seekerid, profiledata, selectedskills) => {
   try {
     const seekerresult = await jobseeker.findById(seekerid);
-
     if (!seekerresult) {
       logger.error("Seeker not found with id:", seekerid);
       return { success: false, error: "Seeker not found" };
     }
 
     profiledata.jobSeeker = {
+      seekerId: seekerresult._id,
       firstName: seekerresult.firstName,
       lastName: seekerresult.lastName,
       userName: seekerresult.userName,
@@ -63,23 +63,32 @@ const profileupdate = async(seekerid,profileid,updatedata) =>{
 }
 
 //delete job seeker profile
-const deleteprofile = async(seekerid,profileid) =>{
+const deleteprofile = async (seekerid, profileid) => {
   try {
-    const seekerdata = await jobseeker.findById(seekerid)
+    const seekerdata = await jobseeker.findById(seekerid);
     if (seekerdata) {
-      const profiledata = await seekerProfile.findByIdAndDelete(profileid)
-      if (profiledata) {
-        logger.info("seeker profile deleted successfully")
-        return profiledata
+      const profiledata = await seekerProfile.findById(profileid);
+      if (profiledata.jobSeeker.seekerId.toString() === seekerdata._id.toString()) {
+        const deletedata = await seekerProfile.findOneAndDelete({ _id: profileid });
+        if (deletedata) {
+          logger.info("Seeker profile deleted successfully");
+          return deletedata;
+        } else {
+          logger.error("Error occurred in deleting seeker profile");
+          throw new BadRequestError("Error occurred in deleting seeker profile");
+        }
       } else {
-        logger.error("error in deleting seeker profile")        
+        logger.error("Profile not found with specific id");
+        throw new NotFoundError("Profile not found with specific id");
       }
     } else {
-      logger.error("seeker not found with specific id")
+      logger.error("Seeker not found with specific id");
+      throw new NotFoundError("Seeker not found with specific id");
     }
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
+
 
 export default {createprofile,deleteprofile,profileupdate}

@@ -1,5 +1,6 @@
 import mongoose,{Schema} from 'mongoose'
 
+//schema for job application schema
 const jobapplicationschema = new Schema({
     job:{
         jobTitle: String,
@@ -44,7 +45,8 @@ const jobapplicationschema = new Schema({
         "ON_HOLD"
     ]
     }
-})
+},{versionKey:false}
+)
 
 const collectionName = "JobApplication"
 const Jobapplication = mongoose.model("JobApplication",jobapplicationschema,collectionName)

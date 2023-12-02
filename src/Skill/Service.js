@@ -111,7 +111,6 @@ const deleteskill = async(skillid)=>{
         const result =await skill.findByIdAndDelete(skillid)
         if (result) {
             logger.info("skill deleted successfully")
-            return result
         } else {
             logger.error("skill not found with id")
             throw new Notfounderror("skill data is not found with specific id")

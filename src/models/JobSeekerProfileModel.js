@@ -20,12 +20,13 @@ const jobSeekerProfileSchema = new Schema(
     }],
     skills:[String],
     jobSeeker: {
+      seekerId: mongoose.Schema.Types.ObjectId,
       firstName: String,
       lastName: String,
       userName: String,
       email: String,
       phone: Number,
-    },
+    }
   },
   { versionKey: false }
 );
