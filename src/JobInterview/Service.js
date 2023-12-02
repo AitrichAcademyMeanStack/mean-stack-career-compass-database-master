@@ -1,6 +1,7 @@
 import JobInterview from "../models/JobInterviewModel"
 import logger from "../middleware/logger.js"
 import BadRequestError from "../Exceptions/BadRequestError.js"
+import NotFoundError from "../Exceptions/NotFoundError.js"
 
 // Adding Job Interview
 const addJobInterview = async(data) => {
@@ -17,4 +18,32 @@ const addJobInterview = async(data) => {
     }
 }
 
-export default addJobInterview
+// Fetching all JobInterview
+const getAllJobInterview = async() => {
+    try {
+        const data = await JobInterview.find()
+        if (data) {
+            return data
+        }else {
+            throw new BadRequestError("Error while fetching JobInterview")
+        }
+    } catch (error) {
+        throw error
+    }
+}
+
+// Deleting JobInterview
+const deleteJobInterview = async(id) => {
+    try {
+        const deleteInterview = await JobInterview.findByIdAndDelete(id)
+        if (deleteInterview) {
+            return deleteInterview
+        }else{
+            throw new NotFoundError("ID Not found")
+        }
+    } catch (error) {
+        throw error
+    }
+}
+
+export default {addJobInterview, getAllJobInterview , deleteJobInterview}
