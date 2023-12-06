@@ -9,7 +9,7 @@ import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad 
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 //create new job seeker profile
-const createprofile = async (seekerid, profiledata, selectedskills) => {
+const createprofile = async (seekerid, profiledata) => {
   try {
     const seekerresult = await jobseeker.findById(seekerid);
     if (!seekerresult) {
