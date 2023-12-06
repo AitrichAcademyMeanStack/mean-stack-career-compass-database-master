@@ -8,6 +8,8 @@ import ValidationError from "../Exceptions/ValidationError.js"; //importing vali
 import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
+
+
 //create new job seeker profile
 const createprofile = async (seekerid, profiledata) => {
   try {

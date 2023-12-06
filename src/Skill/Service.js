@@ -6,24 +6,24 @@ import skill from '../models/SkillModel.js' // importing skill module schema
 import {authschema} from '../middleware/ValidationSchema.js' // importing validation schema
 
 //fetching all skills
-const getallskills = async(skillkey)=>{
-    try {
-        const result =await skill.find({"$or":[{name:{$regex:skillkey, $options: 'i' }}]},{name:true,_id:0}).limit(10)
-        if (result) {
-            logger.info("all skills : ",result)
-            return result
-        } else {
-            logger.error("skills not found")
-            throw new Notfounderror("skills not found")
-        }
-    } catch (error) {
-        throw error
-    }
-}
+// const getallskills = async(skillkey)=>{
+//     try {
+//         const result =await skill.find({"$or":[{name:{$regex:skillkey, $options: 'i' }}]},{name:true,_id:0}).limit(10)
+//         if (result) {
+//             logger.info("all skills : ",result)
+//             return result
+//         } else {
+//             logger.error("skills not found")
+//             throw new Notfounderror("skills not found")
+//         }
+//     } catch (error) {
+//         throw error
+//     }
+// }
 
 const getskills = async()=>{
     try {
-        const result = await skill.find({},{name:true})
+        const result = await skill.find({},{name:true}).limit(5)
         if (result.length>0) {
             logger.info("all skills : ",result)
             return result
@@ -36,10 +36,11 @@ const getskills = async()=>{
     }
 }
 
+
 //fetching skill with specific id
 const getskillbyid = async(skillid)=>{
     try {
-        const result = await skill.findById(skillid)
+        const result = await skill.findById(skillid,{name:true})
         if (result) {
             logger.info("skill with id : ",result)
             return result
@@ -126,5 +127,5 @@ const deleteskill = async(skillid)=>{
     }
 }
 
-export default { getallskills,getskillbyid, createskill,updateskill,deleteskill,getskills}
+export default {getskillbyid, createskill,updateskill,deleteskill,getskills}
 

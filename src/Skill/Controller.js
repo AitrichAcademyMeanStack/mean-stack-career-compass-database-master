@@ -2,11 +2,11 @@ import service from './Service.js' //importing service
 import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynchronous error handler
 
 //fetching all skills
-const getallskills = asyncerrorhandler(async(req,res)=>{
-    const skillkey = req.params.key
-    const getskills = await service.getallskills(skillkey)
-    res.status(200).json(getskills)
-})
+// const getallskills = asyncerrorhandler(async(req,res)=>{
+//     const skillkey = req.params.key
+//     const getskills = await service.getallskills(skillkey)
+//     res.status(200).json(getskills)
+// })
 
 const getskills = asyncerrorhandler(async(req,res)=>{
     const getallskills = await service.getskills()
@@ -43,4 +43,4 @@ const deleteskill = asyncerrorhandler(async(req,res)=>{
 })
 
 
-export default {getallskills,getskillbyid,createskill,updateskill,deleteskill,getskills}
+export default {getskillbyid,createskill,updateskill,deleteskill,getskills}
