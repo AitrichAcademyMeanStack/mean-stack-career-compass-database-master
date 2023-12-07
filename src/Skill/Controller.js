@@ -13,6 +13,11 @@ const getskills = asyncerrorhandler(async(req,res)=>{
     res.status(200).json(getallskills)
 })
 
+const getselectedskills = asyncerrorhandler(async(req,res)=>{
+    const getallselectedskills = await service.getselectedskills()
+    res.status(200).json(getallselectedskills)
+})
+
 //fetching skill by specific id
 const getskillbyid = asyncerrorhandler(async(req,res)=>{
     const skillid = req.params.id
@@ -25,6 +30,12 @@ const createskill = asyncerrorhandler(async(req,res)=>{
     const skilldata = req.body
     const create = await service.createskill(skilldata)
     res.status(201).json(create)
+})
+
+const selectedskills = asyncerrorhandler(async(req,res)=>{
+    const skillid = req.params.id
+    await service.selectedskills(skillid)
+    res.status(201).json("skills are selected")
 })
 
 //update skill
@@ -43,4 +54,4 @@ const deleteskill = asyncerrorhandler(async(req,res)=>{
 })
 
 
-export default {getskillbyid,createskill,updateskill,deleteskill,getskills}
+export default {getskillbyid,createskill,updateskill,deleteskill,getskills,selectedskills,getselectedskills}

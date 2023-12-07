@@ -41,6 +41,8 @@ const router = express()
 
 router.get('/',controller.getskills)
 
+router.get('/selectedskills',controller.getselectedskills)
+
 /**
  * @swagger
  * /api/v1/skills/{id}:
@@ -68,6 +70,7 @@ router.get('/',controller.getskills)
  */
 router.get('/:id',controller.getskillbyid)
 
+router.get('/selectedskills',controller.getselectedskills)
 /**
  * @swagger
  * /api/v1/skills:
@@ -94,6 +97,8 @@ router.get('/:id',controller.getskillbyid)
  * 
  */
 router.post('/',controller.createskill)
+
+router.post('/:id',controller.selectedskills)
 
 /**
  * @swagger
