@@ -17,15 +17,21 @@ import industryData from '../../data/Industry.json' assert{type: 'json'}
 const connecttodatabase = async()=>{
     try {
         // mongoose connection setup
-        await mongoose.connect(process.env.MONGO_URL)
-        logger.info("🍀 MongoDb Connected Successfully")
-        await insertcategorydata() // inserting data into collection
-        await insertLocationData() // inserting data into collection
-        await insertqualificationsdata() // inserting data into collection
-        await insertskillsdata() // inserting data into collection
-        await insertIndustryData()  // inserting data into collection
+        const connectDB = await mongoose.connect(process.env.MONGO_URL)
+        if (connectDB) {
+            logger.info("🍀 MongoDb Connected Successfully")
+            await insertcategorydata() // inserting data into collection
+            await insertLocationData() // inserting data into collection
+            await insertqualificationsdata() // inserting data into collection
+            await insertskillsdata() // inserting data into collection
+            await insertIndustryData()  // inserting data into collection
+
+        }else {
+            logger.error("❌ MongoDb Not Connected")
+
+        }
     } catch (error) {
-        logger.error("Error In Coonnecting database")
+        logger.error("Error In Connecting database")
         process.exit()
     }
 }
