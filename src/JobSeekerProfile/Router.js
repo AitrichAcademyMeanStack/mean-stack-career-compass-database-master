@@ -45,7 +45,9 @@ const router = express.Router();
  *                          type: String
  */
 
+router.post('/:id/addskill',controller.addskill)
 
+router.post('/:id/addqualification',controller.addqualification)
 /**
  * @swagger
  * /api/v1/jobseekers/{seekerid}/profiles:

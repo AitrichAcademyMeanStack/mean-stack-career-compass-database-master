@@ -6,54 +6,6 @@ import skill from '../models/SkillModel.js' // importing skill module schema
 import {authschema} from '../middleware/ValidationSchema.js' // importing validation schema
 
 
-let selected = []
-
-const getselectedskills = async()=>{
-    try {
-        const result = await selected.map(selected => selected)
-        if (result) {
-            logger.info("successfully getting all selected skills",result)
-            return result
-        } else {
-            logger.error("error occured in getting all selected skills")
-        }
-    } catch (error) {
-        throw error
-    }
-} 
-
-
-const selectedskills = async(skillid)=>{
-    try {
-        const result = await skill.findById(skillid)
-        if (result) {
-            selected.push(result.name)
-            logger.info("selected skills are :  ",selected);
-        } else {
-            logger.error("skill not found with specific id")
-        }
-    } catch (error) {
-        throw error
-    }
-}
-
-
-//fetching all skills
-// const getallskills = async(skillkey)=>{
-//     try {
-//         const result =await skill.find({"$or":[{name:{$regex:skillkey, $options: 'i' }}]},{name:true,_id:0}).limit(10)
-//         if (result) {
-//             logger.info("all skills : ",result)
-//             return result
-//         } else {
-//             logger.error("skills not found")
-//             throw new Notfounderror("skills not found")
-//         }
-//     } catch (error) {
-//         throw error
-//     }
-// }
-
 const getskills = async()=>{
     try {
         const result = await skill.find({},{name:true}).limit(5)
@@ -160,5 +112,5 @@ const deleteskill = async(skillid)=>{
     }
 }
 
-export default {getskillbyid, createskill,updateskill,deleteskill,getskills,selectedskills,getselectedskills}
+export default {getskillbyid, createskill,updateskill,deleteskill,getskills}
 

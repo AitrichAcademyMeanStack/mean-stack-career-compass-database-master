@@ -10,6 +10,45 @@ import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not fou
 
 
 
+const addskill = async(seekerid,data)=>{
+  try {
+    const seekerresult = await jobseeker.findById(seekerid)
+    if (seekerresult) {
+
+      const result = await  seekerProfile.create(data)
+      if (result) {
+        logger.info("successfully adding skill into profile")
+      } else {
+        logger.error("error occured in posting skills")
+      }
+    } else {
+      logger.error("seeker not found with specific id")
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
+
+const addqualification = async(seekerid,data)=>{
+  try {
+    const seekerresult = await jobseeker.findById(seekerid)
+    if (seekerresult) {
+      
+      const result = await  seekerProfile.create(data)
+      if (result) {
+        logger.info("successfully adding qualification into profile")
+      } else {
+        logger.error("error occured in posting qualifications")
+      }
+    } else {
+      logger.error("seeker not found with specific id")
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 //create new job seeker profile
 const createprofile = async (seekerid, profiledata) => {
   try {
@@ -93,4 +132,4 @@ const deleteprofile = async (seekerid, profileid) => {
 };
 
 
-export default {createprofile,deleteprofile,profileupdate}
+export default {createprofile,deleteprofile,profileupdate,addskill,addqualification}

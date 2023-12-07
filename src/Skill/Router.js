@@ -19,29 +19,8 @@ const router = express()
  */
 
 
-// /**
-//  * @swagger
-//  * /api/v1/skills:
-//  *  get:
-//  *      summary: get all skill details
-//  *      description: this api is used to get all skills list
-//  *      tags:
-//  *          - Skill
-//  *      responses:
-//  *          200:
-//  *              description:  returns an array of skills
-//  *              content:
-//  *                  application/json:
-//  *                      schema:
-//  *                          type: array
-//  *                          items:
-//  *                              $ref: '#/components/schemas/skill'
-//  */
-// router.get('/:key',controller.getallskills)
 
 router.get('/',controller.getskills)
-
-router.get('/selectedskills',controller.getselectedskills)
 
 /**
  * @swagger
@@ -70,7 +49,6 @@ router.get('/selectedskills',controller.getselectedskills)
  */
 router.get('/:id',controller.getskillbyid)
 
-router.get('/selectedskills',controller.getselectedskills)
 /**
  * @swagger
  * /api/v1/skills:
@@ -98,7 +76,6 @@ router.get('/selectedskills',controller.getselectedskills)
  */
 router.post('/',controller.createskill)
 
-router.post('/:id',controller.selectedskills)
 
 /**
  * @swagger

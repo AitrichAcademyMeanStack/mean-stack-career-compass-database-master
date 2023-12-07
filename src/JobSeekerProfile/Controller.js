@@ -1,6 +1,22 @@
 import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing asynchronous error handler
 import service from './Service.js' //importing service
 
+
+const addskill = asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.id
+    const data = req.body
+    const newskills =  await  service.addskill(seekerid,data)
+    res.status(201).json(newskills)
+})
+
+const addqualification = asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.id
+    const data = req.body
+    const newqualification =  await  service.addqualification(seekerid,data)
+    res.status(201).json(newqualification)
+})
+
+
 //create new job seeker profile
 const createprofile =asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.id
@@ -27,4 +43,4 @@ const deleteprofile =asyncerrorhandler(async(req,res)=>{
 })
 
 
-export default {createprofile,profileupdate,deleteprofile}
+export default {createprofile,profileupdate,deleteprofile,addskill,addqualification}
