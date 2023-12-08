@@ -75,6 +75,40 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
   }
 };
 
+const resumeupload = async(req,seekerid,profileid)=>{
+  try {
+    const existingseeker = await jobseeker.findById(seekerid)
+    if (existingseeker) {
+      const existingprofile  = await seekerProfile.findById(profileid)
+      if (existingprofile) {
+
+        const file = existingprofile.Resume
+        existingprofile.Resume = {
+          title: req.file.originalname,
+          resume: req.file.path
+      };
+      if (!file.title || !file.resume) {
+          logger.error("Invalid file data");
+          throw new Error("Invalid file data");
+      }
+        const updateprofile  =  await seekerProfile.updateOne(   { _id: profileid },
+          { $set: existingprofile })
+        console.log(updateprofile);
+        if (updateprofile) {
+          logger.info("File uploaded successfully");
+          return updateprofile
+      } else {
+          logger.error("Error occurred in file uploading");
+          throw new Error("Error occurred in file uploading");
+      }
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    logger.error("Error in createresume:", error.message);
+    throw error;
+  }
+}
 
 
 
@@ -107,4 +141,4 @@ const deleteprofile = async (seekerid, profileid) => {
 };
 
 
-export default {createprofile,deleteprofile,profileupdate}
+export default {createprofile,deleteprofile,profileupdate,resumeupload}

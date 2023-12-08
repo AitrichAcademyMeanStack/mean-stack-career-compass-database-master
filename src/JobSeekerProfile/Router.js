@@ -1,5 +1,6 @@
 import express from 'express' //import express
 import controller from './Controller.js' //importing controller
+import FileUpload from '../utils/FileUpload.js';
 
 const router = express.Router();
 
@@ -44,6 +45,7 @@ const router = express.Router();
  *                      items:
  *                          type: String
  */
+router.put('/:id1/profiles/:id2/resume',FileUpload,controller.resumeupload)
 
 /**
  * @swagger
@@ -118,6 +120,7 @@ router.post('/:id1/profiles/:id2',controller.createprofile)
  *                  
  */
 router.put('/:id1/profiles/:id2',controller.profileupdate)
+
 
 /**
  * @swagger
