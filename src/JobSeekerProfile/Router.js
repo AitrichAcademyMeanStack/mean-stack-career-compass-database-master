@@ -45,18 +45,6 @@ const router = express.Router();
  *                          type: String
  */
 
-// router.put('/:id1/profiles/:id2/addskills',controller.addskill)
-
-// router.put('/:id1/profiles/:id2/addqualifications',controller.addqualification)
-
-// router.put('/:id1/profiles/:id2/addworkexperience',controller.addqualification)
-
-// router.put('/:id1/profiles/:id2/addresume',controller.addqualification)
-
-// router.put('/:id1/profiles/:id2/addprofilename',controller.addqualification)
-
-// router.put('/:id1/profiles/:id2/addqualifications',controller.addqualification)
-
 /**
  * @swagger
  * /api/v1/jobseekers/{seekerid}/profiles:
@@ -89,7 +77,7 @@ const router = express.Router();
  *              description: not found error, check request body
  * 
  */
-router.post('/:id/profiles',controller.createprofile)
+router.post('/:id1/profiles/:id2',controller.createprofile)
 
 /**
  * @swagger
