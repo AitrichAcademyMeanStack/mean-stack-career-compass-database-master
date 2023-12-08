@@ -46,15 +46,21 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
     if (seekerdata) {
       const profiledata = await seekerProfile.findById(profileid);
       if (profiledata) {
-        const updatedProfile = await seekerProfile.findByIdAndUpdate(
-          profileid,
-          updatedata,
+        const updatedProfile = await seekerProfile.findOneAndUpdate(
+          { _id: profileid },
+          {
+            $push: {
+              qualifications: { $each: updatedata.qualifications || [] },
+              workExperiences: { $each: updatedata.workExperiences || [] },
+              skills: { $each: updatedata.skills || [] }
+            },
+          },
           { new: true }
         );
 
         if (updatedProfile) {
-          logger.info("Seeker profile updated successfully",updatedProfile);
-          return updatedProfile; 
+          logger.info("Seeker profile updated successfully", updatedProfile);
+          return updatedProfile;
         } else {
           logger.error("Error in updating seeker profile");
         }
@@ -68,6 +74,7 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
     throw error;
   }
 };
+
 
 
 //delete job seeker profile
