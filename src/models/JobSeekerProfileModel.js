@@ -4,19 +4,19 @@ import mongoose, { Schema } from 'mongoose'; //importing mongoose
 //schema for job seeker profile
 const jobSeekerProfileSchema = new Schema(
   {
-    profileName: { type: String, required: true },
-    profileSummary: { type: String, required: true },
+    profileName: String,
+    profileSummary: String,
     Resume:{
       title:String,
       resume:String,
     },
     qualifications: [String],
     workExperiences: [{
-       jobTitle: { type: String ,required:true},
-      companyName: { type: String ,required:true},
-      summary: { type: String ,required:true},
-      serviceStart: { type: Date ,required:true},
-      serviceEnd: { type: Date,required:true }
+       jobTitle: String,
+      companyName: String,
+      summary: String,
+      serviceStart: Date,
+      serviceEnd: Date
     }],
     skills:[String],
     jobSeeker: {

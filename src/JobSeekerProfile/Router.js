@@ -45,9 +45,18 @@ const router = express.Router();
  *                          type: String
  */
 
-router.post('/:id/addskill',controller.addskill)
+// router.put('/:id1/profiles/:id2/addskills',controller.addskill)
 
-router.post('/:id/addqualification',controller.addqualification)
+// router.put('/:id1/profiles/:id2/addqualifications',controller.addqualification)
+
+// router.put('/:id1/profiles/:id2/addworkexperience',controller.addqualification)
+
+// router.put('/:id1/profiles/:id2/addresume',controller.addqualification)
+
+// router.put('/:id1/profiles/:id2/addprofilename',controller.addqualification)
+
+// router.put('/:id1/profiles/:id2/addqualifications',controller.addqualification)
+
 /**
  * @swagger
  * /api/v1/jobseekers/{seekerid}/profiles:

@@ -5,6 +5,7 @@ import BadRequestError from "../Exceptions/Badrequesterror.js" //importing bad r
 import NotFoundError from "../Exceptions/NotFoundError.js" //importing not found error handler
 import ValidationError from "../Exceptions/ValidationError.js" // importing validation error handler
 import jobseeker from "../models/JobSeekerModel.js" //importing job seeker
+import seekerProfile from "../models/JobSeekerProfileModel.js"
 
 //get all job seekers
 const getallseekers = async()=>{
@@ -71,8 +72,24 @@ const createseeker = async(seekerdata) => {
                         phone: systemresult.phone,
                         role: systemresult.role,
                     };
-                    await AuthUser.create(authuserdata);
+                    const authuser = await AuthUser.create(authuserdata);
                     logger.info("Auth user created successfully");
+
+                    if (authuser) {
+                        seekerdata.jobSeeker = {
+                            seekerId: seekerresult._id,
+                            firstName: seekerresult.firstName,
+                            lastName: seekerresult.lastName,
+                            userName: seekerresult.userName,
+                            email: seekerresult.email,
+                            phone: seekerresult.phone
+                          }
+
+                        await seekerProfile.create(seekerdata)
+                        logger.info("profile created successfully")
+                    } else {
+                        logger.error("Error in creating auth user");
+                    }
                 } else {
                     logger.error("Error in creating system user");
                     return null;

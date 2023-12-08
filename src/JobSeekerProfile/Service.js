@@ -65,7 +65,7 @@ const createprofile = async (seekerid, profiledata) => {
       userName: seekerresult.userName,
       email: seekerresult.email,
       phone: seekerresult.phone,
-    };
+    }
 
     const profileresult = await seekerProfile.create(profiledata);
 
@@ -89,11 +89,17 @@ const profileupdate = async(seekerid,profileid,updatedata) =>{
   try {
     const seekerdata = await jobseeker.findById(seekerid)
     if (seekerdata) {
-      const profiledata = await seekerProfile.findByIdAndUpdate(profileid,updatedata)
+      const profiledata = await seekerProfile.findById(profileid)
       if (profiledata) {
-        logger.info("seeker profile updated successfully")
+        const updatedataa = await seekerProfile.findByIdAndUpdate(profileid,{ $set: updatedata },{new:true})
+        if (updatedataa) {
+          logger.info("seeker profile updated successfully")
+          return updatedata
+        } else {
+          logger.error("error in updating seeker profile")
+        }
       } else {
-        logger.error("error in updating seeker profile")
+        logger.error("profile not found with specific id")
       }
     } else {
       logger.error("seeker not found with specific id")
