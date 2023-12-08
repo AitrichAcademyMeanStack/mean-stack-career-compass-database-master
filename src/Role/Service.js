@@ -1,5 +1,5 @@
 import BadRequestError from "../Exceptions/Badrequesterror.js";
-import NotFoundError from "../Exceptions/Notfounderror.js";
+import NotFoundError from "../Exceptions/NotFoundError.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 import logger from "../middleware/logger.js";
 import Role from "../models/RoleModel.js";
