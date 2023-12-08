@@ -93,7 +93,7 @@ const profileupdate = async(seekerid,profileid,updatedata) =>{
       if (profiledata) {
         const updatedataa = await seekerProfile.findByIdAndUpdate(profileid,{ $set: updatedata },{new:true})
         if (updatedataa) {
-          logger.info("seeker profile updated successfully")
+          logger.info("seeker profile updated successfully");
           return updatedata
         } else {
           logger.error("error in updating seeker profile")
