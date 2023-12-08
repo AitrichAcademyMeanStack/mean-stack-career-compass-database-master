@@ -46,16 +46,16 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
     if (seekerdata) {
       const profiledata = await seekerProfile.findById(profileid);
       if (profiledata) {
-        const updatedProfile = await seekerProfile.findOneAndUpdate(
+        const updatedProfile = await seekerProfile.updateOne(
           { _id: profileid },
           {
-            $push: {
+            $set: {updatedata},
+            $addToSet: {
               qualifications: { $each: updatedata.qualifications || [] },
               workExperiences: { $each: updatedata.workExperiences || [] },
-              skills: { $each: updatedata.skills || [] }
+              skills: { $each: updatedata.skills || [] },
             },
-          },
-          { new: true }
+          }
         );
 
         if (updatedProfile) {
@@ -74,6 +74,7 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
     throw error;
   }
 };
+
 
 
 
