@@ -4,6 +4,7 @@ import FileUpload from '../utils/FileUpload.js';
 
 const router = express.Router();
 
+router.get('/:id1/profiles/:id2',controller.getallprofile)
 /**
  * @swagger
  *  components:
@@ -45,7 +46,6 @@ const router = express.Router();
  *                      items:
  *                          type: String
  */
-router.put('/:id1/profiles/:id2/resume',FileUpload,controller.resumeupload)
 
 /**
  * @swagger
@@ -119,7 +119,7 @@ router.post('/:id1/profiles/:id2',controller.createprofile)
  *              description: not found error , check request body
  *                  
  */
-router.put('/:id1/profiles/:id2',controller.profileupdate)
+router.put('/:id1/profiles/:id2',FileUpload,controller.profileupdate)
 
 
 /**
@@ -156,5 +156,6 @@ router.put('/:id1/profiles/:id2',controller.profileupdate)
  */
 router.delete('/:id1/profiles/:id2',controller.deleteprofile)
 
+router.put('/:id1/profiles/:id2/resume',FileUpload,controller.resumeupload)
 
 export default router
