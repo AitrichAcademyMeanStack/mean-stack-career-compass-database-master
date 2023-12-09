@@ -1,8 +1,10 @@
 import express from 'express' //import express
 import controller from './Controller.js' //importing controller
+import FileUpload from '../utils/FileUpload.js';
 
 const router = express.Router();
 
+router.get('/:id1/profiles/:id2',controller.getallprofile)
 /**
  * @swagger
  *  components:
@@ -117,7 +119,8 @@ router.post('/:id1/profiles/:id2',controller.createprofile)
  *              description: not found error , check request body
  *                  
  */
-router.put('/:id1/profiles/:id2',controller.profileupdate)
+router.put('/:id1/profiles/:id2',FileUpload,controller.profileupdate)
+
 
 /**
  * @swagger
@@ -153,5 +156,6 @@ router.put('/:id1/profiles/:id2',controller.profileupdate)
  */
 router.delete('/:id1/profiles/:id2',controller.deleteprofile)
 
+router.put('/:id1/profiles/:id2/resume',FileUpload,controller.resumeupload)
 
 export default router
