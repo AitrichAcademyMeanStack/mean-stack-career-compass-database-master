@@ -73,12 +73,13 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
             $set: {
               "profileName": updatedata.profileName,
               "profileSummary": updatedata.profileSummary,
+              ...updatedata
             },
-            $addToSet: {
-              qualifications: { $each: updatedata.qualifications || [] },
-              workExperiences: { $each: updatedata.workExperiences || [] },
-              skills: { $each: updatedata.skills || [] },
-            },
+            // $addToSet: {
+            //   qualifications: { $each: updatedata.qualifications || [] },
+            //   workExperiences: { $each: updatedata.workExperiences || [] },
+            //   skills: { $each: updatedata.skills || [] },
+            // },
           },
           { new: true } // Return the modified document
         );
