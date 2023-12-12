@@ -1,4 +1,3 @@
-import { request } from "express";
 import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing asynchronous error handler
 import service from './Service.js' //importing service
 
