@@ -1,3 +1,4 @@
+import { request } from "express";
 import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing asynchronous error handler
 import service from './Service.js' //importing service
 
@@ -35,6 +36,17 @@ const profileupdate =asyncerrorhandler(async(req,res)=>{
         res.status(200).json(updateprofile)
 })
 
+
+//updatequalification
+
+const qualificationupdate=asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const qualificationdata=req.body
+    const updatequalification=await service.qualificationupdate(seekerid,profileid,qualificationdata)
+    res.status(200).json(updatequalification)
+})
+
 const resumeupload = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.id1
     const profileid = req.params.id2
@@ -51,4 +63,4 @@ const deleteprofile =asyncerrorhandler(async(req,res)=>{
 })
 
 
-export default {createprofile,profileupdate,deleteprofile,resumeupload,getallprofile,addskill}
+export default {createprofile,profileupdate,deleteprofile,resumeupload,getallprofile,addskill,qualificationupdate}

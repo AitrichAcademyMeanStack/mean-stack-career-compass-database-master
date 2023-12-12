@@ -236,11 +236,11 @@ router.delete('/:id1/profiles/:id2',controller.deleteprofile)
 //  */
 router.put('/:seekerid/profiles/:profileid/resume',controller.resumeupload)
 router.put('/:seekerid/profiles/:profileid/skill',controller.addskill)
-router.put('/:seekerid/profiles/:profileid/qualification',controller.addqualification)
-router.put('/:seekerid/profiles/:profileid/profilepicture',controller.addprofilepicture)
-router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
-router.put('/:seekerid/profiles/:profileid/profilesummary',controller.addprofilesummary)
-router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience)
+router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificationupdate)
+// router.put('/:seekerid/profiles/:profileid/profilepicture',controller.addprofilepicture)
+// router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
+// router.put('/:seekerid/profiles/:profileid/profilesummary',controller.addprofilesummary)
+// router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience)
 
 
 
