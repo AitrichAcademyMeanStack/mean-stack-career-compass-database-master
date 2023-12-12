@@ -45,6 +45,41 @@ const addskill = async (seekerid, profileid, skillNames) => {
 };
 
 
+const addprofilename = async (seekerid, profileid, profilenamedata) => {
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+
+      if (existingprofile &&
+        existingseeker._id.toString() ===
+          existingprofile.jobSeeker.seekerId.toString()) {
+        const result = await seekerProfile.updateOne(
+          { _id: profileid },
+          { profileName: profilenamedata.profileName },
+          {new:true}
+        );
+
+        if (result && result.acknowledged) {
+          logger.info("Profile name added successfully");
+          console.log(result);
+          return result;
+        } else {
+          logger.error("Error occurred in adding profilename");
+        }
+      } else {
+        logger.error("Seeker profile not found with specific id");
+      }
+    } else {
+      logger.error("Seeker not found with specific id");
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 
 
@@ -297,5 +332,6 @@ export default {
   getallprofile,
   addskill,
   qualificationupdate,
-  updateprofilesummary
+  updateprofilesummary,
+  addprofilename
 };
