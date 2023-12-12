@@ -239,7 +239,7 @@ router.put('/:seekerid/profiles/:profileid/skill',controller.addskill)
 router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificationupdate)
 // router.put('/:seekerid/profiles/:profileid/profilepicture',controller.addprofilepicture)
 // router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
-// router.put('/:seekerid/profiles/:profileid/profilesummary',controller.addprofilesummary)
+router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprofilesummary)
 // router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience)
 
 
