@@ -46,13 +46,21 @@ const profileupdate =asyncerrorhandler(async(req,res)=>{
 
 
 //updatequalification
-
 const qualificationupdate=asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
     const profileid=req.params.profileid
     const qualificationdata=req.body
     const updatequalification=await service.qualificationupdate(seekerid,profileid,qualificationdata)
     res.status(200).json(updatequalification)
+})
+
+//update profile summary
+const updateprofilesummary= asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const summarydata=req.body
+    const  updateprofilesummary=await service.updateprofilesummary(seekerid,profileid,summarydata)
+    res.status(200).json(updateprofilesummary)
 })
 
 const resumeupload = asyncerrorhandler(async(req,res)=>{

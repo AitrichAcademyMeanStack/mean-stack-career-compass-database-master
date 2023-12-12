@@ -80,12 +80,6 @@ const addprofilename = async (seekerid, profileid, profilenamedata) => {
 };
 
 
-
-
-
-
-
-
 //create new job seeker profile
 const createprofile = async (seekerid, profiledata, profileid) => {
   try {
@@ -116,6 +110,7 @@ const createprofile = async (seekerid, profiledata, profileid) => {
   }
 };
 
+//get all seeker profiles
 const getallprofile = async (seekerid, profileid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -187,6 +182,7 @@ const profileupdate = async (seekerid, profileid, updatedata, req) => {
   }
 };
 
+//add qualification to seekerprofile
 const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
   try {
     const seekerdata = await jobseeker.findById(seekerid);
@@ -216,6 +212,7 @@ const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
 };
 
 
+// add resume to seekerprofile
 const resumeupload = async (req, seekerid, profileid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -294,6 +291,6 @@ export default {
   resumeupload,
   getallprofile,
   addskill,
+  addprofilename,
   qualificationupdate,
-  addprofilename
 };

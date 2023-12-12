@@ -356,7 +356,8 @@ router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificati
  *                  
  */
 router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
-// router.put('/:seekerid/profiles/:profileid/profilesummary',controller.addprofilesummary)
+// router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
+router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprofilesummary)
 // router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience)
 
 
