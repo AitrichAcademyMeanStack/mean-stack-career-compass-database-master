@@ -80,6 +80,12 @@ const addprofilename = async (seekerid, profileid, profilenamedata) => {
 };
 
 
+
+
+
+
+
+
 //create new job seeker profile
 const createprofile = async (seekerid, profiledata, profileid) => {
   try {
@@ -291,6 +297,7 @@ export default {
   resumeupload,
   getallprofile,
   addskill,
-  addprofilename,
   qualificationupdate,
+  addprofilename,
+  updateprofilesummary
 };
