@@ -65,7 +65,6 @@ const options = {
         path.join(__dirname,"Job_Category","router.js"),
         path.join(__dirname,"Qualification","Router.js"),
         path.join(__dirname,"skill","Router.js"),
-        path.join(__dirname,"Role","Router.js"),
         path.join(__dirname,"Industry","Router.js"),
         path.join(__dirname,"JobProviderCompany","Router.js"),
         path.join(__dirname,"JobSeeker","Router.js"),
