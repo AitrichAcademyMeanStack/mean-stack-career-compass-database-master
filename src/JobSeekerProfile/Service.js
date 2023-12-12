@@ -9,6 +9,34 @@ import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad 
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 
+
+const addskill = async(seekerid,profileid,skilldata)=>{
+  try {
+    const existingseeker = await jobseeker.findById(seekerid)
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid)
+      if (existingseeker._id.toString() === existingprofile.jobSeeker.seekerId.toString()) {
+        
+        const result = await seekerProfile.updateOne({_id:profileid},{$set:{skilldata}})
+        if (result) {
+          logger.info("skills are added successfullly")
+          return result
+        } else {
+          logger.error("error occured  in updating skills")
+        }
+      }else{
+        logger.error("seeker profile not found with specific id")
+      }
+    } else {
+      logger.error("seeker not found with specific id")
+    }
+  } catch (error) {
+    
+  }
+}
+
+
+
 //create new job seeker profile
 const createprofile = async (seekerid,profiledata,profileid) => {
   try {
@@ -59,7 +87,7 @@ const getallprofile = async(seekerid,profileid)=>{
 
 
 //update job seeker profile
-const profileupdate = async (seekerid, profileid, updatedata) => {
+const profileupdate = async (seekerid, profileid, updatedata, req) => {
   try {
     const seekerdata = await jobseeker.findById(seekerid);
     if (seekerdata) {
@@ -67,19 +95,28 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
       if (profiledata) {
         profiledata.profileName = updatedata.profileName;
         profiledata.profileSummary = updatedata.profileSummary;
+
+        const file = profiledata.Resume;
+        profiledata.Resume = {
+          title: req.file.originalname,
+          resume: req.file.path
+        };
+
+        if (!profiledata.Resume.title || !profiledata.Resume.resume) {
+          logger.error("Invalid file data");
+          throw new Error("Invalid file data");
+        }
+
         const updatedProfile = await seekerProfile.findOneAndUpdate(
           { _id: profileid },
           {
             $set: {
               "profileName": updatedata.profileName,
               "profileSummary": updatedata.profileSummary,
+              "Resume.title": req.file.originalname,
+              "Resume.resume": req.file.path,
               ...updatedata
-            },
-            // $addToSet: {
-            //   qualifications: { $each: updatedata.qualifications || [] },
-            //   workExperiences: { $each: updatedata.workExperiences || [] },
-            //   skills: { $each: updatedata.skills || [] },
-            // },
+            }
           },
           { new: true } // Return the modified document
         );
@@ -102,6 +139,7 @@ const profileupdate = async (seekerid, profileid, updatedata) => {
 };
 
 
+
 const resumeupload = async(req,seekerid,profileid)=>{
   try {
     const existingseeker = await jobseeker.findById(seekerid)
@@ -118,6 +156,7 @@ const resumeupload = async(req,seekerid,profileid)=>{
           logger.error("Invalid file data");
           throw new Error("Invalid file data");
       }
+
         const updateprofile  =  await seekerProfile.updateOne(   { _id: profileid },
           { $set: existingprofile })
         console.log(updateprofile);
@@ -168,4 +207,4 @@ const deleteprofile = async (seekerid, profileid) => {
 };
 
 
-export default {createprofile,deleteprofile,profileupdate,resumeupload,getallprofile}
+export default {createprofile,deleteprofile,profileupdate,resumeupload,getallprofile,addskill}

@@ -1,10 +1,9 @@
 import express from 'express' //import express
 import controller from './Controller.js' //importing controller
-import FileUpload from '../utils/FileUpload.js';
+import upload from '../utils/FileUpload.js';
 
 const router = express.Router();
 
-router.get('/:id1/profiles/:id2',controller.getallprofile)
 /**
  * @swagger
  *  components:
@@ -14,6 +13,7 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
  *              required:
  *                  - profileName
  *                  - profileSummary
+ *                  - resume
  *                  - qualifications
  *                  - workExperiences
  *                  - skills
@@ -22,6 +22,13 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
  *                      type: string
  *                  profileSummary:
  *                      type: string
+ *                  resume:
+ *                      type: object
+ *                      properties:
+ *                          title:
+ *                              type: String
+ *                          resume:
+ *                              type: String
  *                  qualifications:
  *                      type: array
  *                      items:
@@ -46,6 +53,39 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
  *                      items:
  *                          type: String
  */
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}:
+ *  get:
+ *      summary: get all job-seeker profile details with specific id
+ *      description: this is is used to get all job-seeker profile details with specific id
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seeekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: get all job-seeker profile detailes retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobseekerprofile' 
+ */
+router.get('/:id1/profiles/:id2',controller.getallprofile)
 
 /**
  * @swagger
@@ -119,8 +159,7 @@ router.post('/:id1/profiles/:id2',controller.createprofile)
  *              description: not found error , check request body
  *                  
  */
-router.put('/:id1/profiles/:id2',FileUpload,controller.profileupdate)
-
+router.put('/:id1/profiles/:id2',controller.profileupdate)
 
 /**
  * @swagger
@@ -156,6 +195,49 @@ router.put('/:id1/profiles/:id2',FileUpload,controller.profileupdate)
  */
 router.delete('/:id1/profiles/:id2',controller.deleteprofile)
 
-router.put('/:id1/profiles/:id2/resume',FileUpload,controller.resumeupload)
+// /**
+//  * @swagger
+//  * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
+//  *  put:
+//  *      summary: update jobseeker resume details
+//  *      description: this api is used to update  jobseeker resume details
+//  *      tags:
+//  *          - JobSeeker-Profile
+//  *      parameters:
+//  *          - in: path
+//  *            name: seekerid
+//  *            required: true
+//  *            description: numeric id is required
+//  *            schema:
+//  *                  type: string
+//  *          - in: path
+//  *            name: profileid
+//  *            required: true
+//  *            description: numeric id is required
+//  *            schema:
+//  *                  type: string
+//  *      requestBody:
+//  *          required: true
+//  *          content:
+//  *              application/json:
+//  *                  schema:
+//  *                      $ref: '#/components/schemas/jobseekerprofile'
+//  *      responses:
+//  *          200:
+//  *              description: jobseeker resume updated successfully
+//  *              content:
+//  *                  application/json:
+//  *                      schema:
+//  *                          $ref: '#/components/schemas/jobseekerprofile'
+//  *          400:
+//  *              description: not found error , check request body
+//  *                  
+//  */
+router.put('/:id1/profiles/:id2/resume',controller.resumeupload)
+
+router.put('/:seekerid/profiles/:profileid/addskill',controller.addskill)
+router.put('/:seekerid/profiles/:profileid/addskill',controller.addskill)
+router.put('/:seekerid/profiles/:profileid/addskill',controller.addskill)
+router.put('/:seekerid/profiles/:profileid/addskill',controller.addskill)
 
 export default router
