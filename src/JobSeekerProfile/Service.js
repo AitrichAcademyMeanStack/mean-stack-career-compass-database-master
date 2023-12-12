@@ -23,7 +23,7 @@ const addskill = async (seekerid, profileid, skillNames) => {
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
-          { $addToSet: { skills: { $each: skillNames.skills.map((skill)=>skill) } } }
+          { $addToSet: { skills: { $each: skillNames.skills } } }
         );
 
         if (result) {
@@ -45,10 +45,39 @@ const addskill = async (seekerid, profileid, skillNames) => {
 };
 
 
+const addprofilename = async (seekerid, profileid, profilenamedata) => {
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
 
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
 
+      if (existingprofile &&
+        existingseeker._id.toString() ===
+          existingprofile.jobSeeker.seekerId.toString()) {
+        const result = await seekerProfile.updateOne(
+          { _id: profileid },
+          { profileName: profilenamedata.profileName },
+          {new:true}
+        );
 
-
+        if (result && result.acknowledged) {
+          logger.info("Profile name added successfully");
+          console.log(result);
+          return result;
+        } else {
+          logger.error("Error occurred in adding profilename");
+        }
+      } else {
+        logger.error("Seeker profile not found with specific id");
+      }
+    } else {
+      logger.error("Seeker not found with specific id");
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 
 //create new job seeker profile
@@ -163,7 +192,7 @@ const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
 
       if (seekerdata && seekerdata._id.toString() === profiledata.jobSeeker.seekerId.toString()) {
         
-        const updatedata= await seekerProfile.updateOne({_id:profileid},{$addToSet:{qualifications:{$each:qualificationdata.qualifications.map((qualification)=>qualification)}}})
+        const updatedata= await seekerProfile.updateOne({_id:profileid},{$addToSet:{qualifications:{$each:qualificationdata.qualifications}}})
         if (updatedata) {
           logger.info("Qualification updated successfully", updatedata);
           return updatedata;
@@ -181,40 +210,6 @@ const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
     throw error;
   }
 };
-
-//add profile summary to seekerprofile
-
-const updateprofilesummary= async(seekerid,profileid,summarydata)=>{
-  try{
-    const seekerdata= await jobseeker.findById(seekerid);
-    if(seekerdata){
-     const profiledata= await seekerProfile.findById(profileid);
-      if (profiledata && seekerdata._id.toString() === profiledata.jobSeeker.seekerId.toString()) {
-     
-      const updatedata = await seekerProfile.updateOne(
-        { _id: profileid },
-        { profileSummary: summarydata.profileSummary }
-      );
-   
-     if (updatedata) {
-      logger.info("summary updated successfully", updatedata);
-      return updatedata;
-    } else {
-      logger.error("Error in updating qualification");
-    }
-  } else {
-    logger.error("Profile not found with specific id");
-  }
- } else {
-    logger.error("seeker not found with specific id");
-  
-  }
-}
-  catch(error){
-    throw error;
-  }
-};
-
 
 
 // add resume to seekerprofile
@@ -296,6 +291,6 @@ export default {
   resumeupload,
   getallprofile,
   addskill,
+  addprofilename,
   qualificationupdate,
-  updateprofilesummary
 };
