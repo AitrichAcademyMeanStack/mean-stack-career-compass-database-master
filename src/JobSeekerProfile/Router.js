@@ -356,8 +356,49 @@ router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificati
  *                  
  */
 router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
+
 // router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/profilesummary:
+ *  put:
+ *      summary: update profilesummary in jobseeker profile
+ *      description: this api is used to update profilesummary in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseekerprofile'
+ *      responses:
+ *          200:
+ *              description: jobseeker profile updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
 router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprofilesummary)
+
 // router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience)
 
 

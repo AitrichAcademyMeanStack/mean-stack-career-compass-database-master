@@ -79,4 +79,4 @@ const deleteprofile =asyncerrorhandler(async(req,res)=>{
 })
 
 
-export default {createprofile,profileupdate,deleteprofile,resumeupload,getallprofile,addskill,qualificationupdate,addprofilename}
+export default {createprofile,profileupdate,deleteprofile,resumeupload,getallprofile,addskill,qualificationupdate,addprofilename,updateprofilesummary}
