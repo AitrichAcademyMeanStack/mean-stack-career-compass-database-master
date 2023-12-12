@@ -1,14 +1,13 @@
-import { request } from "express";
 import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing asynchronous error handler
 import service from './Service.js' //importing service
 
 
 
 const addskill  = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const profileid = req.params.id2
-    const skilldata = req.body
-    const addskills = await  service.addskill(seekerid,profileid,skilldata)
+    const seekerid = req.params.seekerid
+    const profileid = req.params.profileid
+    const skillNames = req.body
+    const addskills = await service.addskill(seekerid,profileid,skillNames)
     res.status(201).json(addskills)
 })
 

@@ -7,34 +7,49 @@ import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker mode
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
 import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
-import profileSummary from "../models/Profilesummary.js";
-const addskill = async (seekerid, profileid, skilldata) => {
+
+//add skills to profile
+const addskill = async (seekerid, profileid, skillNames) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
+
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
+
       if (
+        existingprofile &&
         existingseeker._id.toString() ===
-        existingprofile.jobSeeker.seekerId.toString()
+          existingprofile.jobSeeker.seekerId.toString()
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
-          { $set: { skilldata } }
+          { $addToSet: { skills: { $each: skillNames.skills.map((skill)=>skill) } } }
         );
+
         if (result) {
-          logger.info("skills are added successfullly");
+          logger.info("Skills are added successfully");
+          console.log(result);
           return result;
         } else {
-          logger.error("error occured  in updating skills");
+          logger.error("Error occurred in updating skills");
         }
       } else {
-        logger.error("seeker profile not found with specific id");
+        logger.error("Seeker profile not found with specific id");
       }
     } else {
-      logger.error("seeker not found with specific id");
+      logger.error("Seeker not found with specific id");
     }
-  } catch (error) {}
+  } catch (error) {
+    logger.error(`Error: ${error}`);
+  }
 };
+
+
+
+
+
+
+
 
 //create new job seeker profile
 const createprofile = async (seekerid, profiledata, profileid) => {
