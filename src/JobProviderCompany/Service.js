@@ -40,7 +40,7 @@ const getJobProviderById = async (id) => {
 const addJobProvider = async (data) => {
   try {
     // await authschema.validateAsync(data);
-    const newData = await JobProviderCompany.create(data);
+    const newData = await JobProviderCompany.insertMany(data);
     if (newData) {
       logger.info("New JobProviderCompany :", newData);
       return newData;

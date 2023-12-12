@@ -75,7 +75,8 @@ const options = {
         path.join(__dirname,"JobPost","Router.js"),
         path.join(__dirname,"SavedJobs","Router.js"),
         path.join(__dirname,"JobInterview","Router.js"),
-        path.join(__dirname,"JobApplication","Router.js")
+        path.join(__dirname,"JobApplication","Router.js"),
+        path.join(__dirname,"Resume","Router.js")
     ],
 };
 
