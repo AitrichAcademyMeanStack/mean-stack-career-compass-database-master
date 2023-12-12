@@ -23,7 +23,7 @@ const addskill = async (seekerid, profileid, skillNames) => {
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
-          { $addToSet: { skills: { $each: skillNames.skills.map((skill)=>skill) } } }
+          { $addToSet: { skills: { $each: skillNames.skills } } }
         );
 
         if (result) {
@@ -41,6 +41,41 @@ const addskill = async (seekerid, profileid, skillNames) => {
     }
   } catch (error) {
     logger.error(`Error: ${error}`);
+  }
+};
+
+
+const addprofilename = async (seekerid, profileid, profilenamedata) => {
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+
+      if (existingprofile &&
+        existingseeker._id.toString() ===
+          existingprofile.jobSeeker.seekerId.toString()) {
+        const result = await seekerProfile.updateOne(
+          { _id: profileid },
+          { profileName: profilenamedata.profileName },
+          {new:true}
+        );
+
+        if (result && result.acknowledged) {
+          logger.info("Profile name added successfully");
+          console.log(result);
+          return result;
+        } else {
+          logger.error("Error occurred in adding profilename");
+        }
+      } else {
+        logger.error("Seeker profile not found with specific id");
+      }
+    } else {
+      logger.error("Seeker not found with specific id");
+    }
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -161,7 +196,7 @@ const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
 
       if (seekerdata && seekerdata._id.toString() === profiledata.jobSeeker.seekerId.toString()) {
         
-        const updatedata= await seekerProfile.updateOne({_id:profileid},{$addToSet:{qualifications:{$each:qualificationdata.qualifications.map((qualification)=>qualification)}}})
+        const updatedata= await seekerProfile.updateOne({_id:profileid},{$addToSet:{qualifications:{$each:qualificationdata.qualifications}}})
         if (updatedata) {
           logger.info("Qualification updated successfully", updatedata);
           return updatedata;
@@ -180,63 +215,6 @@ const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
   }
 };
 
-// const profileupdate = async (seekerid, profileid, updatedata, req) => {
-//   try {
-//     const seekerdata = await jobseeker.findById(seekerid);
-
-//     if (seekerdata) {
-//       const profiledata = await seekerProfile.findById(profileid);
-
-//       if (profiledata) {
-//         profiledata.profileName = updatedata.profileName;
-//         profiledata.profileSummary = updatedata.profileSummary;
-
-//         const file = profiledata.Resume;
-//         profiledata.Resume = {
-//           title: req.file.originalname,
-//           resume: req.file.path
-//         };
-
-//         if (!profiledata.Resume.title || !profiledata.Resume.resume) {
-//           logger.error("Invalid file data");
-//           throw new Error("Invalid file data");
-//         }
-
-//         // Update the job seeker profile (excluding qualification)
-//         const updatedProfile = await seekerProfile.findOneAndUpdate(
-//           { _id: profileid },
-//           {
-//             $set: {
-//               "profileName": updatedata.profileName,
-//               "profileSummary": updatedata.profileSummary,
-//               "Resume.title": req.file.originalname,
-//               "Resume.resume": req.file.path,
-//               ...updatedata
-//             }
-//           },
-//           { new: true } // Return the modified document
-//         );
-
-//         if (updatedProfile) {
-//           logger.info("Seeker profile updated successfully", updatedProfile);
-
-//           // Call the updateQualification function to update qualifications
-//           await updateQualification(profileid, updatedata.newQualification);
-
-//           return updatedProfile;
-//         } else {
-//           logger.error("Error in updating seeker profile");
-//         }
-//       } else {
-//         logger.error("Profile not found with specific id");
-//       }
-//     } else {
-//       logger.error("Seeker not found with specific id");
-//     }
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 const resumeupload = async (req, seekerid, profileid) => {
   try {
@@ -317,4 +295,5 @@ export default {
   getallprofile,
   addskill,
   qualificationupdate,
+  addprofilename
 };
