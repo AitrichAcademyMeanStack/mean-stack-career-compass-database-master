@@ -10,6 +10,8 @@ import skill from '../../data/Skill.json' assert{type: 'json'}
 import qualification from '../../data/Qualification.json' assert{type: 'json'}
 import Industry from '../models/IndustryModel.js'
 import industryData from '../../data/Industry.json' assert{type: 'json'}
+import JobTitle from '../models/JobTitle.js'
+import jobtitle from '../../data/JobTitle.json' assert{type:'json'}
  
 
 
@@ -25,7 +27,7 @@ const connecttodatabase = async()=>{
             await insertqualificationsdata() // inserting data into collection
             await insertskillsdata() // inserting data into collection
             await insertIndustryData()  // inserting data into collection
-
+            await insertjobtitledata() //inserting data into collection
         }else {
             logger.error("❌ MongoDb Not Connected")
 
@@ -85,6 +87,18 @@ const insertqualificationsdata = async()=>{
             logger.info("qualifications added successfully")
         }
 
+    } catch (error) {
+        logger.error("error inserting data")
+    }
+}
+
+const insertjobtitledata = async()=>{
+    try {
+        const existingdata = await JobTitle.find()
+        if (existingdata.length === 0) {
+            await JobTitle.insertMany(jobtitle)
+            logger.info("jobtitle added successfully")
+        }
     } catch (error) {
         logger.error("error inserting data")
     }

@@ -20,30 +20,13 @@ const addprofilename = asyncerrorhandler(async(req,res)=>{
     res.status(200).json(newprofilename)
 })
 
+//get all profiles
 const getallprofile = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.id1
     const profileid = req.params.id2
     const getprofile = await service.getallprofile(seekerid,profileid)
     res.status(200).json(getprofile)
 })
-//create new job seeker profile
-const createprofile =asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const profileid = req.params.id2
-    const profiledata = req.body
-    const newprofile = await service.createprofile(seekerid,profiledata,profileid)
-    res.status(201).json(newprofile)
-})
-
-//update job seeker profile
-const profileupdate =asyncerrorhandler(async(req,res)=>{
-        const seekerid = req.params.id1
-        const profileid = req.params.id2
-        const updatedata = req.body
-        const updateprofile = await service.profileupdate(seekerid,profileid,updatedata,req)
-        res.status(200).json(updateprofile)
-})
-
 
 //updatequalification
 const qualificationupdate=asyncerrorhandler(async(req,res)=>{
@@ -63,6 +46,7 @@ const updateprofilesummary= asyncerrorhandler(async(req,res)=>{
     res.status(200).json(updateprofilesummary)
 })
 
+//upload resume
 const resumeupload = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.id1
     const profileid = req.params.id2
@@ -70,13 +54,23 @@ const resumeupload = asyncerrorhandler(async(req,res)=>{
     res.status(201).json({ message: "Resume uploaded successfully" });
 })
 
-//delete job seeker profile
-const deleteprofile =asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const profileid = req.params.id2
-    await service.deleteprofile(seekerid,profileid)
-    res.status(200).json("seeker profile deleted successfully")
+
+//update work experience
+const addworkexperience = asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const experiencedata =  req.body
+    const newexperience = await  service.addworkexperience(seekerid,profileid,experiencedata) 
+    res.status(200).json(newexperience)
+})
+
+const deleteskills = asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const skillname = req.params.skillname
+    await service.deleteskills(seekerid,profileid,skillname)
+    res.status(202).json("skill deleted successfully")
 })
 
 
-export default {createprofile,profileupdate,deleteprofile,resumeupload,getallprofile,addskill,qualificationupdate,addprofilename,updateprofilesummary}
+export default {resumeupload,getallprofile,addskill,qualificationupdate,addprofilename,updateprofilesummary,addworkexperience,deleteskills}

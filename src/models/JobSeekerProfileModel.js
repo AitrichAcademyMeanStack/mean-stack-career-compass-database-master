@@ -10,6 +10,9 @@ const jobSeekerProfileSchema = new Schema(
       title:String,
       resume:String,
     },
+    ProfilePicture:{
+      
+    },
     qualifications: [String],
     workExperiences: [{
        jobTitle: String,
