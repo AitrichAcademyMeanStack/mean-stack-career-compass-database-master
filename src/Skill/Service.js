@@ -8,7 +8,7 @@ import {authschema} from '../middleware/ValidationSchema.js' // importing valida
 
 const getskills = async()=>{
     try {
-        const result = await skill.find({},{name:true}).limit(5)
+        const result = await skill.find({},{name:true})
         if (result.length>0) {
             logger.info("all skills : ",result)
             return result

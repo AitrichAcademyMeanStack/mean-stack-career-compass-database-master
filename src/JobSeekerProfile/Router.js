@@ -1,6 +1,6 @@
 import express from 'express' //import express
 import controller from './Controller.js' //importing controller
-import upload from '../utils/FileUpload.js';
+import {uploadresume,uploadprofilepicture} from '../utils/FileUpload.js'
 
 const router = express.Router();
 
@@ -14,6 +14,7 @@ const router = express.Router();
  *                  - profileName
  *                  - profileSummary
  *                  - resume
+ *                  - profilepicture
  *                  - qualifications
  *                  - workExperiences
  *                  - skills
@@ -23,6 +24,13 @@ const router = express.Router();
  *                  profileSummary:
  *                      type: string
  *                  resume:
+ *                      type: object
+ *                      properties:
+ *                          title:
+ *                              type: String
+ *                          resume:
+ *                              type: String
+ *                  profilepicture:
  *                      type: object
  *                      properties:
  *                          title:
@@ -87,41 +95,6 @@ const router = express.Router();
  */
 router.get('/:id1/profiles/:id2',controller.getallprofile)
 
-/**
- * @swagger
- * /api/v1/jobseekers/{seekerid}/profiles/{profileid}:
- *  delete:
- *      summary: delete jobseeker profile details
- *      description: this api is used to delete jobseeker profile details
- *      tags:
- *          - JobSeeker-Profile
- *      parameters:
- *          - in: path
- *            name: seekerid
- *            required: true
- *            description: numeric id is required
- *            schema:
- *                  type: string
- *          - in: path
- *            name: profileid
- *            required: true
- *            description: numeric id is required
- *            schema:
- *                  type: string
- *      responses:
- *          200:
- *              description: job-seeker profile deleted successfully
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: array
- *                          items:
- *                              $ref: '#/components/schemas/jobseekerprofile'
- * 
- */
-// router.delete('/:id1/profiles/:id2',controller.deleteprofile)
-
-
 // /**
 //  * @swagger
 //  * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
@@ -160,7 +133,7 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
 //  *              description: not found error , check request body
 //  *                  
 //  */
-router.put('/:seekerid/profiles/:profileid/resume',controller.resumeupload)
+router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume'),controller.resumeupload)
 
 /**
  * @swagger
@@ -242,7 +215,7 @@ router.put('/:seekerid/profiles/:profileid/skill',controller.addskill)
  */
 router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificationupdate)
 
-// router.put('/:seekerid/profiles/:profileid/profilepicture',controller.addprofilepicture)
+router.put('/:seekerid/profiles/:profileid/profilepicture',uploadprofilepicture.single('ProfilePicture'),controller.addprofilepicture)
 
 /**
  * @swagger

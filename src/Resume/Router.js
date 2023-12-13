@@ -1,6 +1,6 @@
 import express from "express"; //importing express
 import controller from './Controller.js' //importing controller
-import FileUpload from "../utils/FileUpload.js"; //importing file upload
+import { uploadresume } from "../utils/FileUpload.js";
 
 const router = express.Router()
 
@@ -11,13 +11,12 @@ const router = express.Router()
  *          Resume:
  *              type: object
  *              properties:
- *                  name:
- *                      type: string
  *                  resume:
  *                      type: string   
  *                      format: binary
  *                  
  */
+
 
 /**
  * @swagger
@@ -29,25 +28,29 @@ const router = express.Router()
  *          requestBody:
  *              required: true
  *              content:
- *                   multipart/form-data:
- *                              schema:
- *                                  $ref:   '#/components/schemas/Resume'
+ *                  multipart/form-data:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Resume'
+ *          parameters:
+ *            - name: Resume
+ *              in: formData
+ *              description: The resume file to upload
+ *              required: true
+ *              type: file
  *          responses:
- *                 201:
- *                      description: Resume Added Successfully
- *                      content:
- *                              application/json:
- *                                  schema:
- *                                      $ref:   '#/components/schemas/Resume' 
- *                 400:
- *                      description: Bad request 
- *                
- * 
- *                  
- *              
- *            
- *          
+ *              201:
+ *                  description: Resume Added Successfully
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/components/schemas/Resume' 
+ *              400:
+ *                  description: Bad request 
  */
-router.post('/',FileUpload,controller.createresume) //upload file
+
+
+router.post('/', uploadresume.single('Resume'), controller.createresume);
+
+
 router.delete('/:id',controller.deleteresume) //delete uploaded file
 export default router
