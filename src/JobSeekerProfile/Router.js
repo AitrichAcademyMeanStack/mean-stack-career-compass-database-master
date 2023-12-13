@@ -1,10 +1,9 @@
 import express from 'express' //import express
 import controller from './Controller.js' //importing controller
-import FileUpload from '../utils/FileUpload.js';
+import upload from '../utils/FileUpload.js';
 
 const router = express.Router();
 
-router.get('/:id1/profiles/:id2',controller.getallprofile)
 /**
  * @swagger
  *  components:
@@ -14,6 +13,7 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
  *              required:
  *                  - profileName
  *                  - profileSummary
+ *                  - resume
  *                  - qualifications
  *                  - workExperiences
  *                  - skills
@@ -22,6 +22,13 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
  *                      type: string
  *                  profileSummary:
  *                      type: string
+ *                  resume:
+ *                      type: object
+ *                      properties:
+ *                          title:
+ *                              type: String
+ *                          resume:
+ *                              type: String
  *                  qualifications:
  *                      type: array
  *                      items:
@@ -49,49 +56,15 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
 
 /**
  * @swagger
- * /api/v1/jobseekers/{seekerid}/profiles:
- *  post:
- *      summary: create new job seeker profile details
- *      description: this api is used to create new job seeker profile
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}:
+ *  get:
+ *      summary: get all job-seeker profile details with specific id
+ *      description: this is is used to get all job-seeker profile details with specific id
  *      tags:
  *          - JobSeeker-Profile
  *      parameters:
  *          - in: path
- *            name: seekerid
- *            required: true
- *            description: numeric id is required
- *            schema:
- *                  type: string
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/jobseekerprofile'
- *      responses:
- *          201:
- *              description: job-seeker profile created successfully
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
- *          400:
- *              description: not found error, check request body
- * 
- */
-router.post('/:id1/profiles/:id2',controller.createprofile)
-
-/**
- * @swagger
- * /api/v1/jobseekers/{seekerid}/profiles/{profileid}:
- *  put:
- *      summary: update jobseeker profile details
- *      description: this api is used to update  jobseeker profile details
- *      tags:
- *          - JobSeeker-Profile
- *      parameters:
- *          - in: path
- *            name: seekerid
+ *            name: seeekerid
  *            required: true
  *            description: numeric id is required
  *            schema:
@@ -102,25 +75,17 @@ router.post('/:id1/profiles/:id2',controller.createprofile)
  *            description: numeric id is required
  *            schema:
  *                  type: string
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/jobseekerprofile'
  *      responses:
  *          200:
- *              description: jobseeker profile updated successfully
+ *              description: get all job-seeker profile detailes retrived successfully
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
- *          400:
- *              description: not found error , check request body
- *                  
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobseekerprofile' 
  */
-router.put('/:id1/profiles/:id2',FileUpload,controller.profileupdate)
-
+router.get('/:id1/profiles/:id2',controller.getallprofile)
 
 /**
  * @swagger
@@ -154,8 +119,295 @@ router.put('/:id1/profiles/:id2',FileUpload,controller.profileupdate)
  *                              $ref: '#/components/schemas/jobseekerprofile'
  * 
  */
-router.delete('/:id1/profiles/:id2',controller.deleteprofile)
+// router.delete('/:id1/profiles/:id2',controller.deleteprofile)
 
-router.put('/:id1/profiles/:id2/resume',FileUpload,controller.resumeupload)
+
+// /**
+//  * @swagger
+//  * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
+//  *  put:
+//  *      summary: update jobseeker resume details
+//  *      description: this api is used to update  jobseeker resume details
+//  *      tags:
+//  *          - JobSeeker-Profile
+//  *      parameters:
+//  *          - in: path
+//  *            name: seekerid
+//  *            required: true
+//  *            description: numeric id is required
+//  *            schema:
+//  *                  type: string
+//  *          - in: path
+//  *            name: profileid
+//  *            required: true
+//  *            description: numeric id is required
+//  *            schema:
+//  *                  type: string
+//  *      requestBody:
+//  *          required: true
+//  *          content:
+//  *              application/json:
+//  *                  schema:
+//  *                      $ref: '#/components/schemas/jobseekerprofile'
+//  *      responses:
+//  *          200:
+//  *              description: jobseeker resume updated successfully
+//  *              content:
+//  *                  application/json:
+//  *                      schema:
+//  *                          $ref: '#/components/schemas/jobseekerprofile'
+//  *          400:
+//  *              description: not found error , check request body
+//  *                  
+//  */
+router.put('/:seekerid/profiles/:profileid/resume',controller.resumeupload)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/skill:
+ *  put:
+ *      summary: update skills in jobseeker profile
+ *      description: this api is used to update  skills in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseekerprofile'
+ *      responses:
+ *          200:
+ *              description: jobseeker profile updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
+router.put('/:seekerid/profiles/:profileid/skill',controller.addskill)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/qualification:
+ *  put:
+ *      summary: update qualifications in jobseeker profile
+ *      description: this api is used to update qualifications in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseekerprofile'
+ *      responses:
+ *          200:
+ *              description: jobseeker profile updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
+router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificationupdate)
+
+// router.put('/:seekerid/profiles/:profileid/profilepicture',controller.addprofilepicture)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/profilename:
+ *  put:
+ *      summary: update profilename in jobseeker profile
+ *      description: this api is used to update profilename in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseekerprofile'
+ *      responses:
+ *          200:
+ *              description: jobseeker profile updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
+router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/profilesummary:
+ *  put:
+ *      summary: update profilesummary in jobseeker profile
+ *      description: this api is used to update profilesummary in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseekerprofile'
+ *      responses:
+ *          200:
+ *              description: jobseeker profile updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
+router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprofilesummary)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/workexperience:
+ *  put:
+ *      summary: update workexperience in jobseeker profile
+ *      description: this api is used to update  workexperience in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseekerprofile'
+ *      responses:
+ *          200:
+ *              description: jobseeker profile updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
+router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/skills/{skillname}:
+ *  delete:
+ *      summary: update skills in jobseeker profile
+ *      description: this api is used to update  skills in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: skillname
+ *            required: true
+ *            description: skill name is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: jobseeker profile updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
+router.delete('/:seekerid/profiles/:profileid/skills/:skillname',controller.deleteskills)
+// router.delete('/:seekerid/profiles/:profileid/qualification',controller.deletequalification)
+// router.delete('/:seekerid/profiles/:profileid/workexperience',controller.deleteworkexperience)
+// router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume)
+// router.delete('/:seekerid/profiles/:profileid/profilepicture',controller.deleteprofilepictre)
+
+
 
 export default router
