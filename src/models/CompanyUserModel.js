@@ -7,16 +7,12 @@ const companyUserSchema = new Schema(
             companyId: mongoose.Schema.Types.ObjectId,
             legalName:{type: String},
             summary:{type: String},
-            industry:{
-                name:{type: String}
-            },
+            industry:[String],
             email:{type: String},
-            phone:{type: String},
+            phone:{type:Number},
             address:{type: String},
             website:{type: String},
-            location:{
-                name:{type: String}
-            }
+            location:[String]
         }, 
         firstName: {type:String},
         role: {

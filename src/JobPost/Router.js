@@ -12,7 +12,6 @@ const router = express.Router()
  *                  - jobTitle
  *                  - jobSummary
  *                  - jobLocation
- *                  - company
  *                  - category
  *                  - qualification
  *                  - skills
@@ -21,21 +20,31 @@ const router = express.Router()
  *                  - postedBy
  *              properties :
  *                  jobTitle:
- *                      type: string
+ *                      type: object
+ *                      items:
+ *                          type: string
  *                  jobSummary:
  *                      type: string
  *                  jobLocation:
- *                      type: string
- *                  company:
- *                      type: string
+ *                      type: array
+ *                      items:
+ *                          type: string
  *                  category:
- *                      type: string
+ *                      type: array
+ *                      items:
+ *                          type: string
  *                  qualification:
- *                      type: string
+ *                      type: array
+ *                      items:
+ *                          type: string
  *                  skills:
- *                      type: string
+ *                      type: array
+ *                      items: 
+ *                          type: string
  *                  industry:
- *                      type: string
+ *                      type: array
+ *                      items:
+ *                          type: string
  *                  jobResponsibilities:
  *                      type: string
  *                  postedBy:
