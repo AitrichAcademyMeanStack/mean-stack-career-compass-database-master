@@ -48,10 +48,17 @@ const updateprofilesummary= asyncerrorhandler(async(req,res)=>{
 
 //upload resume
 const resumeupload = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const profileid = req.params.id2
+    const seekerid = req.params.seekerid
+    const profileid = req.params.profileid
     await service.resumeupload(req,seekerid,profileid);
     res.status(201).json({ message: "Resume uploaded successfully" });
+})
+
+const addprofilepicture = asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.seekerid
+    const profileid = req.params.profileid
+    await service.addprofilepicture(req,seekerid,profileid);
+    res.status(201).json({ message: "Profile Picture uploaded successfully" });
 })
 
 
@@ -73,4 +80,4 @@ const deleteskills = asyncerrorhandler(async(req,res)=>{
 })
 
 
-export default {resumeupload,getallprofile,addskill,qualificationupdate,addprofilename,updateprofilesummary,addworkexperience,deleteskills}
+export default {resumeupload,getallprofile,addskill,qualificationupdate,addprofilename,updateprofilesummary,addworkexperience,deleteskills,addprofilepicture}
