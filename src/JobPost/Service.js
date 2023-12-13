@@ -9,6 +9,7 @@ const addJobPost = async (jobPost,companyUserId) => {
   try {
     const companyUser = await CompanyUser.findById(companyUserId)
     if (companyUser) {
+      
       const jobs = await JobPost.create(jobPost);
       if (jobs) {
         logger.info("Job Posted Successfully");
