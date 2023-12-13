@@ -198,41 +198,47 @@ const addworkexperience = async(seekerid,profileid,experiencedata) =>{
 // add resume to seekerprofile
 const resumeupload = async (req, seekerid, profileid) => {
   try {
+    console.log(req.file);
     const existingseeker = await jobseeker.findById(seekerid);
-    if (existingseeker) {
-      const existingprofile = await seekerProfile.findById(profileid);
-      console.log(existingprofile);
-      if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
-        const file = existingprofile.Resume;
-        existingprofile.Resume = {
-          title: req.file.originalname,
-          resume: req.file.path,
-        };
-        if (!file.title || !file.resume) {
-          logger.error("Invalid file data");
-          throw new Error("Invalid file data");
-        }
 
-        const updateprofile = await seekerProfile.updateOne(
-          { _id: profileid },
-          { $set: existingprofile }
-        );
-        console.log(updateprofile);
-        if (updateprofile) {
-          logger.info("Resume uploaded successfully");
-          return updateprofile;
-        } else {
-          logger.error("Error occurred in file uploading");
-          throw new Error("Error occurred in file uploading");
-        }
-      }
+    if (!existingseeker) {
+      throw new Error("Job seeker not found");
+    }
+
+    const existingprofile = await seekerProfile.findById(profileid);
+
+    if (!existingprofile || existingprofile.jobSeeker.seekerId.toString() !== existingseeker._id.toString()) {
+      throw new Error("Invalid profile or mismatched relationship with job seeker");
+    }
+
+    const file = existingprofile.Resume;
+
+    existingprofile.Resume = {
+      title: req.file.originalname,
+      resume: req.file.path,
+    };
+
+    if (!file.title || !file.resume) {
+      logger.error("Invalid file data");
+      throw new Error("Invalid file data");
+    }
+
+    const updateprofile = await seekerProfile.updateOne({ _id: profileid }, { $set: existingprofile });
+
+    if (updateprofile) {
+      logger.info("Resume uploaded successfully");
+      return updateprofile;
+    } else {
+      logger.error("Error occurred in file uploading");
+      throw new Error("Error occurred in file uploading");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     logger.error("Error in upload resume:", error.message);
     throw error;
   }
 };
+
 
 const addprofilepicture = async(req, seekerid, profileid)=>{
   try {

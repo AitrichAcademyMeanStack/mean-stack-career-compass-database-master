@@ -45,7 +45,7 @@ app.use(express.json()) //defining middleware
 const swaggerDefinition = {
         openapi: "3.0.0",
         info:{
-            title:"JOB_PORTAL API",
+            title:"JOB_PORTAL_API",
             version:"1.0.0",
             description:"API FOR MANAGING JOB_PORTAL SYSTEM"
         },

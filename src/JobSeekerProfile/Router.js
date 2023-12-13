@@ -13,8 +13,6 @@ const router = express.Router();
  *              required:
  *                  - profileName
  *                  - profileSummary
- *                  - resume
- *                  - profilepicture
  *                  - qualifications
  *                  - workExperiences
  *                  - skills
@@ -23,20 +21,6 @@ const router = express.Router();
  *                      type: string
  *                  profileSummary:
  *                      type: string
- *                  resume:
- *                      type: object
- *                      properties:
- *                          title:
- *                              type: String
- *                          resume:
- *                              type: String
- *                  profilepicture:
- *                      type: object
- *                      properties:
- *                          title:
- *                              type: String
- *                          resume:
- *                              type: String
  *                  qualifications:
  *                      type: array
  *                      items:
@@ -95,44 +79,51 @@ const router = express.Router();
  */
 router.get('/:id1/profiles/:id2',controller.getallprofile)
 
-// /**
-//  * @swagger
-//  * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
-//  *  put:
-//  *      summary: update jobseeker resume details
-//  *      description: this api is used to update  jobseeker resume details
-//  *      tags:
-//  *          - JobSeeker-Profile
-//  *      parameters:
-//  *          - in: path
-//  *            name: seekerid
-//  *            required: true
-//  *            description: numeric id is required
-//  *            schema:
-//  *                  type: string
-//  *          - in: path
-//  *            name: profileid
-//  *            required: true
-//  *            description: numeric id is required
-//  *            schema:
-//  *                  type: string
-//  *      requestBody:
-//  *          required: true
-//  *          content:
-//  *              application/json:
-//  *                  schema:
-//  *                      $ref: '#/components/schemas/jobseekerprofile'
-//  *      responses:
-//  *          200:
-//  *              description: jobseeker resume updated successfully
-//  *              content:
-//  *                  application/json:
-//  *                      schema:
-//  *                          $ref: '#/components/schemas/jobseekerprofile'
-//  *          400:
-//  *              description: not found error , check request body
-//  *                  
-//  */
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
+ *  put:
+ *      summary: update jobseeker resume details
+ *      description: This API is used to update jobseeker resume details.
+ *      consumes:
+ *        - multipart/form-data
+ *      tags:
+ *        - JobSeeker-Profile
+ *      parameters:
+ *        - in: path
+ *          name: seekerid
+ *          required: true
+ *          description: Numeric ID is required.
+ *          schema:
+ *            type: string
+ *        - in: path
+ *          name: profileid
+ *          required: true
+ *          description: Numeric ID is required.
+ *          schema:
+ *            type: string
+ *        - in: formData
+ *          name: Resume
+ *          type: file
+ *          required: true
+ *          description: The file Resume to upload
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          multipart/form-data:
+ *            schema:
+ *              $ref: '#/components/schemas/Resume'
+ *      responses:
+ *        200:
+ *          description: Jobseeker resume updated successfully
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/jobseekerprofile'
+ *        400:
+ *          description: Not found error, check the request body
+ */
+
 router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume'),controller.resumeupload)
 
 /**
