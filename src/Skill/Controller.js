@@ -1,7 +1,7 @@
 import service from './Service.js' //importing service
 import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynchronous error handler
 
-
+// fetching all skills 
 const getskills = asyncerrorhandler(async(req,res)=>{
     const getallskills = await service.getskills()
     res.status(200).json(getallskills)

@@ -1,0 +1,89 @@
+import express from 'express' // importing express
+import controller from './Controller.js' //importing controller
+const router = express.Router()
+
+
+/**
+@swagger
+ * /api/v1/jobtitle
+ *  get:
+ *      summary: get all  jobtitles
+ *      description: this is is used to get  all jobtitles
+ *      tags:
+ *          - JobTitle
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: Jobtitle retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobtitle' 
+ */
+router.get('/',controller.getalljobtitle)
+
+
+
+//create new jobtitle
+/**
+ * @swagger
+ * /api/v1/jobtitle:
+ *  post:
+ *      summary: create new jobtitle
+ *      description: this api is used to create new jobtitle
+ *      tags:
+ *          - JobTitle
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/JobTitle'
+ *      responses:
+ *          201:
+ *              description: Jobtitle added successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/JobTitle'
+ *          400:
+ *              description: not found error, check request body
+ * 
+ */
+router.post('/',controller.createJobTitle)
+//delete jobtitle
+/**
+ * @swagger
+ * /api/v1/jobtitle/jobtitleid:
+ *  post:
+ *      summary: delete  jobtitle
+ *      description: this api is used to delete jobtitle
+ *      tags:
+ *          - JobTitle
+ *      
+ *      responses:
+ *          201:
+ *              description: Jobtitle deleted successfully
+ *               content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/JobTitle'
+ * 
+ *              
+ */
+
+router.delete('/:id',controller.deleteJobTitle)
+
+
+
+export default router

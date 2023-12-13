@@ -18,7 +18,24 @@ const router = express()
  *                      type: string
  */
 
-
+/**
+ * @swagger
+ * /api/v1/skills:
+ * get:
+ *      summary: get all skills 
+ *      description: this is used to get skill details with specific id
+ *      tags:
+ *          -Skill
+ *      responses:
+ *          200:
+ *              description: skill retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref:'#/components/schemas/skill'
+ */
 
 router.get('/',controller.getskills)
 
@@ -27,7 +44,7 @@ router.get('/',controller.getskills)
  * /api/v1/skills/{id}:
  *  get:
  *      summary: get skill details with specific id
- *      description: this is is used to get skill details with specific id
+ *      description: this is  used to get skill details with specific id
  *      tags:
  *          - Skill
  *      parameters:
