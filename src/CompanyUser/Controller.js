@@ -1,9 +1,10 @@
 import asyncerrorhandler from "../utils/asyncerrorhandler.js";
 import userService from "./Service.js";
 
-// Fetching all CompanyUsers
+// Fetching all CompanyUsers from a JobProviderCompany
 const getAllCompanyUsers = asyncerrorhandler(async (req, res) => {
-  const users = await userService.getAllCompanyUsers();
+  const jobProviderCompany = req.params.jobProviderCompanyId;
+  const users = await userService.getAllCompanyUsers(jobProviderCompany);
   res.status(200).json(users);
 });
 
@@ -16,7 +17,7 @@ const getCompanyUserById = asyncerrorhandler(async (req, res) => {
 
 // Adding new CompanyUser
 const addCompanyUser = asyncerrorhandler(async (req, res) => {
-  const companyId = req.params.id;
+  const companyId = req.params.jobProviderCompanyId;
   const data = req.body;
   const newCompanyUser = await userService.addCompanyUser(companyId,data);
   res.status(201).json(newCompanyUser);
@@ -31,8 +32,9 @@ const updateCompanyUser = asyncerrorhandler(async (req, res) => {
 
 // Deleting CompanyUser
 const deleteCompanyUser = asyncerrorhandler(async (req, res) => {
-  const userId = req.params.id;
-  const deleteData = await userService.deleteCompanyUser(userId);
+  const jobProviderCompany  = req.params.jobProviderCompanyId
+  const userId = req.params.companyUserId;
+  const deleteData = await userService.deleteCompanyUser(jobProviderCompany,userId);
   res.status(200).json(deleteData);
 });
 

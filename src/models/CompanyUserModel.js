@@ -4,18 +4,15 @@ import mongoose,{Schema} from 'mongoose';
 const companyUserSchema = new Schema(
     {
         company:{
+            companyId: mongoose.Schema.Types.ObjectId,
             legalName:{type: String},
             summary:{type: String},
-            industry:{
-                name:{type: String}
-            },
+            industry:[String],
             email:{type: String},
-            phone:{type: String},
+            phone:{type:Number},
             address:{type: String},
             website:{type: String},
-            location:{
-                name:{type: String}
-            }
+            location:[String]
         }, 
         firstName: {type:String},
         role: {
@@ -29,7 +26,7 @@ const companyUserSchema = new Schema(
         lastName:{type:String},
         userName:{type: String},
         email:{type: String},
-        phone:{type: String}
+        phone:{type: Number}
 
     },{versionKey: false}
 )

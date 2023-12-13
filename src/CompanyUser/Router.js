@@ -35,11 +35,18 @@ const router = express.Router();
 
 /**
  * @swagger
- *  /api/v1/CompanyUsers:
+ *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers:
  *      get:
  *          summary: Get all CompanyUsers
  *          tags:
  *              - CompanyUser
+ *          parameters:
+ *              - in: path
+ *                name: jobProviderCompanyId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description:  ID of the jobProviderCompany
  *          responses: 
  *              200:
  *               description: Return array of CompanyUsers
@@ -53,7 +60,7 @@ const router = express.Router();
  *  
  * 
  */
-router.get("/",userController.getAllCompanyUsers);
+router.get("/:jobProviderCompanyId/companyUsers",userController.getAllCompanyUsers);
 /**
  * @swagger
  *  /api/v1/CompanyUsers/{id}:
@@ -86,18 +93,18 @@ router.get("/:id",userController.getCompanyUserById);
 
 /**
  * @swagger
- *  /api/v1/CompanyUsers/{id}:
+ *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/companyUsers:
  *      post:
  *          summary: Add a new CompanyUser
  *          tags:
  *              - CompanyUser
  *          parameters:
  *              - in: path
- *                name: id
+ *                name: jobProviderCompanyId
  *                required: true
- *                schema:
- *                  type: string
  *                description:  ID of the JobProviderComapny
+ *                schema:
+ *                      type: string
  *          requestBody:
  *              required: true
  *              content:
@@ -116,7 +123,7 @@ router.get("/:id",userController.getCompanyUserById);
  *              
  */
 
-router.post("/:id",userController.addCompanyUser);
+router.post("/:jobProviderCompanyId/companyUsers",userController.addCompanyUser);
 
 /**
  * @swagger
@@ -156,17 +163,19 @@ router.post("/:id",userController.addCompanyUser);
 router.put("/:id",userController.updateCompanyUser);
 /**
  * @swagger
- *  /api/v1/CompanyUsers/{id}:
+ *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers/{companyUserId}:
  *      delete:
  *          summary: Delete CompanyUser by ID
  *          tags:
  *              - CompanyUser 
  *          parameters:
  *              - in: path
- *                name: id
+ *                name: jobProviderCompanyId
  *                required: true
- *                schema:
- *                  type: string
+ *                description: ID of the jobProviderCompany
+ *              - in: path
+ *                name: companyUserId
+ *                required: true
  *                description: ID of the CompanyUser to delete
  *          responses:
  *              204:
@@ -176,7 +185,7 @@ router.put("/:id",userController.updateCompanyUser);
  * 
  *              
  */
-router.delete("/:id",userController.deleteCompanyUser);
+router.delete("/:jobProviderCompanyId/companyUser/:companyUserId",userController.deleteCompanyUser);
 
 
 export default router

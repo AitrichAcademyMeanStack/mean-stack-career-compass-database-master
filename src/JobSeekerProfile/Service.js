@@ -1,11 +1,8 @@
 import logger from "../middleware/logger.js"; // importing logger
-import SkillModel from "../models/SkillModel.js"; //importing skill model
-import qualification from "../models/QualificationModel.js"; //importing qualification model
-import Workexperience from "../models/WorkExperienceModel.js"; //importing work experience model
 import seekerProfile from "../models/JobSeekerProfileModel.js"; //importing job seeker profile model
 import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker model
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
-import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad request error handler
+import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 //add skills to profile
@@ -204,7 +201,8 @@ const resumeupload = async (req, seekerid, profileid) => {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
-      if (existingprofile) {
+      console.log(existingprofile);
+      if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
         const file = existingprofile.Resume;
         existingprofile.Resume = {
           title: req.file.originalname,
@@ -221,7 +219,7 @@ const resumeupload = async (req, seekerid, profileid) => {
         );
         console.log(updateprofile);
         if (updateprofile) {
-          logger.info("File uploaded successfully");
+          logger.info("Resume uploaded successfully");
           return updateprofile;
         } else {
           logger.error("Error occurred in file uploading");
@@ -231,10 +229,49 @@ const resumeupload = async (req, seekerid, profileid) => {
     }
   } catch (error) {
     console.log(error);
-    logger.error("Error in createresume:", error.message);
+    logger.error("Error in upload resume:", error.message);
     throw error;
   }
 };
+
+const addprofilepicture = async(req, seekerid, profileid)=>{
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+      console.log(existingprofile);
+      if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
+        const file = existingprofile.ProfilePicture
+        existingprofile.ProfilePicture = {
+          title: req.file.originalname,
+          profilepicture: req.file.path,
+        };
+        if (!file.title || !file.profilepicture) {
+          logger.error("Invalid file data");
+          throw new Error("Invalid file data");
+        }
+
+        const updateprofile = await seekerProfile.updateOne(
+          { _id: profileid },
+          { $set: existingprofile }
+        );
+        console.log(updateprofile);
+        if (updateprofile) {
+          logger.info("ProfilePicture uploaded successfully");
+          return updateprofile;
+        } else {
+          logger.error("Error occurred in file uploading");
+          throw new Error("Error occurred in file uploading");
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    logger.error("Error in upload profile picture:", error.message);
+    throw error;
+  }
+}
+
 
 const deleteskills = async (seekerid, profileid, skillname) => {
   try {
@@ -275,5 +312,6 @@ export default {
   updateprofilesummary,
   addprofilename,
   addworkexperience,
-  deleteskills
+  deleteskills,
+  addprofilepicture
 };

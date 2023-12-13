@@ -1,4 +1,4 @@
-import Badrequesterror from "../Exceptions/Badrequesterror.js";
+import Badrequesterror from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
@@ -9,9 +9,14 @@ import Industry from "../models/IndustryModel.js";
 // fetching all JobProviderCompany
 const getAllJobProviders = async () => {
   try {
-    return await JobProviderCompany.find();
+    const jobProviders =  await JobProviderCompany.find();
+    if (jobProviders) {
+      return jobProviders
+    }else {
+      throw new Notfounderror("Job provider not found")
+    }
   } catch (error) {
-    throw new Notfounderror("Job Provider Company not found");
+    throw new Notfounderror("OOPS! something went wrong");
   }
 };
 
