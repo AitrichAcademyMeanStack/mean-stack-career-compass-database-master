@@ -25,16 +25,11 @@ const router = express.Router()
  *                  industry:
  *                      type: array
  *                      items:
- *                          type: object
- *                          properties:
- *                              name:
- *                                  type: String
- *                              description:
- *                                  type: String
+ *                          type: string
  *                  email:
  *                      type: string
  *                  phone:
- *                      type: string
+ *                      type: number
  *                  address:
  *                      type: string
  *                  website:

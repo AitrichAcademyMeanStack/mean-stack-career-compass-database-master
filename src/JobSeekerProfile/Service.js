@@ -5,7 +5,7 @@ import Workexperience from '../models/WorkExperienceModel.js' //importing work e
 import seekerProfile from "../models/JobSeekerProfileModel.js" //importing job seeker profile model
 import jobseeker from "../models/JobSeekerModel.js" //importing job seeker model
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
-import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing bad request error handler
+import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 

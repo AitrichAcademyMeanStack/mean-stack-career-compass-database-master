@@ -1,16 +1,12 @@
 import mongoose , {Schema} from 'mongoose';
-import Industry from './IndustryModel.js';
 
 const JobProviderCompanySchema = new Schema(
     {
         legalName:{type: String},
         summary:{type: String},
-        industry:{
-            name:{type: String},
-            description:{type: String}
-        },
+        industry:[String],
         email:{type: String},
-        phone: {type: String},
+        phone: {type: Number},
         address: {type: String},
         website:{type: String},
         location:{

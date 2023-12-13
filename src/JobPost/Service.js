@@ -2,16 +2,22 @@ import JobPost from "../models/JobPostModel.js";
 import logger from "../middleware/logger.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
+import CompanyUser from "../models/CompanyUserModel.js";
 
 // creating job post
-const addJobPost = async (jobPost) => {
+const addJobPost = async (jobPost,companyUserId) => {
   try {
-    const jobs = await JobPost.create(jobPost);
-    if (jobs) {
-      logger.info("Job Posted Successfully");
-      return jobs;
-    } else {
-      throw new BadRequestError("Error while posting Job");
+    const companyUser = await CompanyUser.findById(companyUserId)
+    if (companyUser) {
+      const jobs = await JobPost.create(jobPost);
+      if (jobs) {
+        logger.info("Job Posted Successfully");
+        return jobs;
+      } else {
+        throw new BadRequestError("Error while posting Job");
+      }  
+    }else {
+      throw new NotFoundError("CompanyUser not found")
     }
   } catch (error) {
     throw error;
@@ -34,14 +40,19 @@ const getAllJobPosts = async () => {
 };
 
 // Fetching Job Post By ID
-const getJobPostsById = async (postId) => {
+const getJobPostsById = async (postId,companyUserId) => {
   try {
-    const Job = await JobPost.findById(postId);
-    if (Job) {
-      logger.info("Job :", Job);
-      return Job;
-    } else {
-      throw new NotFoundError("Job ID Not Found");
+    const companyUser = await CompanyUser.findById(companyUserId)
+    if (companyUser) {
+      const Job = await JobPost.findById(postId);
+      if (Job) {
+        logger.info("Job :", Job);
+        return Job;
+      } else {
+        throw new NotFoundError("Job ID Not Found");
+      }
+    }else {
+      throw new NotFoundError("Company User not found")
     }
   } catch (error) {
     throw new BadRequestError("Error while fetching Job");
@@ -64,14 +75,19 @@ const updatePost = async (postId) => {
 };
 
 // Deleting Job Post
-const deletePost = async (postId) => {
+const deletePost = async (postId,companyUserId) => {
   try {
-    const deleteJobPost = await JobPost.findByIdAndDelete(postId);
-    if (deleteJobPost) {
-      logger.info("Job Post Deleted Successfully");
-      return deleteJobPost;
-    } else {
-      throw new NotFoundError("PostId not Found");
+    const companyUser = await CompanyUser.findById(companyUserId)
+    if (companyUser) {
+      const deleteJobPost = await JobPost.findByIdAndDelete(postId);
+      if (deleteJobPost) {
+        logger.info("Job Post Deleted Successfully");
+        return deleteJobPost;
+      } else {
+        throw new NotFoundError("PostId not Found");
+      }   
+    }else {
+      throw new NotFoundError("CompanyUser not found")
     }
   } catch (error) {
     throw error;
