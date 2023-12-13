@@ -96,10 +96,10 @@ app.use('/api/v1/jobseekers',savedjobrouter) //configuring routes for saved jobs
 app.use('/api/v1/jobseekers',jobapplicationrouter) //configuring routes for job application module
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
-app.use('/api/v1/companyUsers', companyUserRouter) // Configuring routes for JobProviderCompany
+app.use('/api/v1/jobProviderCompany', companyUserRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/workexperiences',workexperience) //configuring routes for work experience
 app.use('/api/v1/resume',resumerouter)//configuring routes for resume
-app.use('/api/v1/jobPosts',jobPostRouter) // configuring routes for JobPosts
+app.use('/api/v1/companyUsers',jobPostRouter) // configuring routes for JobPosts
 app.use('/api/v1/jobInterviews',jobInterviewRoute) // configuring routes for JobPosts
 
 

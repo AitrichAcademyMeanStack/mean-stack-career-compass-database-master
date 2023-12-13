@@ -1,6 +1,6 @@
 import CompanyUser from "../models/CompanyUserModel.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
-import BadRequestError from "../Exceptions/Badrequesterror.js";
+import BadRequestError from "../Exceptions/BadRequestError.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 import logger from "../middleware/logger.js";
 import systemuser from "../models/SystemUserModel.js";
@@ -8,12 +8,18 @@ import AuthUser from "../models/AuthUserModel.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
 
 // Fetchng all CompanyUser
-const getAllCompanyUsers = async () => {
+const getAllCompanyUsers = async (id) => {
   try {
-    const users = await CompanyUser.find();
-    return users;
+    const jobProviderCompany = await JobProviderCompany.findById(id);
+    if (!jobProviderCompany) {
+      throw new NotFoundError("JobProviderCompany not found");
+    } else {
+      const users = await CompanyUser.find();
+      logger.info(users)
+      return users;
+    }
   } catch (error) {
-    throw new NotFoundError("CompanyUsers not found");
+    throw new NotFoundError("CompanyUser not found");
   }
 };
 
@@ -34,79 +40,71 @@ const getCompanyUserById = async (id) => {
 };
 
 // Adding new CompanyUser
-const addCompanyUser = async (companyId,data) => {
+const addCompanyUser = async (companyId, data) => {
   try {
-    const jobProvider = await JobProviderCompany.findById(companyId)
-    console.log(jobProvider);
-    
+    const jobProvider = await JobProviderCompany.findById(companyId);
     if (!jobProvider) {
       logger.error("JobProvider not found with Id:", companyId);
-      return {error: "JobProvider not found" };
+      return { error: "JobProvider not found" };
     }
 
-      data.company = {
-        legalName: jobProvider.legalName,
-        summary: jobProvider.summary,
-        industry: jobProvider.industry,
-        email: jobProvider.email,
-        phone: jobProvider.phone,
-        address:jobProvider.address,
-        website:jobProvider.website,
-        location: jobProvider.location
-      }
-      const newCompanyUser = await CompanyUser.create(data);
-      logger.info("New Company Registered");
-      
-      if (newCompanyUser) {
-        let systemUserRole;
-  
-        // Check the role of the new company user
-        if (newCompanyUser.role === "Company Admin") {
-          systemUserRole = "Company Admin";
-        } else if (newCompanyUser.role === "Hiring Manager") {
-          systemUserRole = "Hiring Manager";
-        }
-        const systemUser = {
-          _id: newCompanyUser._id,
-          firstName: newCompanyUser.firstName,
-          lastName: newCompanyUser.lastName,
-          email: newCompanyUser.email,
-          phone: newCompanyUser.phone,
-          role: systemUserRole,
-        }
-        
-              const newSystemUser = await systemuser.create(systemUser)
-              logger.info("System user created successfully");
-              
-              if (newSystemUser) {
-                const authUser = {
-                  _id: newSystemUser._id,
-                  userName: newCompanyUser.userName,
-                  password: "12345",
-                  firstName: newSystemUser.firstName,
-                  lastName: newSystemUser.lastName,
-                  email: newSystemUser.email,
-                  phone: newSystemUser.phone,
-                  role: newSystemUser.role,
-              };
-        
-              const companyAuthUser = await AuthUser.create(authUser)
-              logger.info("Auth user created successfully", companyAuthUser);
-        
-              }else {
-                logger.error("Error while creating system user")
-                return null;
-              }
-        
-        
-              
-            } else {
-              logger.error("Error while creating CompanyUser");
-        
-            }
-            return newCompanyUser
-   
+    data.company = {
+      companyId: jobProvider._id,
+      legalName: jobProvider.legalName,
+      summary: jobProvider.summary,
+      industry: jobProvider.industry,
+      email: jobProvider.email,
+      phone: jobProvider.phone,
+      address: jobProvider.address,
+      website: jobProvider.website,
+      location: jobProvider.location,
+    };
+    const newCompanyUser = await CompanyUser.create(data);
+    logger.info("New Company Registered");
 
+    if (newCompanyUser) {
+      let systemUserRole;
+
+      // Check the role of the new company user
+      if (newCompanyUser.role === "Company Admin") {
+        systemUserRole = "Company Admin";
+      } else if (newCompanyUser.role === "Hiring Manager") {
+        systemUserRole = "Hiring Manager";
+      }
+      const systemUser = {
+        _id: newCompanyUser._id,
+        firstName: newCompanyUser.firstName,
+        lastName: newCompanyUser.lastName,
+        email: newCompanyUser.email,
+        phone: newCompanyUser.phone,
+        role: systemUserRole,
+      };
+
+      const newSystemUser = await systemuser.create(systemUser);
+      logger.info("System user created successfully");
+
+      if (newSystemUser) {
+        const authUser = {
+          _id: newSystemUser._id,
+          userName: newCompanyUser.userName,
+          password: "12345",
+          firstName: newSystemUser.firstName,
+          lastName: newSystemUser.lastName,
+          email: newSystemUser.email,
+          phone: newSystemUser.phone,
+          role: newSystemUser.role,
+        };
+
+        const companyAuthUser = await AuthUser.create(authUser);
+        logger.info("Auth user created successfully", companyAuthUser);
+      } else {
+        logger.error("Error while creating system user");
+        return null;
+      }
+    } else {
+      logger.error("Error while creating CompanyUser");
+    }
+    return newCompanyUser;
   } catch (error) {
     if (error.name === "ValidationError") {
       logger.error(`validation error ${error.message}`);
@@ -142,15 +140,20 @@ const updateCompanyUser = async (id) => {
 };
 
 // Deleting CompanyUser
-const deleteCompanyUser = async (id) => {
+const deleteCompanyUser = async (jobProviderCompanyId, userId) => {
   try {
-    const deleteData = await CompanyUser.findByIdAndDelete(id);
-    if (deleteData) {
-      logger.info("CompanyUser Deleted Successfully");
-      return deleteData;
-    } else {
-      logger.error("CompanyUser ID not found");
-      throw new NotFoundError("CompanyUser ID not found");
+    const jobProviderCompany = await JobProviderCompany.findById(
+      jobProviderCompanyId
+    );
+    if (jobProviderCompany) {
+      const deleteData = await CompanyUser.findByIdAndDelete(userId);
+      if (deleteData) {
+        logger.info("CompanyUser Deleted Successfully");
+        return deleteData;
+      } else {
+        logger.error("CompanyUser ID not found");
+        throw new NotFoundError("CompanyUser ID not found");
+      }
     }
   } catch (error) {
     if (error.name === "CastError") {

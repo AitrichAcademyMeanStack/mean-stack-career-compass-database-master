@@ -64,11 +64,18 @@ router.get("/",jobPostController.getAllJobPosts);
 
 /**
  * @swagger
- *  /api/v1/jobPosts:
+ *  /api/v1/companyUsers/{companyUserId}/jobPosts:
  *      post:
  *          summary: Add a new Job Post
  *          tags:
  *              - JobPost
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description:  ID of the companyUser
  *          requestBody:
  *              required: true
  *              content:
@@ -88,11 +95,11 @@ router.get("/",jobPostController.getAllJobPosts);
  *          
  *  
  */
-router.post("/",jobPostController.createJobPost)
+router.post("/:companyUserId/jobPosts",jobPostController.createJobPost)
 
 /**
  * @swagger
- *  /api/v1/jobPosts/{id}:
+ *  /api/v1/companyUser/{companyUserId}/jobPosts/{jobPostId}:
  *      get:
  *          summary: Get JobPost By Id
  *          tags:
@@ -115,7 +122,7 @@ router.post("/",jobPostController.createJobPost)
  *                  description: JobPost not found
  *                          
  */
-router.get("/:id",jobPostController.getJobPostById)
+router.get("/:companyUserId/jobPosts/:jobPostId",jobPostController.getJobPostById)
 
 /**
  * @swagger
@@ -153,14 +160,20 @@ router.put("/:id",jobPostController.updateJobPost)
 
 /**
  * @swagger
- *  /api/v1/jobPosts/{id}:
+ *  /api/v1/companyUsers/{companyUserId}/jobPosts/{jobPostId}:
  *      delete:
  *          summary: Delete Job Post By ID
  *          tags:
  *              - JobPost
  *          parameters:
  *              - in: path
- *                name: id
+ *                name: companyUserId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description: ID of the CompanyUser
+ *              - in: path
+ *                name: jobPostId
  *                required: true
  *                schema:
  *                  type: string
@@ -171,6 +184,6 @@ router.put("/:id",jobPostController.updateJobPost)
  *              404:
  *                  description: PostId not found
  */
-router.delete("/:id",jobPostController.deleteJobPost)
+router.delete("/:id1/jobPosts/:id2",jobPostController.deleteJobPost)
 
 export default router
