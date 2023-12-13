@@ -79,5 +79,40 @@ const deleteskills = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("skill deleted successfully")
 })
 
+const deletequalification = asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const qualificationname = req.params.qualificationname
+    await service.deletequalification(seekerid,profileid,qualificationname)
+    res.status(202).json("qualification deleted successfully")
+})
 
-export default {resumeupload,getallprofile,addskill,qualificationupdate,addprofilename,updateprofilesummary,addworkexperience,deleteskills,addprofilepicture}
+const deleteworkexperience = asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const workexpid = req.params.workexperienceid
+    await service.deleteworkexperience(seekerid,profileid,workexpid)
+    res.status(202).json("workexperience deleted successfully")
+})
+
+const deleteresume = asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    await service.deleteresume(seekerid,profileid)
+    res.status(202).json("Resume deleted successfully")
+})
+
+
+export default {resumeupload,
+    getallprofile,
+    addskill,
+    qualificationupdate,
+    addprofilename,
+    updateprofilesummary,
+    addworkexperience,
+    deleteskills,
+    addprofilepicture,
+    deletequalification,
+    deleteworkexperience,
+    deleteresume
+}

@@ -4,6 +4,7 @@ import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker mode
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
 import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
+import mongoose from "mongoose";
 
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
@@ -214,6 +215,7 @@ const resumeupload = async (req, seekerid, profileid) => {
     const file = existingprofile.Resume;
 
     existingprofile.Resume = {
+      _id: mongoose.Schema.Types.ObjectId,
       title: req.file.originalname,
       resume: req.file.path,
     };
@@ -289,7 +291,10 @@ const deleteskills = async (seekerid, profileid, skillname) => {
         existingseeker._id.toString() ===
           existingprofile.jobSeeker.seekerId.toString()
       ) {
-        const result = await seekerProfile.findOneAndDelete({_id:profileid})
+        const result = await seekerProfile.updateOne(
+          { _id: profileid },
+          { $pull: { skills: skillname } }
+        )
 
         if (result && result.acknowledged) {
           logger.info("Skill deleted successfully");
@@ -309,6 +314,105 @@ const deleteskills = async (seekerid, profileid, skillname) => {
   }
 };
 
+const deletequalification = async(seekerid,profileid,qualificationname)=>{
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+      if (
+        existingprofile &&
+        existingseeker._id.toString() ===
+          existingprofile.jobSeeker.seekerId.toString()
+      ) {
+        const result = await seekerProfile.updateOne(
+          { _id: profileid },
+          { $pull: { qualifications: qualificationname} }
+        )
+
+        if (result && result.acknowledged) {
+          logger.info("qualification deleted successfully");
+          return result;
+        } else {
+          logger.error("Update operation failed or not acknowledged by MongoDB");
+        }
+      } else {
+        logger.error("Profile not found with specific id or not associated with the seeker");
+      }
+    } else {
+      logger.error("Seeker not found with specific id");
+    }
+  } catch (error) {
+    logger.error(`Error: ${error.message}`);
+    throw error;
+  }
+}
+
+const deleteworkexperience = async(seekerid,profileid,workexpid)=>{
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+      if (
+        existingprofile &&
+        existingseeker._id.toString() ===
+          existingprofile.jobSeeker.seekerId.toString()
+      ) {
+        const result = await seekerProfile.updateOne(
+          { _id: profileid },
+          { $pull: { workExperiences:{_id:workexpid}} }
+        )
+
+        if (result && result.acknowledged) {
+          logger.info("workexperience deleted successfully");
+          return result;
+        } else {
+          logger.error("Update operation failed or not acknowledged by MongoDB");
+        }
+      } else {
+        logger.error("Profile not found with specific id or not associated with the seeker");
+      }
+    } else {
+      logger.error("Seeker not found with specific id");
+    }
+  } catch (error) {
+    logger.error(`Error: ${error.message}`);
+    throw error;
+  }
+}
+
+const deleteresume = async(seekerid,profileid)=>{
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+      if (
+        existingprofile &&
+        existingseeker._id.toString() ===
+          existingprofile.jobSeeker.seekerId.toString()
+      ) {
+        const result = await seekerProfile.updateOne(
+          { _id: profileid },
+          {$unset:{Resume:1}}
+        )
+
+        if (result && result.acknowledged) {
+          logger.info("Resume deleted successfully");
+          return result;
+        } else {
+          logger.error("Update operation failed or not acknowledged by MongoDB");
+        }
+      } else {
+        logger.error("Profile not found with specific id or not associated with the seeker");
+      }
+    } else {
+      logger.error("Seeker not found with specific id");
+    }
+  } catch (error) {
+    logger.error(`Error: ${error.message}`);
+    throw error;
+  }
+}
+
 
 export default {
   resumeupload,
@@ -319,5 +423,8 @@ export default {
   addprofilename,
   addworkexperience,
   deleteskills,
-  addprofilepicture
+  addprofilepicture,
+  deletequalification,
+  deleteworkexperience,
+  deleteresume
 };

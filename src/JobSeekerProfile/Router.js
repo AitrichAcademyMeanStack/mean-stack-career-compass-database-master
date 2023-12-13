@@ -1,6 +1,6 @@
 import express from 'express' //import express
 import controller from './Controller.js' //importing controller
-import {uploadresume,uploadprofilepicture} from '../utils/FileUpload.js'
+import {uploadresume,uploadprofilepicture} from '../utils/FileUpload.js' //importing resume upload and profile picture upload function
 
 const router = express.Router();
 
@@ -77,7 +77,7 @@ const router = express.Router();
  *                          items:
  *                              $ref: '#/components/schemas/jobseekerprofile' 
  */
-router.get('/:id1/profiles/:id2',controller.getallprofile)
+router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profiles
 
 /**
  * @swagger
@@ -124,7 +124,7 @@ router.get('/:id1/profiles/:id2',controller.getallprofile)
  *          description: Not found error, check the request body
  */
 
-router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume'),controller.resumeupload)
+router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume'),controller.resumeupload) //adding resume
 
 /**
  * @swagger
@@ -164,7 +164,7 @@ router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume')
  *              description: not found error , check request body
  *                  
  */
-router.put('/:seekerid/profiles/:profileid/skill',controller.addskill)
+router.put('/:seekerid/profiles/:profileid/skill',controller.addskill) //adding skills
 
 /**
  * @swagger
@@ -204,9 +204,9 @@ router.put('/:seekerid/profiles/:profileid/skill',controller.addskill)
  *              description: not found error , check request body
  *                  
  */
-router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificationupdate)
+router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificationupdate) //adding qualifications
 
-router.put('/:seekerid/profiles/:profileid/profilepicture',uploadprofilepicture.single('ProfilePicture'),controller.addprofilepicture)
+router.put('/:seekerid/profiles/:profileid/profilepicture',uploadprofilepicture.single('ProfilePicture'),controller.addprofilepicture) //adding profile picture
 
 /**
  * @swagger
@@ -246,7 +246,7 @@ router.put('/:seekerid/profiles/:profileid/profilepicture',uploadprofilepicture.
  *              description: not found error , check request body
  *                  
  */
-router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename)
+router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilename) //adding profile name
 
 /**
  * @swagger
@@ -286,7 +286,7 @@ router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilenam
  *              description: not found error , check request body
  *                  
  */
-router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprofilesummary)
+router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprofilesummary) //adding profile summary
 
 /**
  * @swagger
@@ -326,14 +326,15 @@ router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprof
  *              description: not found error , check request body
  *                  
  */
-router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience)
+router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience) //adding work experience
+
 
 /**
  * @swagger
  * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/skills/{skillname}:
  *  delete:
- *      summary: update skills in jobseeker profile
- *      description: this api is used to update  skills in jobseeker profile
+ *      summary: delete skills in jobseeker profile
+ *      description: this api is used to delete  skills in jobseeker profile
  *      tags:
  *          - JobSeeker-Profile
  *      parameters:
@@ -357,7 +358,7 @@ router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexp
  *                  type: string
  *      responses:
  *          200:
- *              description: jobseeker profile updated successfully
+ *              description: skill deleted from jobseeker profile successfully
  *              content:
  *                  application/json:
  *                      schema:
@@ -366,10 +367,118 @@ router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexp
  *              description: not found error , check request body
  *                  
  */
-router.delete('/:seekerid/profiles/:profileid/skills/:skillname',controller.deleteskills)
-// router.delete('/:seekerid/profiles/:profileid/qualification',controller.deletequalification)
-// router.delete('/:seekerid/profiles/:profileid/workexperience',controller.deleteworkexperience)
-// router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume)
+router.delete('/:seekerid/profiles/:profileid/skills/:skillname',controller.deleteskills) //deleting skills
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/qualifications/{qualificationname}:
+ *  delete:
+ *      summary: delete qualifications in jobseeker profile
+ *      description: this api is used to delete  qualifications in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: qualificationname
+ *            required: true
+ *            description: qualification name is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: qualification deleted from jobseeker profile successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body  
+ */
+router.delete('/:seekerid/profiles/:profileid/qualifications/:qualificationname',controller.deletequalification) //deleting qualifications
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/workexperiences/{workexperienceid}:
+ *  delete:
+ *      summary: delete workexperiences in jobseeker profile
+ *      description: this api is used to delete  workexperiences in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: workexperienceid
+ *            required: true
+ *            description: qualification name is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: workexperiences deleted from jobseeker profile successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body  
+ */
+router.delete('/:seekerid/profiles/:profileid/workexperiences/:workexperienceid',controller.deleteworkexperience) //deleting work experiences
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
+ *  delete:
+ *      summary: delete resume in jobseeker profile
+ *      description: this api is used to delete  resume in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: resume deleted from jobseeker profile successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body  
+ */
+router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume)
 // router.delete('/:seekerid/profiles/:profileid/profilepicture',controller.deleteprofilepictre)
 
 
