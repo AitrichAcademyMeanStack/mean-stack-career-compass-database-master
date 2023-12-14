@@ -25,18 +25,19 @@ const getJobPostById = asyncHandler(async (req, res) => {
 
 // Updating Job Post
 const updateJobPost = asyncHandler(async (req, res) => {
-  const postId = req.params.id;
+  const postId = req.params.jobPostId;
+  const companyUser = req.params.companyUserId
   const updateData = req.body;
-  const updatePost = await jobPostService.updatePost(postId, updateData);
+  const updatePost = await jobPostService.updatePost(postId, companyUser, updateData);
   res.status(200).json(updatePost);
 });
 
 // Deleting Job Post
 const deleteJobPost = asyncHandler(async (req, res) => {
   const companyUser = req.params.companyUserId
-  const postId = req.params.jobPosts;
+  const postId = req.params.jobPostId;
   const deletePost = await jobPostService.deletePost(postId,companyUser);
-  res.status(200).json(deletePost);
+  res.status(202).json(deletePost);
 });
 
 export default {

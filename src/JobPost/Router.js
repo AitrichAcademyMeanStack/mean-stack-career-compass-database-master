@@ -115,7 +115,13 @@ router.post("/:companyUserId/jobPosts",jobPostController.createJobPost)
  *              - JobPost
  *          parameters:
  *              - in: path
- *                name: id
+ *                name: companyUserId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description: ID of the JobPost
+ *              - in: path
+ *                name: jobPostId
  *                required: true
  *                schema:
  *                  type: string
@@ -135,18 +141,24 @@ router.get("/:companyUserId/jobPosts/:jobPostId",jobPostController.getJobPostByI
 
 /**
  * @swagger
- *  /api/v1/jobPosts/{id}:
+ *  /api/v1/companyUsers/{companyUserId}/jobPosts/{jobPostId}:
  *      put:
- *          summary:    Update JobPost By ID
+ *          summary: Update JobPost By ID
  *          tags:
  *              - JobPost
  *          parameters:
  *              - in: path
- *                name: id
+ *                name: companyUserId
  *                required: true
  *                schema:
  *                  type: string
- *                description: ID of the JobPost to Update
+ *                description: ID of the Company User
+ *              - in: path
+ *                name: jobPostId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description: ID of the JobPost
  *          requestBody:
  *                  required: true
  *                  content:
@@ -165,7 +177,7 @@ router.get("/:companyUserId/jobPosts/:jobPostId",jobPostController.getJobPostByI
  *      
  *          
  */
-router.put("/:id",jobPostController.updateJobPost)
+router.put("/:companyUserId/jobPosts/:jobPostId",jobPostController.updateJobPost)
 
 /**
  * @swagger
@@ -193,6 +205,6 @@ router.put("/:id",jobPostController.updateJobPost)
  *              404:
  *                  description: PostId not found
  */
-router.delete("/:id1/jobPosts/:id2",jobPostController.deleteJobPost)
+router.delete("/:companyUserId/jobPosts/:jobPostId",jobPostController.deleteJobPost)
 
 export default router

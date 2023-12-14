@@ -71,14 +71,25 @@ const getJobPostsById = async (postId,companyUserId) => {
 };
 
 // Updating Job Post
-const updatePost = async (postId) => {
+const updatePost = async (postId,companyUserId,updateData) => {
   try {
-    const updatePost = await JobPost.findByIdAndUpdate(postId);
-    if (updatePost) {
-      logger.info("Job Post Updated Successfully");
-      return updatePost;
-    } else {
-      throw new BadRequestError("Error while updating Job Post");
+    const companyUser = await CompanyUser.findById(companyUserId);
+    if (companyUser) {
+      const job = await JobPost.findById(postId)
+      if (job) {
+        const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
+        if (updatePost) {
+          logger.info("Job Post Updated Successfully");
+          return updatePost;
+        } else {
+          throw new BadRequestError("Error while updating Job Post");
+        }
+      }else {
+        throw new NotFoundError("JobPost not found with specific ID")
+      }
+    }else {
+      logger.error("Company User not found")
+      throw new NotFoundError("Company User not found")
     }
   } catch (error) {
     throw error;
