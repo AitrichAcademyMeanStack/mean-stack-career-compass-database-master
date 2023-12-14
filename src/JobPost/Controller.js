@@ -5,7 +5,7 @@ import jobPostService from "./Service.js";
 const createJobPost = asyncHandler(async (req, res) => {
   const companyUser = req.params.companyUserId
   const addPost = req.body;
-  const postJob = await jobPostService.addJobPost(addPost,companyUser);
+  const postJob = await jobPostService.addJobPost(companyUser,addPost);
   res.status(201).json(postJob);
 });
 
