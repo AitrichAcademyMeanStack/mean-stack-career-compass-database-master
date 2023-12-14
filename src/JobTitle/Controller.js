@@ -20,5 +20,12 @@ const deleteJobTitle=asyncerrorhandler(async(req,res)=>
     res.status(200).json("jobtitle deleted successfully")
 })
 
+//update jobtitle
+const updateJobTitle=asyncerrorhandler(async(req,res)=>
+{   const jobtitleid=req.params.id
+    const jobtitledata=req.body
+    const jobtitleupdate=await service.updateJobTitle(jobtitleid,jobtitledata)
+    res.status(200).json(jobtitleupdate)
+})
 
-export default {getalljobtitle,createJobTitle,deleteJobTitle}
+export default {getalljobtitle,createJobTitle,deleteJobTitle,updateJobTitle}

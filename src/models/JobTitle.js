@@ -4,11 +4,10 @@ import mongoose, { Schema } from "mongoose";
 const jobtitleschma = new Schema({
   name: {
     type: String,
-    required: true,
+    unique:true
   },
   description: {
     type: String,
-    required: true,
   },
 },{versionKey:false}
 );
