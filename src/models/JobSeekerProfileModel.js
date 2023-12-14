@@ -14,7 +14,12 @@ const jobSeekerProfileSchema = new Schema(
       title:String,
       profilepicture:String
     },
-    qualifications: [String],
+    qualifications: [{
+      name:String,
+      institution:String,
+      startdate: Date,
+      enddate: Date
+    }],
     workExperiences: [{
        jobTitle: String,
       companyName: String,

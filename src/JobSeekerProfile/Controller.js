@@ -82,8 +82,8 @@ const deleteskills = asyncerrorhandler(async(req,res)=>{
 const deletequalification = asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
     const profileid=req.params.profileid
-    const qualificationname = req.params.qualificationname
-    await service.deletequalification(seekerid,profileid,qualificationname)
+    const qualificationid = req.params.qualificationid
+    await service.deletequalification(seekerid,profileid,qualificationid)
     res.status(202).json("qualification deleted successfully")
 })
 
