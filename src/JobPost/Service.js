@@ -51,9 +51,10 @@ const getAllJobPosts = async () => {
 };
 
 // Fetching Job Post By ID
-const getJobPostsById = async (postId,companyUserId) => {
+const getJobPostsById = async (companyUserId,postId) => {
   try {
     const companyUser = await CompanyUser.findById(companyUserId)
+    console.log(companyUser);
     if (companyUser) {
       const Job = await JobPost.findById(postId);
       if (Job) {

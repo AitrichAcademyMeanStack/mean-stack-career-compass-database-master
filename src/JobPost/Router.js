@@ -119,7 +119,7 @@ router.post("/:companyUserId/jobPosts",jobPostController.createJobPost)
  *                required: true
  *                schema:
  *                  type: string
- *                description: ID of the JobPost
+ *                description: ID of the CompanyUser
  *              - in: path
  *                name: jobPostId
  *                required: true
