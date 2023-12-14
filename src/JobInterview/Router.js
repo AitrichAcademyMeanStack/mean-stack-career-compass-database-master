@@ -1,6 +1,70 @@
 import express from 'express';
 const router = express.Router()
 
+/**
+ * @swagger
+ *  components:
+ *      schemas:
+ *          JobInterview:
+ *                  type: object
+ *                  required: 
+ *                      - job
+ *                      - interviewee
+ *                      - jobApplication
+ *                      - scheduledBy
+ *                      - dateScheduled
+ *                      - status
+ *                  properties:
+ *                      job:
+ *                          type: object
+ *                          items:
+ *                              type: string
+ *                      interviewee:
+ *                          type: object
+ *                          items: 
+ *                              type: string
+ *                      jobApplication:
+ *                          type: object
+ *                          items:
+ *                              type: string
+ *                      scheduledBy:
+ *                              type: string
+ *                      dateScheduled: 
+ *                              type: string
+ *                      status:
+ *                          type: enum
+*/        
+
+/**
+ * @swagger
+ *  /api/v1/jobPosts/{jobPostId}/jobInterview/jobInterviewId:
+ *      post:
+ *          summary: Post Job Interview
+ *          tags:
+ *              - JobInterview
+ *          parameters:
+ *              - in: path
+ *                name: jobPostId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description: ID of the JobPost
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                          schema:
+ *                              $ref:   '#/components/schemas/JobInterview'
+ *          responses:
+ *              201:
+ *                  description: JobInteriew Posted Successfully
+ *                  content:
+ *                          application/json:
+ *                                      schema:
+ *                                          $ref:   '#/componenets/schemas/JobInterview'
+ *              400:
+ *                  description: Bad request , check request body
+ */
 
 
 

@@ -17,9 +17,9 @@ const getAllJobPosts = asyncHandler(async (req, res) => {
 
 // Fetching Job Post by ID
 const getJobPostById = asyncHandler(async (req, res) => {
-  const companyUser = req.params.companyUserId
-  const postId = req.params.jobPosts;
-  const getJobPost = await jobPostService.getJobPostsById(postId,companyUser);
+  const companyUser = req.params.companyUserId;
+  const postId = req.params.jobPostId;
+  const getJobPost = await jobPostService.getJobPostsById(companyUser,postId);
   res.status(200).json(getJobPost);
 });
 
