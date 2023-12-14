@@ -59,11 +59,14 @@ router.get('/',controller.getalljobtitle)
  * 
  */
 router.post('/',controller.createJobTitle)
+
+
+
 //delete jobtitle
 /**
  * @swagger
  * /api/v1/jobtitle/jobtitleid:
- *  post:
+ *  delete:
  *      summary: delete  jobtitle
  *      description: this api is used to delete jobtitle
  *      tags:
@@ -83,6 +86,44 @@ router.post('/',controller.createJobTitle)
  */
 
 router.delete('/:id',controller.deleteJobTitle)
+
+
+
+//update jobtitle
+/**
+ * @swagger
+ * /api/v1/jobtitle/jobtitleid:
+ *  put:
+ *      summary: update   jobtitle
+ *      description: this api is used to update jobtitle
+ *      tags:
+ *          - JobTitle
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/JobTitle'
+ *      responses:
+ *          200:
+ *              description: jobtitle updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/JobTitle'
+ *          400:
+ *              description: not found error , check request body
+ *                  
+ */
+
+router.put('/:id',controller.updateJobTitle)
 
 
 

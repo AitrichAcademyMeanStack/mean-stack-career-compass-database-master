@@ -9,9 +9,7 @@ const JobProviderCompanySchema = new Schema(
         phone: {type: Number},
         address: {type: String},
         website:{type: String},
-        location:{
-            name:{type: String}
-        }
+        location:[String]
     },{versionKey:false}
 ) 
 

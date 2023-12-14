@@ -20,7 +20,7 @@ const router = express.Router()
  *                  - postedBy
  *              properties :
  *                  jobTitle:
- *                      type: object
+ *                      type: array
  *                      items:
  *                          type: string
  *                  jobSummary:
@@ -80,7 +80,7 @@ router.get("/",jobPostController.getAllJobPosts);
  *              - JobPost
  *          parameters:
  *              - in: path
- *                name: id
+ *                name: companyUserId
  *                required: true
  *                schema:
  *                  type: string

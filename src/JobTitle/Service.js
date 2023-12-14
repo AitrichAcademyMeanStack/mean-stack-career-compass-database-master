@@ -70,10 +70,31 @@ catch (error) {
 }
 }
 
+const updateJobTitle=async(jobtitledata,jobtitleid)=>
+{
+  try {
+    const result = await JobTitle.findByIdAndUpdate(jobtitledata,jobtitleid,{new:true})
+    if (result) {
+      
+        logger.info("jobtitle updated successfully")
+        return result
+    } else {
+        logger.error("jobtitle not found with id")
+        throw new NotFoundError("jobtitle data is not found with specific id")
+
+    }
+} catch (error) {
+    if (error.name === "CastError") {
+        logger.error("invalid jobtitle id")
+        throw new BadRequestError("invalid jobtitle id")
+    } else if(error.name === 'ValidationError'){
+        logger.error(`validation Error : ${error.message}`)
+        throw new ValidationError(error.message)
+    }else{
+        throw error
+    }
+}
+}
 
 
-
-
-
-
-export default {getalljobtitle,createJobTitle,deleteJobTitle};
+export default {getalljobtitle,createJobTitle,deleteJobTitle,updateJobTitle};
