@@ -35,41 +35,36 @@ const router = express.Router()
  *                          type: enum
 */        
 
-
 /**
  * @swagger
- *  components:
- *      /api/v1/jobPosts/{jobPostId}/jobInterview:
- *          post:
- *              summary: Job Interview for Posted Job
- *              tags:
- *                  - JobInterview
- *              parameters:
- *                  - in: path
- *                    name: jobPostId
- *                    required: true
- *                    schema:
- *                      type: string
- *                    description: ID of the Posted Job
- *              requestBody:
- *                  required: true
+ *  /api/v1/jobPosts/{jobPostId}/jobInterview/jobInterviewId:
+ *      post:
+ *          summary: Post Job Interview
+ *          tags:
+ *              - JobInterview
+ *          parameters:
+ *              - in: path
+ *                name: jobPostId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description: ID of the JobPost
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                          schema:
+ *                              $ref:   '#/components/schemas/JobInterview'
+ *          responses:
+ *              201:
+ *                  description: JobInteriew Posted Successfully
  *                  content:
- *                      application/json: 
- *                              schema:
- *                                  $ref: '#/components/schemas/JobInterview'
- *              responses:
- *                  201:
- *                      description: Job Interview Posted
- *                      content:
- *                              application/json:
+ *                          application/json:
  *                                      schema:
- *                                          $ref: '#/components/schemas/JobInterview'
- *                  400:
- *                      description: Bad request, check request body
- *                      
- *           
+ *                                          $ref:   '#/componenets/schemas/JobInterview'
+ *              400:
+ *                  description: Bad request , check request body
  */
-
 
 
 
