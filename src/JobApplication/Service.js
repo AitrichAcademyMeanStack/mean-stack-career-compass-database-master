@@ -1,10 +1,9 @@
-import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing custom bad request error handler
+import BadRequestError from "../Exceptions/BadRequestError.js"; //importing custom bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js";// importing custom not found error handler
 import logger from "../middleware/logger.js"; //importing logger
 import Jobapplication from "../models/JobApplicationModel.js"; //importing job application model
 import JobPost from "../models/JobPostModel.js"; //importing job post model
 import jobseeker from "../models/JobSeekerModel.js"; //importing jobseeker model
-import mongoose from "mongoose";
 
 //getting all job applications
 const getallapplications = async(seekerid)=>{
@@ -86,11 +85,11 @@ const createapplication = async(seekerid,jobpostid,applicationdata)=>{
 
                 const newapplication = await Jobapplication.create(applicationdata)
                 if (newapplication) {
-                    logger.info("job application added successfully")
+                    logger.info("job applied successfully")
                     return newapplication
                 } else {
-                    logger.error("error occured in adding new job application")
-                    throw new BadRequestError("error occured in adding new job application")
+                    logger.error("error occured in applying new job")
+                    throw new BadRequestError("error occured in applying new job")
                 }
             } else {
                 logger.error("job post not found with specific id")

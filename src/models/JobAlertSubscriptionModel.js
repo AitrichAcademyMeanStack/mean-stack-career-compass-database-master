@@ -9,7 +9,16 @@ const subscriptionschema = new Schema({
         email: String,
         phone: Number,
       },
-    SubscribedCompany:{},
+    SubscribedCompany:{        
+        legalName:{type: String},
+        summary:{type: String},
+        industry:[String],
+        email:{type: String},
+        phone: {type: Number},
+        address: {type: String},
+        website:{type: String},
+        location:[String]
+    },
     Industry:{
         name:String,
         description: String

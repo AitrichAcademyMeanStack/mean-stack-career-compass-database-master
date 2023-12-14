@@ -3,17 +3,27 @@ import mongoose,{Schema} from 'mongoose'
 //schema for job application schema
 const jobapplicationschema = new Schema({
     job:{
-        jobTitle: String,
-        jobSummary: String,
-        jobLocation: String,
-        company: String,
-        category: String,
-        qualifications: String,
-        skills: String,
-        industry: String,
-        jobResponsibilities: [String],
-        postedJob: String,
-        postedDate: Date
+        jobTitle: [String],
+        jobSummary: { type: String },
+        jobLocation: [String],
+        company: {
+          companyId: mongoose.Schema.Types.ObjectId,
+          legalName: { type: String },
+          summary: { type: String },
+          industry: [String],
+          email: { type: String },
+          phone: { type: String },
+          address: { type: String },
+          website: { type: String },
+          location: [String],
+        },
+        category: [String],
+        qualifications: [String],
+        skills: [String],
+        industry: [String],
+        jobResponsibilities: { type: String },
+        postedBy: { type: String },
+        postedDate: { type: Date, default: Date.now() },
     },
     applicant:{
         seekerId: mongoose.Schema.Types.ObjectId,

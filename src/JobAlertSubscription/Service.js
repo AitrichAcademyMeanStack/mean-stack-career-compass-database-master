@@ -14,7 +14,6 @@ const createsubscription = async(seekerid,subscriptiondata)=>{
                 email: existingseeker.email,
                 phone: existingseeker.phone,
             }
-
         const newsubscription =await  JobAlertSubscription.create(subscriptiondata)
         if (newsubscription) {
             logger.info("new subscription created successfully")
