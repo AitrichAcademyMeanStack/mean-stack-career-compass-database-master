@@ -4,7 +4,8 @@ import mongoose, {Schema} from "mongoose";
 const skillschema = new Schema(
     {
         name: {
-            type: String
+            type: String,
+            unique:true
         },
         description: {
             type: String
