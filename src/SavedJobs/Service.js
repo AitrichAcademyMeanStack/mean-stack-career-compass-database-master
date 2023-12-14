@@ -2,7 +2,7 @@ import logger from "../middleware/logger.js"; //importing logger
 import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker model
 import savedjobs from "../models/SavedJobsModel.js"; //importing saved jobs model
 import JobPost from "../models/JobPostModel.js";//importing job post model
-import BadRequestError from "../Exceptions/Badrequesterror.js"; //imporing bad request error handler
+import BadRequestError from "../Exceptions/BadRequestError.js"; //imporing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing not found error handler
 
 

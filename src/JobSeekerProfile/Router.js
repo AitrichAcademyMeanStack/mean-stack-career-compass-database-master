@@ -102,17 +102,16 @@ router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profile
  *          description: Numeric ID is required.
  *          schema:
  *            type: string
- *        - in: formData
- *          name: Resume
- *          type: file
- *          required: true
- *          description: The file Resume to upload
  *      requestBody:
  *        required: true
  *        content:
  *          multipart/form-data:
  *            schema:
- *              $ref: '#/components/schemas/Resume'
+ *              type: object
+ *              properties:
+ *                Resume:
+ *                  type: string
+ *                  format: binary
  *      responses:
  *        200:
  *          description: Jobseeker resume updated successfully
@@ -123,7 +122,6 @@ router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profile
  *        400:
  *          description: Not found error, check the request body
  */
-
 router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume'),controller.resumeupload) //adding resume
 
 /**
@@ -206,6 +204,49 @@ router.put('/:seekerid/profiles/:profileid/skill',controller.addskill) //adding 
  */
 router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificationupdate) //adding qualifications
 
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/profilepicture:
+ *  put:
+ *      summary: add profilepicture in jobseeker profilepicture details
+ *      description: This API is used to add profilepicture in jobseeker profile.
+ *      consumes:
+ *        - multipart/form-data
+ *      tags:
+ *        - JobSeeker-Profile
+ *      parameters:
+ *        - in: path
+ *          name: seekerid
+ *          required: true
+ *          description: Numeric ID is required.
+ *          schema:
+ *            type: string
+ *        - in: path
+ *          name: profileid
+ *          required: true
+ *          description: Numeric ID is required.
+ *          schema:
+ *            type: string
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          multipart/form-data:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                ProfilePicture:
+ *                  type: string
+ *                  format: binary
+ *      responses:
+ *        200:
+ *          description: Jobseeker ProfilePicture updated successfully
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/jobseekerprofile'
+ *        400:
+ *          description: Not found error, check the request body
+ */
 router.put('/:seekerid/profiles/:profileid/profilepicture',uploadprofilepicture.single('ProfilePicture'),controller.addprofilepicture) //adding profile picture
 
 /**

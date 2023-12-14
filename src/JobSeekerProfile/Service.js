@@ -42,7 +42,7 @@ const addskill = async (seekerid, profileid, skillNames) => {
   }
 };
 
-
+//add profile name to profile
 const addprofilename = async (seekerid, profileid, profilenamedata) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -162,6 +162,7 @@ const updateprofilesummary= async(seekerid,profileid,summarydata)=>{
   }
 };
 
+//add work experience to profile
 const addworkexperience = async(seekerid,profileid,experiencedata) =>{
   try {
     const existingseeker  = await jobseeker.findById(seekerid)
@@ -241,7 +242,7 @@ const resumeupload = async (req, seekerid, profileid) => {
   }
 };
 
-
+//add profile picture to profile
 const addprofilepicture = async(req, seekerid, profileid)=>{
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -266,6 +267,7 @@ const addprofilepicture = async(req, seekerid, profileid)=>{
         console.log(updateprofile);
         if (updateprofile) {
           logger.info("ProfilePicture uploaded successfully");
+          console.log(req.file);
           return updateprofile;
         } else {
           logger.error("Error occurred in file uploading");
@@ -280,7 +282,7 @@ const addprofilepicture = async(req, seekerid, profileid)=>{
   }
 }
 
-
+//delete skills frrom array
 const deleteskills = async (seekerid, profileid, skillname) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -314,6 +316,7 @@ const deleteskills = async (seekerid, profileid, skillname) => {
   }
 };
 
+//delete qualification from array
 const deletequalification = async(seekerid,profileid,qualificationname)=>{
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -347,6 +350,7 @@ const deletequalification = async(seekerid,profileid,qualificationname)=>{
   }
 }
 
+//delete work experience from array
 const deleteworkexperience = async(seekerid,profileid,workexpid)=>{
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -380,6 +384,7 @@ const deleteworkexperience = async(seekerid,profileid,workexpid)=>{
   }
 }
 
+//delete resume from profile
 const deleteresume = async(seekerid,profileid)=>{
   try {
     const existingseeker = await jobseeker.findById(seekerid);
@@ -412,6 +417,8 @@ const deleteresume = async(seekerid,profileid)=>{
     throw error;
   }
 }
+
+
 
 const deleteprofilepictre = async(seekerid,profileid) =>{
   try {
