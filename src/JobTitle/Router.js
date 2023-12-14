@@ -2,22 +2,30 @@ import express from 'express' // importing express
 import controller from './Controller.js' //importing controller
 const router = express.Router()
 
+/**
+ * @swagger
+ *  components:
+ *      schemas:
+ *          jobtitle:
+ *              type: object
+ *              required:
+ *                  - name
+ *                  - description
+ *              properties:
+ *                  name:
+ *                      type: string
+ *                  description:
+ *                      type: string
+ */
 
 /**
 @swagger
- * /api/v1/jobtitle
+ * /api/v1/jobtitle:
  *  get:
  *      summary: get all  jobtitles
  *      description: this is is used to get  all jobtitles
  *      tags:
  *          - JobTitle
- *      parameters:
- *          - in: path
- *            name: id
- *            required: true
- *            description: numeric id is required
- *            schema:
- *                  type: string
  *      responses:
  *          200:
  *              description: Jobtitle retrived successfully
@@ -65,17 +73,23 @@ router.post('/',controller.createJobTitle)
 //delete jobtitle
 /**
  * @swagger
- * /api/v1/jobtitle/jobtitleid:
+ * /api/v1/jobtitle/{jobtitleid}:
  *  delete:
  *      summary: delete  jobtitle
  *      description: this api is used to delete jobtitle
  *      tags:
  *          - JobTitle
- *      
+ *      parameters:
+ *          - in: path
+ *            name: jobtitleid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
  *      responses:
  *          201:
  *              description: Jobtitle deleted successfully
- *               content:
+ *              content:
  *                  application/json:
  *                      schema:
  *                          type: array
@@ -92,7 +106,7 @@ router.delete('/:id',controller.deleteJobTitle)
 //update jobtitle
 /**
  * @swagger
- * /api/v1/jobtitle/jobtitleid:
+ * /api/v1/jobtitle/{jobtitleid}:
  *  put:
  *      summary: update   jobtitle
  *      description: this api is used to update jobtitle
@@ -100,7 +114,7 @@ router.delete('/:id',controller.deleteJobTitle)
  *          - JobTitle
  *      parameters:
  *          - in: path
- *            name: id
+ *            name: jobtitleid
  *            required: true
  *            description: numeric id is required
  *            schema:
