@@ -19,7 +19,7 @@ const jobPostSchema = new Schema(
     qualifications: [String],
     skills: [String],
     industry: [String],
-    jobResponsibilities: { type: String },
+    jobResponsibilities: [String],
     postedBy: { type: String },
     postedDate: { type: Date, default: Date.now() },
   },

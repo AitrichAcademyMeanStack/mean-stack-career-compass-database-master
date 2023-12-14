@@ -46,7 +46,9 @@ const router = express.Router()
  *                      items:
  *                          type: string
  *                  jobResponsibilities:
- *                      type: string
+ *                      type: array
+ *                      items:
+ *                          type: string
  *                  postedBy:
  *                      type: string
  *                      
