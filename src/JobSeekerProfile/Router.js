@@ -478,7 +478,7 @@ router.delete('/:seekerid/profiles/:profileid/workexperiences/:workexperienceid'
  *          400:
  *              description: not found error , check request body  
  */
-router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume)
+router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume) // deleting resume
 
 /**
  * @swagger
@@ -511,7 +511,7 @@ router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume)
  *          400:
  *              description: not found error , check request body  
  */
-router.delete('/:seekerid/profiles/:profileid/profilepicture',controller.deleteprofilepictre)
+router.delete('/:seekerid/profiles/:profileid/profilepicture',controller.deleteprofilepictre) //deleting profile picture
 
 
 

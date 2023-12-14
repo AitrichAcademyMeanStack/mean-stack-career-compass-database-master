@@ -71,12 +71,10 @@ const options = {
         path.join(__dirname,"JobSeeker","Router.js"),
         path.join(__dirname,"JobSeekerProfile","Router.js"),
         path.join(__dirname,"CompanyUser","Router.js"),
-        path.join(__dirname,"WorkExperience","Router.js"),
         path.join(__dirname,"JobPost","Router.js"),
         path.join(__dirname,"SavedJobs","Router.js"),
         path.join(__dirname,"JobInterview","Router.js"),
         path.join(__dirname,"JobApplication","Router.js"),
-        path.join(__dirname,"Resume","Router.js"),
         path.join(__dirname,"JobTitle,Router.js"),
     ],
 };
