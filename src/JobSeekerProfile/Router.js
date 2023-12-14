@@ -24,7 +24,16 @@ const router = express.Router();
  *                  qualifications:
  *                      type: array
  *                      items:
- *                          type: String
+ *                          type: object
+ *                          properties:
+ *                              name:
+ *                                  type: String
+ *                              institution:
+ *                                  type: String
+ *                              startdate:
+ *                                  type: String
+ *                              enddate:
+ *                                  type: String
  *                  workExperiences:
  *                      type: array
  *                      items:
@@ -150,7 +159,11 @@ router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume')
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/jobseekerprofile'
+ *                      properties:
+ *                          skills:
+ *                              type: array
+ *                              items:
+ *                                  type: String
  *      responses:
  *          200:
  *              description: jobseeker profile updated successfully
@@ -190,7 +203,20 @@ router.put('/:seekerid/profiles/:profileid/skill',controller.addskill) //adding 
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/jobseekerprofile'
+ *                      properties:
+ *                       qualifications:
+ *                          type: array
+ *                          items:
+ *                              type: object
+ *                              properties:
+ *                                  name:
+ *                                      type: String
+ *                                  institution:
+ *                                      type: String
+ *                                  startdate:
+ *                                      type: String
+ *                                  enddate:
+ *                                      type: String
  *      responses:
  *          200:
  *              description: jobseeker profile updated successfully
@@ -275,7 +301,9 @@ router.put('/:seekerid/profiles/:profileid/profilepicture',uploadprofilepicture.
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/jobseekerprofile'
+ *                      properties:
+ *                         profileName:
+ *                          type: string
  *      responses:
  *          200:
  *              description: jobseeker profile updated successfully
@@ -315,7 +343,9 @@ router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilenam
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/jobseekerprofile'
+ *                      properties:
+ *                         profileSummary:
+ *                          type: string
  *      responses:
  *          200:
  *              description: jobseeker profile updated successfully
@@ -355,7 +385,22 @@ router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprof
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/jobseekerprofile'
+ *                      properties:
+ *                       workExperiences:
+ *                          type: array
+ *                          items:
+ *                              type: object
+ *                              properties:
+ *                                  jobTitle:
+ *                                      type: String
+ *                                  companyName:
+ *                                      type: String
+ *                                  summary:
+ *                                      type: String
+ *                                  serviceStart:
+ *                                      type: String
+ *                                  serviceEnd:
+ *                                      type: String
  *      responses:
  *          200:
  *              description: jobseeker profile updated successfully
@@ -368,7 +413,6 @@ router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprof
  *                  
  */
 router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexperience) //adding work experience
-
 
 /**
  * @swagger
@@ -412,7 +456,7 @@ router.delete('/:seekerid/profiles/:profileid/skills/:skillname',controller.dele
 
 /**
  * @swagger
- * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/qualifications/{qualificationname}:
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/qualifications/{qualificationid}:
  *  delete:
  *      summary: delete qualifications in jobseeker profile
  *      description: this api is used to delete  qualifications in jobseeker profile
@@ -422,19 +466,19 @@ router.delete('/:seekerid/profiles/:profileid/skills/:skillname',controller.dele
  *          - in: path
  *            name: seekerid
  *            required: true
- *            description: numeric id is required
+ *            description: seeker id is required
  *            schema:
  *                  type: string
  *          - in: path
  *            name: profileid
  *            required: true
- *            description: numeric id is required
+ *            description: profile id is required
  *            schema:
  *                  type: string
  *          - in: path
- *            name: qualificationname
+ *            name: qualificationid
  *            required: true
- *            description: qualification name is required
+ *            description: qualification id is required
  *            schema:
  *                  type: string
  *      responses:
@@ -447,7 +491,7 @@ router.delete('/:seekerid/profiles/:profileid/skills/:skillname',controller.dele
  *          400:
  *              description: not found error , check request body  
  */
-router.delete('/:seekerid/profiles/:profileid/qualifications/:qualificationname',controller.deletequalification) //deleting qualifications
+router.delete('/:seekerid/profiles/:profileid/qualifications/:qualificationid',controller.deletequalification) //deleting qualifications
 
 /**
  * @swagger

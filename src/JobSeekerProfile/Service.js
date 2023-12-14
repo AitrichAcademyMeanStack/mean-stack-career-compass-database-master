@@ -4,20 +4,18 @@ import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker mode
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
 import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
-import mongoose from "mongoose";
+
 
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
-
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
-
       if (
         existingprofile &&
         existingseeker._id.toString() ===
-          existingprofile.jobSeeker.seekerId.toString()
+        existingprofile.jobSeeker.seekerId.toString()
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
@@ -26,16 +24,18 @@ const addskill = async (seekerid, profileid, skillNames) => {
 
         if (result) {
           logger.info("Skills are added successfully");
-          console.log(result);
           return result;
         } else {
           logger.error("Error occurred in updating skills");
+          throw new BadRequestError("Error occurred in updating skills")
         }
       } else {
         logger.error("Seeker profile not found with specific id");
+        throw new NotFoundError("Seeker profile not found with specific id")
       }
     } else {
       logger.error("Seeker not found with specific id");
+      throw new NotFoundError("Seeker not found with specific id")
     }
   } catch (error) {
     logger.error(`Error: ${error}`);
@@ -52,27 +52,30 @@ const addprofilename = async (seekerid, profileid, profilenamedata) => {
 
       if (existingprofile &&
         existingseeker._id.toString() ===
-          existingprofile.jobSeeker.seekerId.toString()) {
+        existingprofile.jobSeeker.seekerId.toString()) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
           { profileName: profilenamedata.profileName },
-          {new:true}
+          { new: true }
         );
 
         if (result && result.acknowledged) {
           logger.info("Profile name added successfully");
-          console.log(result);
           return result;
         } else {
           logger.error("Error occurred in adding profilename");
+          throw new BadRequestError("Error occurred in adding profilename")
         }
       } else {
         logger.error("Seeker profile not found with specific id");
+        throw new NotFoundError("Seeker profile not found with specific id")
       }
     } else {
       logger.error("Seeker not found with specific id");
+      throw new NotFoundError("Seeker not found with specific id")
     }
   } catch (error) {
+    logger.error(`Error: ${error}`);
     throw error;
   }
 };
@@ -89,11 +92,15 @@ const getallprofile = async (seekerid, profileid) => {
         return existingprofile;
       } else {
         logger.error("seeker profile is not found with specific id");
+        throw new NotFoundError("seeker profile is not found with specific id")
       }
     } else {
       logger.error("job seeker is not found with specific id");
+      throw new NotFoundError("Seeker not found with specific id")
+
     }
   } catch (error) {
+    logger.error(`Error: ${error}`);
     throw error;
   }
 };
@@ -103,69 +110,77 @@ const getallprofile = async (seekerid, profileid) => {
 const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
   try {
     const seekerdata = await jobseeker.findById(seekerid);
-
     if (seekerdata) {
       const profiledata = await seekerProfile.findById(profileid);
-
       if (profiledata && seekerdata._id.toString() === profiledata.jobSeeker.seekerId.toString()) {
-        
-        const updatedata= await seekerProfile.updateOne(
-          {_id:profileid},
-          {$addToSet:{qualifications:{$each: qualificationdata.qualifications}}})
+        profiledata.qualifications = [{
+          name: qualificationdata.name,
+          institution: qualificationdata.institution,
+          startdate: qualificationdata.startdate,
+          enddate: qualificationdata.enddate,
+        }]
+        const updatedata = await seekerProfile.updateOne(
+          { _id: profileid },
+          { $addToSet: { qualifications: { $each: qualificationdata.qualifications } } })
         if (updatedata) {
           logger.info("Qualification updated successfully", updatedata);
           return updatedata;
         } else {
           logger.error("Error in updating qualification");
+          throw new BadRequestError("Error in updating qualification")
         }
       } else {
         logger.error("Profile not found with specific id");
+        throw new NotFoundError("Profile not found with specific id")
       }
-      } else {
-        logger.error("seeker not found with specific id");
-
-      }
+    } else {
+      logger.error("seeker not found with specific id");
+      throw new NotFoundError("Seeker not found with specific id")
+    }
   } catch (error) {
+    logger.error(`Error: ${error}`);
     throw error;
   }
 };
 
 //add profile summary to seekerprofile
-const updateprofilesummary= async(seekerid,profileid,summarydata)=>{
-  try{
-    const seekerdata= await jobseeker.findById(seekerid);
-    if(seekerdata){
-     const profiledata= await seekerProfile.findById(profileid);
+const updateprofilesummary = async (seekerid, profileid, summarydata) => {
+  try {
+    const seekerdata = await jobseeker.findById(seekerid);
+    if (seekerdata) {
+      const profiledata = await seekerProfile.findById(profileid);
       if (profiledata && seekerdata._id.toString() === profiledata.jobSeeker.seekerId.toString()) {
-     
-      const updatedata = await seekerProfile.updateOne(
-        { _id: profileid },
-        { profileSummary: summarydata.profileSummary }
-      );
-   
-     if (updatedata) {
-      logger.info("summary updated successfully", updatedata);
-      return updatedata;
+
+        const updatedata = await seekerProfile.updateOne(
+          { _id: profileid },
+          { profileSummary: summarydata.profileSummary }
+        );
+        if (updatedata) {
+          logger.info("summary updated successfully", updatedata);
+          return updatedata;
+        } else {
+          logger.error("Error in updating qualification");
+          throw new BadRequestError("Error in updating qualification")
+        }
+      } else {
+        logger.error("Profile not found with specific id");
+        throw new NotFoundError("Profile not found with specific id")
+      }
     } else {
-      logger.error("Error in updating qualification");
+      logger.error("seeker not found with specific id");
+      throw new NotFoundError("Seeker not found with specific id")
     }
-  } else {
-    logger.error("Profile not found with specific id");
   }
- } else {
-    logger.error("seeker not found with specific id");
-  
-  }
-}
-  catch(error){
+  catch (error) {
+    logger.error(`Error: ${error}`);
     throw error;
   }
 };
 
 //add work experience to profile
-const addworkexperience = async(seekerid,profileid,experiencedata) =>{
+const addworkexperience = async (seekerid, profileid, experiencedata) => {
   try {
-    const existingseeker  = await jobseeker.findById(seekerid)
+    const existingseeker = await jobseeker.findById(seekerid)
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid)
       if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
@@ -173,26 +188,31 @@ const addworkexperience = async(seekerid,profileid,experiencedata) =>{
           jobTitle: experiencedata.jobTitle,
           companyName: experiencedata.companyName,
           summary: experiencedata.summary,
-          serviceStart: experiencedata.summary,
-          serviceEnd:experiencedata.serviceEnd
+          serviceStart: experiencedata.serviceStart,
+          serviceEnd: experiencedata.serviceEnd
         }]
         const result = await seekerProfile.updateOne(
-          {_id:profileid},
-          {$addToSet:{workExperiences:{$each: experiencedata.workExperiences}}})
-          if (result) {
-            logger.info("work experience added successfully")
-            console.log(result);
-            return result
-          } else {
-            logger.error("error occured  in adding work experiences")
-          }
+          { _id: profileid },
+          { $addToSet: { workExperiences: { $each: experiencedata.workExperiences } } })
+        if (result) {
+          logger.info("work experience added successfully")
+          console.log(result);
+          return result
+        } else {
+          logger.error("error occured  in adding work experiences")
+          throw new BadRequestError("error occured  in adding work experiences")
+        }
       } else {
-        logger.error("seeeker profile not found with specific id")
+        logger.error("seeker profile not found with specific id")
+        throw new NotFoundError("seeker profile not found with specific id")
       }
     } else {
       logger.error("seeker not found with specific id")
+      throw new NotFoundError("Seeker not found with specific id")
+
     }
   } catch (error) {
+    logger.error(`Error: ${error}`);
     throw error
   }
 }
@@ -200,23 +220,23 @@ const addworkexperience = async(seekerid,profileid,experiencedata) =>{
 // add resume to seekerprofile
 const resumeupload = async (req, seekerid, profileid) => {
   try {
-    console.log(req.file);
     const existingseeker = await jobseeker.findById(seekerid);
 
     if (!existingseeker) {
-      throw new Error("Job seeker not found");
+      logger.error("Seeker not found with specific id")
+      throw new NotFoundError("Seeker not found with specific id")
+
     }
 
     const existingprofile = await seekerProfile.findById(profileid);
 
     if (!existingprofile || existingprofile.jobSeeker.seekerId.toString() !== existingseeker._id.toString()) {
-      throw new Error("Invalid profile or mismatched relationship with job seeker");
+      throw new  NotFoundError("Invalid profile or mismatched relationship with job seeker")
     }
 
     const file = existingprofile.Resume;
 
     existingprofile.Resume = {
-      _id: mongoose.Schema.Types.ObjectId,
       title: req.file.originalname,
       resume: req.file.path,
     };
@@ -236,14 +256,13 @@ const resumeupload = async (req, seekerid, profileid) => {
       throw new Error("Error occurred in file uploading");
     }
   } catch (error) {
-    console.error(error);
     logger.error("Error in upload resume:", error.message);
     throw error;
   }
 };
 
 //add profile picture to profile
-const addprofilepicture = async(req, seekerid, profileid)=>{
+const addprofilepicture = async (req, seekerid, profileid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
@@ -267,16 +286,20 @@ const addprofilepicture = async(req, seekerid, profileid)=>{
         console.log(updateprofile);
         if (updateprofile) {
           logger.info("ProfilePicture uploaded successfully");
-          console.log(req.file);
           return updateprofile;
         } else {
           logger.error("Error occurred in file uploading");
-          throw new Error("Error occurred in file uploading");
+          throw new BadRequestError("Error occurred in file uploading");
         }
+      } else {
+        logger.error("job seeker profile not found with specific id")
+        throw new NotFoundError("job seeker profile not found with specific id")
       }
+    } else {
+      logger.error("Seeker not found with specific id")
+      throw new NotFoundError("Seeker not found with specific id")
     }
   } catch (error) {
-    console.log(error);
     logger.error("Error in upload profile picture:", error.message);
     throw error;
   }
@@ -291,7 +314,7 @@ const deleteskills = async (seekerid, profileid, skillname) => {
       if (
         existingprofile &&
         existingseeker._id.toString() ===
-          existingprofile.jobSeeker.seekerId.toString()
+        existingprofile.jobSeeker.seekerId.toString()
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
@@ -317,7 +340,7 @@ const deleteskills = async (seekerid, profileid, skillname) => {
 };
 
 //delete qualification from array
-const deletequalification = async(seekerid,profileid,qualificationname)=>{
+const deletequalification = async (seekerid, profileid, qualificationid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
@@ -325,11 +348,11 @@ const deletequalification = async(seekerid,profileid,qualificationname)=>{
       if (
         existingprofile &&
         existingseeker._id.toString() ===
-          existingprofile.jobSeeker.seekerId.toString()
+        existingprofile.jobSeeker.seekerId.toString()
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
-          { $pull: { qualifications: qualificationname} }
+          { $pull: { qualifications: { _id: qualificationid } } }
         )
 
         if (result && result.acknowledged) {
@@ -351,7 +374,7 @@ const deletequalification = async(seekerid,profileid,qualificationname)=>{
 }
 
 //delete work experience from array
-const deleteworkexperience = async(seekerid,profileid,workexpid)=>{
+const deleteworkexperience = async (seekerid, profileid, workexpid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
@@ -359,11 +382,11 @@ const deleteworkexperience = async(seekerid,profileid,workexpid)=>{
       if (
         existingprofile &&
         existingseeker._id.toString() ===
-          existingprofile.jobSeeker.seekerId.toString()
+        existingprofile.jobSeeker.seekerId.toString()
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
-          { $pull: { workExperiences:{_id:workexpid}} }
+          { $pull: { workExperiences: { _id: workexpid } } }
         )
 
         if (result && result.acknowledged) {
@@ -385,7 +408,7 @@ const deleteworkexperience = async(seekerid,profileid,workexpid)=>{
 }
 
 //delete resume from profile
-const deleteresume = async(seekerid,profileid)=>{
+const deleteresume = async (seekerid, profileid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
@@ -393,11 +416,11 @@ const deleteresume = async(seekerid,profileid)=>{
       if (
         existingprofile &&
         existingseeker._id.toString() ===
-          existingprofile.jobSeeker.seekerId.toString()
+        existingprofile.jobSeeker.seekerId.toString()
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
-          {$unset:{Resume:1}}
+          { $unset: { Resume: 1 } }
         )
 
         if (result && result.acknowledged) {
@@ -419,8 +442,8 @@ const deleteresume = async(seekerid,profileid)=>{
 }
 
 
-
-const deleteprofilepictre = async(seekerid,profileid) =>{
+// delete profile picture from profile
+const deleteprofilepictre = async (seekerid, profileid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
@@ -428,11 +451,11 @@ const deleteprofilepictre = async(seekerid,profileid) =>{
       if (
         existingprofile &&
         existingseeker._id.toString() ===
-          existingprofile.jobSeeker.seekerId.toString()
+        existingprofile.jobSeeker.seekerId.toString()
       ) {
         const result = await seekerProfile.updateOne(
           { _id: profileid },
-          {$unset:{ProfilePicture:1}}
+          { $unset: { ProfilePicture: 1 } }
         )
 
         if (result && result.acknowledged) {
