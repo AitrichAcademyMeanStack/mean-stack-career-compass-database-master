@@ -479,7 +479,39 @@ router.delete('/:seekerid/profiles/:profileid/workexperiences/:workexperienceid'
  *              description: not found error , check request body  
  */
 router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume)
-// router.delete('/:seekerid/profiles/:profileid/profilepicture',controller.deleteprofilepictre)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/profilepicture:
+ *  delete:
+ *      summary: delete profilepicture in jobseeker profile
+ *      description: this api is used to delete  profilepicture in jobseeker profile
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: profilepicture deleted from jobseeker profile successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseekerprofile'
+ *          400:
+ *              description: not found error , check request body  
+ */
+router.delete('/:seekerid/profiles/:profileid/profilepicture',controller.deleteprofilepictre)
 
 
 

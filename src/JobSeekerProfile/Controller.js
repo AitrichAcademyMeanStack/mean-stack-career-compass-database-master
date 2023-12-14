@@ -102,6 +102,13 @@ const deleteresume = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("Resume deleted successfully")
 })
 
+const deleteprofilepictre = asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    await service.deleteprofilepictre(seekerid,profileid)
+    res.status(202).json("profile picture deleted successfully")
+})
+
 
 export default {resumeupload,
     getallprofile,
@@ -114,5 +121,6 @@ export default {resumeupload,
     addprofilepicture,
     deletequalification,
     deleteworkexperience,
-    deleteresume
+    deleteresume,
+    deleteprofilepictre
 }
