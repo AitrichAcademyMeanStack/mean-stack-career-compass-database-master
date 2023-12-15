@@ -116,6 +116,15 @@ const deleteprofilepictre = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("profile picture deleted successfully")
 })
 
+const getWorkExperience = asyncerrorhandler( async (req , res) => {
+    const seekerId = req.params.seekerid;
+    const profileId = req.params.profileid;
+    await service.getWorkExperience(seekerId,profileId)
+    res.status(200).json("WorkExperience Fetched")
+    
+
+})
+
 
 export default {resumeupload,
     getallprofile,
@@ -130,5 +139,6 @@ export default {resumeupload,
     deleteworkexperience,
     deleteresume,
     deleteprofilepictre,
-    getskills
+    getskills,
+    getWorkExperience
 }

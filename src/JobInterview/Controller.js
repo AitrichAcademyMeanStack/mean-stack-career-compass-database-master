@@ -1,4 +1,4 @@
-import asyncHandler from "../utils/asyncerrorhandler";
+import asyncHandler from "../utils/asyncerrorhandler.js";
 import jobInterviewService from "./Service.js"
 
 
@@ -12,8 +12,11 @@ const getAllJobInterview = asyncHandler( async(req , res) => {
 
 // Adding JobInterview
 const addJobInterview = asyncHandler( async(req , res) => {
-    const data = req.body
-    const interview = await jobInterviewService.addJobInterview(data);
+    const jobPost = req.params.jobPostId;
+    const seeker = req.params.jobSeekerId;
+    const application = req.params.jobApplicationId
+    const data = req.body;
+    const interview = await jobInterviewService.addJobInterview(jobPost,seeker,application,data);
     res.status(201).json(interview)
 
 })
@@ -24,4 +27,4 @@ const deleteJobInterview  = asyncHandler( async(req , res) => {
     res.status(200).json(deleteInterview)
 })
 
-export default {getAllJobInterview , addJobInterview}
+export default {getAllJobInterview , addJobInterview , deleteJobInterview}

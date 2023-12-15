@@ -1,4 +1,5 @@
 import express from 'express';
+import Controller from './Controller.js';
 const router = express.Router()
 
 /**
@@ -37,7 +38,7 @@ const router = express.Router()
 
 /**
  * @swagger
- *  /api/v1/jobPosts/{jobPostId}/jobInterview/jobInterviewId:
+ *  /api/v1/jobPosts/{jobPostId}/jobSeeker/{jobSeekerId}/jobApplication/{jobApplicationId}:
  *      post:
  *          summary: Post Job Interview
  *          tags:
@@ -49,6 +50,18 @@ const router = express.Router()
  *                schema:
  *                  type: string
  *                description: ID of the JobPost
+ *              - in: path
+ *                name: jobSeekerId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description: ID of the JobSeeker
+ *              - in: path
+ *                name: jobApplicationId
+ *                required: true
+ *                schema:
+ *                  type: string
+ *                description: ID of the JobApplication
  *          requestBody:
  *              required: true
  *              content:
@@ -66,6 +79,6 @@ const router = express.Router()
  *                  description: Bad request , check request body
  */
 
-
+router.post('/:jobPostId/jobSeeker/:jobSeekerId/jobApplication/:jobApplicationId/jobInterview',Controller.addJobInterview)
 
 export default router

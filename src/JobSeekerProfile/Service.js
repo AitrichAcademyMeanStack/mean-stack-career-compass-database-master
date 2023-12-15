@@ -247,6 +247,7 @@ const resumeupload = async (req, seekerid, profileid) => {
       logger.error("Seeker not found with specific id")
       throw new NotFoundError("Seeker not found with specific id")
 
+
     }
 
     const existingprofile = await seekerProfile.findById(profileid);
@@ -497,6 +498,30 @@ const deleteprofilepictre = async (seekerid, profileid) => {
   }
 }
 
+const getWorkExperience = async (seekerId, profileId) => {
+  try {
+    const existingSeeker = await jobseeker.findById(seekerId)
+    if (existingSeeker) {
+      const existingProfile = await seekerProfile.findById(profileId)
+      if (existingProfile && existingSeeker._id.toString() === existingProfile.jobSeeker.seekerId) {
+        const Experience = existingProfile.workExperiences
+        console.log(`This is workExp ${Experience}`);
+        logger.info("WorkExperience Found")
+        return Experience
+      }else {
+        logger.error("Profile not found")
+        throw new NotFoundError("Profile not found")
+      }
+    }else {
+      logger.error("JobSeeker not found")
+      throw new NotFoundError("JobSeeker Not Found")
+    }
+  } catch (error) {
+    
+  }
+
+}
+
 
 export default {
   resumeupload,
@@ -511,5 +536,6 @@ export default {
   deletequalification,
   deleteworkexperience,
   deleteresume,
-  deleteprofilepictre
+  deleteprofilepictre,
+  getWorkExperience
 };

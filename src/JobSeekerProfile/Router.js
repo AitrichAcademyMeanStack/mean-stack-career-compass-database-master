@@ -91,7 +91,7 @@ router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profile
 
 router.get('/:seekerid/profiles/:profileid/skills',controller.getskills)
 router.get('/:seekerid/profiles/:profileid/qualifications')
-router.get('/:seekerid/profiles/:profileid/workexperiences')
+router.get('/:seekerid/profiles/:profileid/workexperiences',controller.getWorkExperience)
 router.get('/:seekerid/profiles/:profileid/resume')
 router.get('/:seekerid/profiles/:profileid/profilepicture')
 router.get('/:seekerid/profiles/:profileid/profilename')
