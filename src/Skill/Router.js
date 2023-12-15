@@ -90,7 +90,6 @@ router.get('/:id',controller.getskillbyid)
  *                          $ref: '#/components/schemas/skill'
  *          400:
  *              description: not found error, check request body
- * 
  */
 router.post('/',controller.createskill)
 
