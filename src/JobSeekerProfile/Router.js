@@ -89,7 +89,7 @@ const router = express.Router();
 router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profiles
 
 
-router.get('/:seekerid/profiles/:profileid/skills')
+router.get('/:seekerid/profiles/:profileid/skills',controller.getskills)
 router.get('/:seekerid/profiles/:profileid/qualifications')
 router.get('/:seekerid/profiles/:profileid/workexperiences')
 router.get('/:seekerid/profiles/:profileid/resume')

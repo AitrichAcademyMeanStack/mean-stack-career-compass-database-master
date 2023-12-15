@@ -4,25 +4,27 @@ import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynch
 
 //getting all job applications
 const getallapplications = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const result = await service.getallapplications(seekerid)
+    const profileid = req.params.profileid
+    const jobpostid = req.params.jobpostid
+    const result = await service.getallapplications(profileid,jobpostid)
     res.status(200).json(result)
 })
 
 //deleting job application with specific id
 const deleteapplication = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const applicationid = req.params.id2
-    await service.deleteapplication(seekerid,applicationid)
+    const profileid = req.params.profileid
+    const jobpostid = req.params.jobpostid
+    const applicationid = req.params.applicationid
+    await service.deleteapplication(profileid,jobpostid,applicationid)
     res.status(200).json("job application deleted successfully")
 })
 
 //adding new job application
 const createapplication = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.id1
-    const jobpostid = req.params.id2
+    const profileid = req.params.profileid
+    const jobpostid = req.params.jobpostid
     const applicationdata = req.body
-    const result = await service.createapplication(seekerid,jobpostid,applicationdata)
+    const result = await service.createapplication(profileid,jobpostid,applicationdata)
     res.status(200).json(result)
 })
 

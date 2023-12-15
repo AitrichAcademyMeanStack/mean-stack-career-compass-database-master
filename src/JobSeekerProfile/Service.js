@@ -6,6 +6,27 @@ import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad 
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 
+const getskills = async(seekerid,profileid)=>{
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+      if (  existingprofile && existingseeker._id.toString() === existingprofile.jobSeeker.seekerId.toString()) {
+        const resultskill  = await seekerProfile.findOne()
+      } else {
+        logger.error("job seeker profile not found with specific id")
+        throw new NotFoundError("job seeker profile not found with specific id")
+      }
+
+    } else {
+      logger.error("jobseeker not found with specific id")
+      throw new NotFoundError("jobseeker not found with specific id")
+    }
+  } catch (error) {
+    logger.error(`Error: ${error}`);
+  }
+}
+
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
   try {

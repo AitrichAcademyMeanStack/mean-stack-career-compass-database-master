@@ -6,7 +6,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /api/v1/jobseekers/{seekerid}/savedjobs:
+ * /api/v1/jobseekers/{seekerid}/jobpost/{jobpostid}/savedjobs:
  *  get:
  *      summary: getting all saved jobs
  *      description: this api is used to getting all saved jobs
@@ -15,6 +15,12 @@ const router = express.Router()
  *      parameters:
  *          - in: path
  *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: jobpostid
  *            required: true
  *            description: numeric id is required
  *            schema:
@@ -29,7 +35,7 @@ const router = express.Router()
  *          400:
  *              description: not found error, check request body
  */
-router.get('/:id/savedjobs',controller.getallsavedjobs) //getting all savedjobs
+router.get('/:seekerid/jobpost/:jobpostid/savedjobs',controller.getallsavedjobs) //getting all savedjobs
 
 
 /**
@@ -63,13 +69,13 @@ router.get('/:id/savedjobs',controller.getallsavedjobs) //getting all savedjobs
  *          400:
  *              description: not found error, check request body
  */
-router.post('/:id1/jobpost/:id2/savedjobs',controller.createsavedjobs) //creating savedjobs
+router.post('/:seekerid/jobpost/:jobpostid/savedjobs',controller.createsavedjobs) //creating savedjobs
 
 
 
 /**
  * @swagger
- * /api/v1/jobseekers/{seekerid}/savedjobs/{savedjobid}:
+ * /api/v1/jobseekers/{seekerid}/jobpost/{jobpostid}/savedjobs/{savedjobid}:
  *  delete:
  *      summary: deleting saved job with id
  *      description: this api is used to delete saved job with id
@@ -78,6 +84,12 @@ router.post('/:id1/jobpost/:id2/savedjobs',controller.createsavedjobs) //creatin
  *      parameters:
  *          - in: path
  *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: jobpostid
  *            required: true
  *            description: numeric id is required
  *            schema:
@@ -98,7 +110,7 @@ router.post('/:id1/jobpost/:id2/savedjobs',controller.createsavedjobs) //creatin
  *          400:
  *              description: not found error, check request body
  */
-router.delete('/:id1/savedjobs/:id2',controller.deletesavedjobs) //deleting savedjobs
+router.delete('/:seekerid/jobpost/:jobpostid/savedjobs/:savedjobid',controller.deletesavedjobs) //deleting savedjobs
 
 
 export default router

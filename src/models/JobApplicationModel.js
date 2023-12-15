@@ -3,6 +3,7 @@ import mongoose,{Schema} from 'mongoose'
 //schema for job application schema
 const jobapplicationschema = new Schema({
     job:{
+        JobpostId: mongoose.Schema.Types.ObjectId,
         jobTitle: [String],
         jobSummary: { type: String },
         jobLocation: [String],
@@ -21,7 +22,7 @@ const jobapplicationschema = new Schema({
         qualifications: [String],
         skills: [String],
         industry: [String],
-        jobResponsibilities: { type: String },
+        jobResponsibilities: [String],
         postedBy: { type: String },
         postedDate: { type: Date, default: Date.now() },
     },
@@ -35,7 +36,7 @@ const jobapplicationschema = new Schema({
     },
     resume:{
         title:{type: String},
-        resume:{type:String}
+        Resume:{type:String}
     },
     coverletter:String,
     datesubmitted:{
@@ -43,6 +44,7 @@ const jobapplicationschema = new Schema({
         default:Date.now
     },
     status:{
+        type:String,
         enum:[
         "SUBMITTED",
         "SHORT_LISTED_BY_EMPLOYER",
