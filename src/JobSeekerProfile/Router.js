@@ -88,6 +88,15 @@ const router = express.Router();
  */
 router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profiles
 
+
+router.get('/:seekerid/profiles/:profileid/skills')
+router.get('/:seekerid/profiles/:profileid/qualifications')
+router.get('/:seekerid/profiles/:profileid/workexperiences')
+router.get('/:seekerid/profiles/:profileid/resume')
+router.get('/:seekerid/profiles/:profileid/profilepicture')
+router.get('/:seekerid/profiles/:profileid/profilename')
+router.get('/:seekerid/profiles/:profileid/profilesummmary')
+
 /**
  * @swagger
  * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
