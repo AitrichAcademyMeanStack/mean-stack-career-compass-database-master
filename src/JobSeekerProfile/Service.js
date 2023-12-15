@@ -6,6 +6,103 @@ import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad 
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 
+
+//get profilename
+const getprofilename = async (seekerid, profileid) => {
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+
+      if (existingprofile) {
+        logger.info("Successfully getting profile data with specific id");
+        // Assuming profile name is stored in the 'name' property of the existingprofile object
+        const profileName = existingprofile.profileName;
+        return profileName;
+      } else {
+        logger.error('Seeker profile not found with this id');
+        throw new NotFoundError("Seeker profile not found with this id");
+      }
+    } else {
+      logger.error('Seeker not found with this id');
+      throw new NotFoundError("Seeker not found with this id");
+    }
+  } catch (error) {
+    logger.error(`Error: ${error}`);
+    // Handle the error or rethrow it if needed
+    throw error;
+  }
+};
+
+//get profilesummary
+
+  const getprofilesummary = async(seekerid,profileid) => {
+    try {
+      const existingseeker = await jobseeker.findById(seekerid);
+      if (existingseeker) {
+        const existingprofile = await seekerProfile.findById(profileid);
+  
+        if (existingprofile) {
+          logger.info("Successfully getting profile data with specific id");
+         
+          const profileSummary = existingprofile.profileSummary;
+         
+          return profileSummary;
+        } 
+        else {
+          logger.error('Seeker profile not found with this id');
+          throw new NotFoundError("Seeker profile not found with this id");
+        }
+      } else {
+        logger.error('Seeker not found with this id');
+        throw new NotFoundError("Seeker not found with this id");
+      }
+    } catch (error) {
+      logger.error(`Error: ${error}`);
+      // Handle the error or rethrow it if needed
+      throw error;
+    }
+ 
+  }
+
+  const getqualification= async(seekerid,profileid)=>
+  {
+    try{
+      const  existingseeker= await jobseeker.findById(seekerid)
+      if(existingseeker)
+      {
+        const existingseeker = await jobseeker.findById(seekerid);
+        if(existingseeker)
+        {
+          const existingprofile = await seekerProfile.findById(profileid);
+          if (existingprofile) {
+            logger.info("Successfully getting profile data with specific id");
+           
+           const   qualifications = existingprofile.qualifications;
+           
+            return qualifications;
+        }
+        else{
+          logger.error('qualification not get this id');
+          throw new NotFoundError('qualification not get this id');
+        }
+      }
+      else{
+            logger.error('qualification not get on this id');
+            throw new NotFoundError('qualification not get this id')
+      }
+
+    }}
+
+catch (error) {
+        logger.error(`Error: ${error}`);
+        // Handle the error or rethrow it if needed
+        throw error;
+      }
+   
+  };
+
+
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
   try {
@@ -478,6 +575,9 @@ const deleteprofilepictre = async (seekerid, profileid) => {
 
 
 export default {
+  getprofilename,
+  getprofilesummary,
+  getqualification,
   resumeupload,
   getallprofile,
   addskill,
