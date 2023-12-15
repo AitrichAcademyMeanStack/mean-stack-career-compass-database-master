@@ -2,6 +2,7 @@ import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing async
 import service from './Service.js' //importing service
 
 
+<<<<<<< HEAD
 //get profilename
 const getprofilename=asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
@@ -29,6 +30,15 @@ const getqualification=asyncerrorhandler(async(req,res)=>
     const fetchqualification=await service.getqualification(seekerid,profileid)
     res.status(200).json(fetchqualification)
 })
+=======
+const getskills = asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.seekerid
+    const profileid = req.params.profileid
+    const getallskills = await service.getskills(seekerid,profileid)
+    res.status(200).json(getallskills)
+})
+
+>>>>>>> 7c0c37244227376671cb07e3e253ac2c64400aee
 //add skills to profile
 const addskill  = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.seekerid
@@ -136,6 +146,15 @@ const deleteprofilepictre = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("profile picture deleted successfully")
 })
 
+const getWorkExperience = asyncerrorhandler( async (req , res) => {
+    const seekerId = req.params.seekerid;
+    const profileId = req.params.profileid;
+    await service.getWorkExperience(seekerId,profileId)
+    res.status(200).json("WorkExperience Fetched")
+    
+
+})
+
 
 export default {resumeupload,
     getprofilename,
@@ -152,5 +171,7 @@ export default {resumeupload,
     deletequalification,
     deleteworkexperience,
     deleteresume,
-    deleteprofilepictre
+    deleteprofilepictre,
+    getskills,
+    getWorkExperience
 }

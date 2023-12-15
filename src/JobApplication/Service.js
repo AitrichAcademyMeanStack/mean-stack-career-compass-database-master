@@ -4,22 +4,29 @@ import logger from "../middleware/logger.js"; //importing logger
 import Jobapplication from "../models/JobApplicationModel.js"; //importing job application model
 import JobPost from "../models/JobPostModel.js"; //importing job post model
 import jobseeker from "../models/JobSeekerModel.js"; //importing jobseeker model
+import seekerProfile from "../models/JobSeekerProfileModel.js"; ///importing seeker profile model
 
 //getting all job applications
-const getallapplications = async(seekerid)=>{
+const getallapplications = async(profileid,jobpostid)=>{
     try {
-        const existingseeker = await jobseeker.findById(seekerid)
-        if (existingseeker) {
-            const getapplication = await Jobapplication.find({"applicant.seekerId":seekerid})
-            if (getapplication.length>0) {
-                logger.info("successfully getting all job applications")
-                return getapplication
+        const existingprofile = await seekerProfile.findById(profileid)
+        if (existingprofile) {
+            const existingjobpost =  await JobPost.findById(jobpostid)
+            if (existingjobpost) {
+                const result = await Jobapplication.find({"applicant.seekerId":existingprofile.jobSeeker.seekerId})
+                if (result.length>0) {
+                    logger.info("successfully getting all job applications")
+                    return result
+                } else {
+                    logger.error("error occured in getting all job aplications")
+                    throw new BadRequestError("error occured in getting all job applications")
+                }
             } else {
-                logger.error("error occured in getting all job aplications")
-                throw new BadRequestError("error occured in getting all job applications")
+                logger.error("job post not found with specific id")
+                throw new NotFoundError("job post not found with specific id")
             }
         } else {
-            logger.error("job seeker not found with specific id")
+            logger.error("job seeker profile not found with specific id")
             throw new NotFoundError("job seeker not found with specific id")
         }
     } catch (error) {
@@ -28,12 +35,14 @@ const getallapplications = async(seekerid)=>{
 }
 
 //deleting job application with specific id
-const deleteapplication = async (seekerid, applicationid) => {
+const deleteapplication = async (profileid,jobpostid,applicationid) => {
     try {
-        const existingseeker = await jobseeker.findById(seekerid);
-        if (existingseeker) {
+        const existingprofile = await seekerProfile.findById(profileid);
+        if (existingprofile) {
+            const  existingjobpost = await JobPost.findById(jobpostid)
+            if (existingjobpost) {
             const findjobapplication = await Jobapplication.findById(applicationid);
-            if (findjobapplication.applicant.seekerId.toString() === existingseeker._id.toString()) {
+            if (findjobapplication.applicant.seekerId.toString() === existingprofile.jobSeeker.seekerId.toString()) {
                 const deletejobapplication = await Jobapplication.findOneAndDelete({_id: applicationid});
                 if (!deletejobapplication) {
                     logger.error("Error occurred in deleting job application with specific id");
@@ -45,8 +54,12 @@ const deleteapplication = async (seekerid, applicationid) => {
                 logger.error("Error occurred in deleting job application with specific id");
                 throw new BadRequestError("Error occurred in deleting job application with specific id");
             }
+            } else {
+                logger.error("Job post not found with specific id");
+                throw new NotFoundError("Job seeker profile not found with specific id");
+            }
         } else {
-            logger.error("Job seeker not found with specific id");
+            logger.error("Job seeker profile not found with specific id");
             throw new NotFoundError("Job seeker not found with specific id");
         }
     } catch (error) {
@@ -55,21 +68,22 @@ const deleteapplication = async (seekerid, applicationid) => {
 };
 
 //adding new job application
-const createapplication = async(seekerid,jobpostid,applicationdata)=>{
+const createapplication = async(profileid,jobpostid,applicationdata)=>{
     try {
-        const existingseeker = await jobseeker.findById(seekerid)
-        if (existingseeker) {
+        const existingprofile = await seekerProfile.findById(profileid)
+        if (existingprofile) {
             applicationdata.applicant={
-                seekerId:existingseeker._id,
-                firstName:existingseeker.firstName,
-                lastName:existingseeker.lastName,
-                userName:existingseeker.userName,
-                email:existingseeker.email,
-                phone:existingseeker.phone
+                seekerId:existingprofile.jobSeeker.seekerId,
+                firstName:existingprofile.jobSeeker.firstName,
+                lastName:existingprofile.jobSeeker.lastName,
+                userName:existingprofile.jobSeeker.userName,
+                email:existingprofile.jobSeeker.email,
+                phone:existingprofile.jobSeeker.phone
             }
             const existingjobpost = await JobPost.findById(jobpostid)
             if (existingjobpost) {
                 applicationdata.job ={
+                    JobpostId:existingjobpost._id,
                     jobTitle:existingjobpost.jobTitle,
                     jobSummary:existingjobpost.jobSummary,
                     jobLocation:existingjobpost.jobLocation,
@@ -81,6 +95,11 @@ const createapplication = async(seekerid,jobpostid,applicationdata)=>{
                     jobResponsibilities:existingjobpost.jobResponsibilities,
                     postedBy:existingjobpost.postedBy,
                     postedDate:existingjobpost.postedDate
+                }
+
+                applicationdata.resume = {
+                    title: existingprofile.Resume.title,
+                    Resume:existingprofile.Resume.resume
                 }
 
                 const newapplication = await Jobapplication.create(applicationdata)
@@ -96,7 +115,7 @@ const createapplication = async(seekerid,jobpostid,applicationdata)=>{
                 throw new NotFoundError("job post not found with specific id")
             }
         } else {
-            logger.error("job seeker not found with specific id")
+            logger.error("job seeker profile not found with specific id")
             throw new NotFoundError("job seeker not found with specific id")
         }
     } catch (error) {

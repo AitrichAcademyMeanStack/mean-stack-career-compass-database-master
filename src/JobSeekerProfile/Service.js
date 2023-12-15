@@ -6,13 +6,18 @@ import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad 
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 
+<<<<<<< HEAD
 
 //get profilename
 const getprofilename = async (seekerid, profileid) => {
+=======
+const getskills = async(seekerid,profileid)=>{
+>>>>>>> 7c0c37244227376671cb07e3e253ac2c64400aee
   try {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
+<<<<<<< HEAD
 
       if (existingprofile) {
         logger.info("Successfully getting profile data with specific id");
@@ -102,6 +107,23 @@ catch (error) {
    
   };
 
+=======
+      if (  existingprofile && existingseeker._id.toString() === existingprofile.jobSeeker.seekerId.toString()) {
+        const resultskill  = await seekerProfile.findOne()
+      } else {
+        logger.error("job seeker profile not found with specific id")
+        throw new NotFoundError("job seeker profile not found with specific id")
+      }
+
+    } else {
+      logger.error("jobseeker not found with specific id")
+      throw new NotFoundError("jobseeker not found with specific id")
+    }
+  } catch (error) {
+    logger.error(`Error: ${error}`);
+  }
+}
+>>>>>>> 7c0c37244227376671cb07e3e253ac2c64400aee
 
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
@@ -322,6 +344,7 @@ const resumeupload = async (req, seekerid, profileid) => {
     if (!existingseeker) {
       logger.error("Seeker not found with specific id")
       throw new NotFoundError("Seeker not found with specific id")
+
 
     }
 
@@ -573,6 +596,30 @@ const deleteprofilepictre = async (seekerid, profileid) => {
   }
 }
 
+const getWorkExperience = async (seekerId, profileId) => {
+  try {
+    const existingSeeker = await jobseeker.findById(seekerId)
+    if (existingSeeker) {
+      const existingProfile = await seekerProfile.findById(profileId)
+      if (existingProfile && existingSeeker._id.toString() === existingProfile.jobSeeker.seekerId) {
+        const Experience = existingProfile.workExperiences
+        console.log(`This is workExp ${Experience}`);
+        logger.info("WorkExperience Found")
+        return Experience
+      }else {
+        logger.error("Profile not found")
+        throw new NotFoundError("Profile not found")
+      }
+    }else {
+      logger.error("JobSeeker not found")
+      throw new NotFoundError("JobSeeker Not Found")
+    }
+  } catch (error) {
+    
+  }
+
+}
+
 
 export default {
   getprofilename,
@@ -590,5 +637,6 @@ export default {
   deletequalification,
   deleteworkexperience,
   deleteresume,
-  deleteprofilepictre
+  deleteprofilepictre,
+  getWorkExperience
 };
