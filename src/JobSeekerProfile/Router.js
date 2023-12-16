@@ -126,8 +126,6 @@ router.get('/:seekerid/profiles/:profileid/skills')
  */
 router.get('/:seekerid/profiles/:profileid/qualifications',controller.getqualification)
 
-router.get('/:seekerid/profiles/:profileid/workexperiences')
-router.get('/:seekerid/profiles/:profileid/skills',controller.getskills)
 router.get('/:seekerid/profiles/:profileid/qualifications')
 router.get('/:seekerid/profiles/:profileid/workexperiences',controller.getWorkExperience)
 router.get('/:seekerid/profiles/:profileid/resume')
@@ -170,7 +168,7 @@ router.get('/:seekerid/profiles/:profileid/profilename',controller.getprofilenam
 //get profile summary
 /**
  * @swagger
-/api/v1/jobseekers/{seeekerid}/profiles/{profileid}/profilesummary:
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/profilesummary:
  *  get:
  *      summary: get  job-seeker profile summary 
  *      description: this is  used to get job-seeker profile summary with specific id

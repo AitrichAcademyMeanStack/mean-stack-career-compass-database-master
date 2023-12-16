@@ -2,7 +2,6 @@ import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing async
 import service from './Service.js' //importing service
 
 
-<<<<<<< HEAD
 //get profilename
 const getprofilename=asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
@@ -30,15 +29,6 @@ const getqualification=asyncerrorhandler(async(req,res)=>
     const fetchqualification=await service.getqualification(seekerid,profileid)
     res.status(200).json(fetchqualification)
 })
-=======
-const getskills = asyncerrorhandler(async(req,res)=>{
-    const seekerid = req.params.seekerid
-    const profileid = req.params.profileid
-    const getallskills = await service.getskills(seekerid,profileid)
-    res.status(200).json(getallskills)
-})
-
->>>>>>> 7c0c37244227376671cb07e3e253ac2c64400aee
 //add skills to profile
 const addskill  = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.seekerid
@@ -172,6 +162,5 @@ export default {resumeupload,
     deleteworkexperience,
     deleteresume,
     deleteprofilepictre,
-    getskills,
     getWorkExperience
 }
