@@ -21,7 +21,7 @@ const getprofilesummary= asyncerrorhandler(async(req,res)=>
 })
 
 
-//get skills
+//get qualification
 const getqualification=asyncerrorhandler(async(req,res)=>
 {
     const seekerid=req.params.seekerid
@@ -29,6 +29,21 @@ const getqualification=asyncerrorhandler(async(req,res)=>
     const fetchqualification=await service.getqualification(seekerid,profileid)
     res.status(200).json(fetchqualification)
 })
+
+//getskills
+const getskills=asyncerrorhandler(async(req,res)=>
+{
+  const seekerid=req.params.seekerid
+  const profileid=req.params.profileid
+  const fetchskill=await service.getskills(seekerid,profileid)
+  res.status(200).json(fetchskill)
+
+})
+
+
+
+
+
 //add skills to profile
 const addskill  = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.seekerid
@@ -151,6 +166,7 @@ export default {resumeupload,
     getprofilesummary,
     getqualification,
     getallprofile,
+    getskills,
     addskill,
     qualificationupdate,
     addprofilename,

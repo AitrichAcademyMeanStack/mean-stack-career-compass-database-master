@@ -101,6 +101,37 @@ const getqualification = async (seekerid, profileid) => {
 };
 
 
+//getskills
+const getskills=async(seekerid,profileid)=>
+{
+  try{
+      const existingseeker=await jobseeker.findById(seekerid)
+      if(existingseeker){
+        const existingprofile=await seekerProfile.findById(profileid)
+      
+      if(profileid)  {
+          logger.info("Successfully getting profile data with specific id");
+
+          const skills = existingprofile.skills;
+
+          return skills;
+        }
+        else{
+          logger.error("The skills did not match in this id")
+          throw new NotFoundError("The skills did not match in this id")
+        }
+
+      }
+      else{
+        logger.error("The skills idid not match in this id")
+        throw new NotFoundError("The skills idid not match in this id")
+      }
+  }
+  catch (error) {
+    logger.error(`Error: ${error}`);
+  }
+};
+
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
   try {
@@ -603,6 +634,7 @@ export default {
   getqualification,
   resumeupload,
   getallprofile,
+  getskills,
   addskill,
   qualificationupdate,
   updateprofilesummary,

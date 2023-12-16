@@ -88,8 +88,39 @@ const router = express.Router();
  */
 router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profiles
 
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/skills:
+ *  get:
+ *      summary: get  job-seeker skills with specific id
+ *      description: this is  used to get all job-seeker skills with specific id
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seeekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: get all job-seeker skills retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobseekerprofile' 
+ */
 
-router.get('/:seekerid/profiles/:profileid/skills')
+router.get('/:seekerid/profiles/:profileid/skills',controller.getskills)
 
 
 //get all qualification
