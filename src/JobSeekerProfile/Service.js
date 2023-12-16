@@ -13,15 +13,13 @@ const getprofilename = async (seekerid, profileid) => {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
-
-      if (existingprofile) {
+      if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
         logger.info("Successfully getting profile data with specific id");
-        // Assuming profile name is stored in the 'name' property of the existingprofile object
         const profileName = existingprofile.profileName;
         return profileName;
       } else {
         logger.error('Seeker profile not found with this id');
-        throw new NotFoundError("Seeker profile not found with this id");
+        throw new NotFoundError("Seeker profile not found with this id");      
       }
     } else {
       logger.error('Seeker not found with this id');
@@ -29,24 +27,19 @@ const getprofilename = async (seekerid, profileid) => {
     }
   } catch (error) {
     logger.error(`Error: ${error}`);
-    // Handle the error or rethrow it if needed
     throw error;
   }
 };
 
 //get profilesummary
-
 const getprofilesummary = async (seekerid, profileid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
-
-      if (existingprofile) {
+      if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
         logger.info("Successfully getting profile data with specific id");
-
         const profileSummary = existingprofile.profileSummary;
-
         return profileSummary;
       }
       else {
@@ -59,24 +52,19 @@ const getprofilesummary = async (seekerid, profileid) => {
     }
   } catch (error) {
     logger.error(`Error: ${error}`);
-    // Handle the error or rethrow it if needed
     throw error;
   }
 
 }
-
+//get all qualifications
 const getqualification = async (seekerid, profileid) => {
   try {
     const existingseeker = await jobseeker.findById(seekerid)
-    if (existingseeker) {
-      const existingseeker = await jobseeker.findById(seekerid);
       if (existingseeker) {
         const existingprofile = await seekerProfile.findById(profileid);
-        if (existingprofile) {
+        if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
           logger.info("Successfully getting profile data with specific id");
-
           const qualifications = existingprofile.qualifications;
-
           return qualifications;
         }
         else {
@@ -88,18 +76,12 @@ const getqualification = async (seekerid, profileid) => {
         logger.error('qualification not get on this id');
         throw new NotFoundError('qualification not get this id')
       }
-
-    }
   }
-
   catch (error) {
     logger.error(`Error: ${error}`);
-    // Handle the error or rethrow it if needed
     throw error;
   }
-
 };
-
 
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
@@ -572,15 +554,15 @@ const deleteprofilepictre = async (seekerid, profileid) => {
   }
 }
 
+//get all work experiences
 const getWorkExperience = async (seekerId, profileId) => {
   try {
     const existingSeeker = await jobseeker.findById(seekerId)
     if (existingSeeker) {
       const existingProfile = await seekerProfile.findById(profileId)
-      if (existingProfile && existingSeeker._id.toString() === existingProfile.jobSeeker.seekerId) {
+      if (existingProfile && existingSeeker._id.toString() === existingProfile.jobSeeker.seekerId.toString()) {
         const Experience = existingProfile.workExperiences
-        console.log(`This is workExp ${Experience}`);
-        logger.info("WorkExperience Found")
+        logger.info("WorkExperience Found",Experience)
         return Experience
       } else {
         logger.error("Profile not found")
@@ -591,10 +573,57 @@ const getWorkExperience = async (seekerId, profileId) => {
       throw new NotFoundError("JobSeeker Not Found")
     }
   } catch (error) {
-
+    throw error
   }
-
 }
+
+//getting resume
+const getresume = async(seekerid,profileid)=>{
+  try {
+    const existingseekeer = await jobseeker.findById(seekerid)
+    if (existingseekeer) {
+      const existingprofile = await seekerProfile.findById(profileid)
+      if (existingprofile && existingseekeer._id.toString() === existingprofile.jobSeeker.seekerId.toString()) {
+        const profileresume =  existingprofile.Resume
+        logger.info("job seeker profile resume is getting successfully")
+        return  profileresume
+      } else {
+        logger.error("job seeker profile not found with specific id")
+        throw  new NotFoundError("job seeker profile not found with specific id")
+      }
+    } else {
+      logger.error("job seeker not found with specific id")
+      throw  new NotFoundError("job seeker not found with specific id")
+    }
+  } catch (error) {
+    throw  error
+  }
+}
+
+//getting resume
+const getprofilepicture = async(seekerid,profileid)=>{
+  try {
+    const existingseekeer = await jobseeker.findById(seekerid)
+    if (existingseekeer) {
+      const existingprofile = await seekerProfile.findById(profileid)
+      if (existingprofile && existingseekeer._id.toString() === existingprofile.jobSeeker.seekerId.toString()) {
+        const profilepicture =  existingprofile.ProfilePicture
+        logger.info("job seeker profile picture is getting successfully")
+        return  profilepicture
+      } else {
+        logger.error("job seeker profile not found with specific id")
+        throw  new NotFoundError("job seeker profile not found with specific id")
+      }
+    } else {
+      logger.error("job seeker not found with specific id")
+      throw  new NotFoundError("job seeker not found with specific id")
+    }
+  } catch (error) {
+    throw  error
+  }
+}
+
+
 
 
 export default {
@@ -614,5 +643,7 @@ export default {
   deleteworkexperience,
   deleteresume,
   deleteprofilepictre,
-  getWorkExperience
+  getWorkExperience,
+  getresume,
+  getprofilepicture
 };

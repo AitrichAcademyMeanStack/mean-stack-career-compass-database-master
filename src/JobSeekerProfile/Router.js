@@ -92,7 +92,6 @@ router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profile
 router.get('/:seekerid/profiles/:profileid/skills')
 
 
-//get all qualification
 /**
  * @swagger
  * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/qualifications:
@@ -124,14 +123,12 @@ router.get('/:seekerid/profiles/:profileid/skills')
  *                          items:
  *                              $ref: '#/components/schemas/jobseekerprofile' 
  */
-router.get('/:seekerid/profiles/:profileid/qualifications',controller.getqualification)
+router.get('/:seekerid/profiles/:profileid/qualifications',controller.getqualification) //geting qualifications
 
-router.get('/:seekerid/profiles/:profileid/qualifications')
-router.get('/:seekerid/profiles/:profileid/workexperiences',controller.getWorkExperience)
-router.get('/:seekerid/profiles/:profileid/resume')
-router.get('/:seekerid/profiles/:profileid/profilepicture')
+router.get('/:seekerid/profiles/:profileid/workexperiences',controller.getWorkExperience) //getting work experiences
+router.get('/:seekerid/profiles/:profileid/resume',controller.getresume)//getting jobseeeker profile resume
+router.get('/:seekerid/profiles/:profileid/profilepicture',controller.getprofilepicture)//getting profile picture
 
-//get profilename
 /**
  * @swagger
  * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/profilename:
@@ -163,9 +160,8 @@ router.get('/:seekerid/profiles/:profileid/profilepicture')
  *                          items:
  *                              $ref: '#/components/schemas/jobseekerprofile' 
  */
-router.get('/:seekerid/profiles/:profileid/profilename',controller.getprofilename)
+router.get('/:seekerid/profiles/:profileid/profilename',controller.getprofilename) //get profile name
 
-//get profile summary
 /**
  * @swagger
  * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/profilesummary:
@@ -197,7 +193,7 @@ router.get('/:seekerid/profiles/:profileid/profilename',controller.getprofilenam
  *                          items:
  *                              $ref: '#/components/schemas/jobseekerprofile' 
  */
-router.get('/:seekerid/profiles/:profileid/profilesummary',controller.getprofilesummary)
+router.get('/:seekerid/profiles/:profileid/profilesummary',controller.getprofilesummary) //get profile summary
 
 
 /**
