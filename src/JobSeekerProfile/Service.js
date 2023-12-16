@@ -6,6 +6,114 @@ import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad 
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 
 
+
+//get profilename
+const getprofilename = async (seekerid, profileid) => {
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+      if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
+        logger.info("Successfully getting profile data with specific id");
+        const profileName = existingprofile.profileName;
+        return profileName;
+      } else {
+        logger.error('Seeker profile not found with this id');
+        throw new NotFoundError("Seeker profile not found with this id");      
+      }
+    } else {
+      logger.error('Seeker not found with this id');
+      throw new NotFoundError("Seeker not found with this id");
+    }
+  } catch (error) {
+    logger.error(`Error: ${error}`);
+    throw error;
+  }
+};
+
+//get profilesummary
+const getprofilesummary = async (seekerid, profileid) => {
+  try {
+    const existingseeker = await jobseeker.findById(seekerid);
+    if (existingseeker) {
+      const existingprofile = await seekerProfile.findById(profileid);
+      if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
+        logger.info("Successfully getting profile data with specific id");
+        const profileSummary = existingprofile.profileSummary;
+        return profileSummary;
+      }
+      else {
+        logger.error('Seeker profile not found with this id');
+        throw new NotFoundError("Seeker profile not found with this id");
+      }
+    } else {
+      logger.error('Seeker not found with this id');
+      throw new NotFoundError("Seeker not found with this id");
+    }
+  } catch (error) {
+    logger.error(`Error: ${error}`);
+    throw error;
+  }
+
+}
+//get all qualifications
+const getqualification = async (seekerid, profileid) => {
+  try {
+    const existingseeker = await jobseeker.findById(seekerid)
+      if (existingseeker) {
+        const existingprofile = await seekerProfile.findById(profileid);
+        if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
+          logger.info("Successfully getting profile data with specific id");
+          const qualifications = existingprofile.qualifications;
+          return qualifications;
+        }
+        else {
+          logger.error('qualification not get this id');
+          throw new NotFoundError('qualification not get this id');
+        }
+      }
+      else {
+        logger.error('qualification not get on this id');
+        throw new NotFoundError('qualification not get this id')
+      }
+  }
+  catch (error) {
+    logger.error(`Error: ${error}`);
+    throw error;
+  }
+};
+
+//getskills
+const getskills=async(seekerid,profileid)=>
+{
+  try{
+      const existingseeker=await jobseeker.findById(seekerid)
+      if(existingseeker){
+        const existingprofile=await seekerProfile.findById(profileid)
+      
+      if(profileid)  {
+          logger.info("Successfully getting profile data with specific id");
+
+          const skills = existingprofile.skills;
+
+          return skills;
+        }
+        else{
+          logger.error("The skills did not match in this id")
+          throw new NotFoundError("The skills did not match in this id")
+        }
+
+      }
+      else{
+        logger.error("The skills idid not match in this id")
+        throw new NotFoundError("The skills idid not match in this id")
+      }
+  }
+  catch (error) {
+    logger.error(`Error: ${error}`);
+  }
+};
+
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
   try {
@@ -232,7 +340,7 @@ const resumeupload = async (req, seekerid, profileid) => {
     const existingprofile = await seekerProfile.findById(profileid);
 
     if (!existingprofile || existingprofile.jobSeeker.seekerId.toString() !== existingseeker._id.toString()) {
-      throw new  NotFoundError("Invalid profile or mismatched relationship with job seeker")
+      throw new NotFoundError("Invalid profile or mismatched relationship with job seeker")
     }
 
     const file = existingprofile.Resume;
@@ -477,34 +585,85 @@ const deleteprofilepictre = async (seekerid, profileid) => {
   }
 }
 
+//get all work experiences
 const getWorkExperience = async (seekerId, profileId) => {
   try {
     const existingSeeker = await jobseeker.findById(seekerId)
     if (existingSeeker) {
       const existingProfile = await seekerProfile.findById(profileId)
-      if (existingProfile && existingSeeker._id.toString() === existingProfile.jobSeeker.seekerId) {
+      if (existingProfile && existingSeeker._id.toString() === existingProfile.jobSeeker.seekerId.toString()) {
         const Experience = existingProfile.workExperiences
-        console.log(`This is workExp ${Experience}`);
-        logger.info("WorkExperience Found")
+        logger.info("WorkExperience Found",Experience)
         return Experience
-      }else {
+      } else {
         logger.error("Profile not found")
         throw new NotFoundError("Profile not found")
       }
-    }else {
+    } else {
       logger.error("JobSeeker not found")
       throw new NotFoundError("JobSeeker Not Found")
     }
   } catch (error) {
-    
+    throw error
   }
+}
 
+//getting resume
+const getresume = async(seekerid,profileid)=>{
+  try {
+    const existingseekeer = await jobseeker.findById(seekerid)
+    if (existingseekeer) {
+      const existingprofile = await seekerProfile.findById(profileid)
+      if (existingprofile && existingseekeer._id.toString() === existingprofile.jobSeeker.seekerId.toString()) {
+        const profileresume =  existingprofile.Resume
+        logger.info("job seeker profile resume is getting successfully")
+        return  profileresume
+      } else {
+        logger.error("job seeker profile not found with specific id")
+        throw  new NotFoundError("job seeker profile not found with specific id")
+      }
+    } else {
+      logger.error("job seeker not found with specific id")
+      throw  new NotFoundError("job seeker not found with specific id")
+    }
+  } catch (error) {
+    throw  error
+  }
+}
+
+//getting resume
+const getprofilepicture = async(seekerid,profileid)=>{
+  try {
+    const existingseekeer = await jobseeker.findById(seekerid)
+    if (existingseekeer) {
+      const existingprofile = await seekerProfile.findById(profileid)
+      if (existingprofile && existingseekeer._id.toString() === existingprofile.jobSeeker.seekerId.toString()) {
+        const profilepicture =  existingprofile.ProfilePicture
+        logger.info("job seeker profile picture is getting successfully")
+        return  profilepicture
+      } else {
+        logger.error("job seeker profile not found with specific id")
+        throw  new NotFoundError("job seeker profile not found with specific id")
+      }
+    } else {
+      logger.error("job seeker not found with specific id")
+      throw  new NotFoundError("job seeker not found with specific id")
+    }
+  } catch (error) {
+    throw  error
+  }
 }
 
 
+
+
 export default {
+  getprofilename,
+  getprofilesummary,
+  getqualification,
   resumeupload,
   getallprofile,
+  getskills,
   addskill,
   qualificationupdate,
   updateprofilesummary,
@@ -516,5 +675,7 @@ export default {
   deleteworkexperience,
   deleteresume,
   deleteprofilepictre,
-  getWorkExperience
+  getWorkExperience,
+  getresume,
+  getprofilepicture
 };

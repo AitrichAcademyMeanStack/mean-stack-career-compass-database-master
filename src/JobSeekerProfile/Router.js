@@ -8,7 +8,7 @@ const router = express.Router();
  * @swagger
  *  components:
  *      schemas:
- *          jobseekerprofile:
+ *          JobSeeker-Profile:
  *              type: object
  *              required:
  *                  - profileName
@@ -88,14 +88,144 @@ const router = express.Router();
  */
 router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profiles
 
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/skills:
+ *  get:
+ *      summary: get  job-seeker skills with specific id
+ *      description: this is  used to get all job-seeker skills with specific id
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seeekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: get all job-seeker skills retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobseekerprofile' 
+ */
 
-router.get('/:seekerid/profiles/:profileid/skills')
-router.get('/:seekerid/profiles/:profileid/qualifications')
-router.get('/:seekerid/profiles/:profileid/workexperiences',controller.getWorkExperience)
-router.get('/:seekerid/profiles/:profileid/resume')
-router.get('/:seekerid/profiles/:profileid/profilepicture')
-router.get('/:seekerid/profiles/:profileid/profilename')
-router.get('/:seekerid/profiles/:profileid/profilesummmary')
+router.get('/:seekerid/profiles/:profileid/skills',controller.getskills)
+
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/qualifications:
+ *  get:
+ *      summary: get  job-seeker qualification
+ *      description: this is is used to get all job-seeker qualification
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seeekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: job-seeker qualification retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobseekerprofile' 
+ */
+router.get('/:seekerid/profiles/:profileid/qualifications',controller.getqualification) //geting qualifications
+
+router.get('/:seekerid/profiles/:profileid/workexperiences',controller.getWorkExperience) //getting work experiences
+router.get('/:seekerid/profiles/:profileid/resume',controller.getresume)//getting jobseeeker profile resume
+router.get('/:seekerid/profiles/:profileid/profilepicture',controller.getprofilepicture)//getting profile picture
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/profilename:
+ *  get:
+ *      summary: get all job-seeker profile name with specific id
+ *      description: this is is used to get all job-seeker profile name with specific id
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seeekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: job-seeker profile name retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobseekerprofile' 
+ */
+router.get('/:seekerid/profiles/:profileid/profilename',controller.getprofilename) //get profile name
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seeekerid}/profiles/{profileid}/profilesummary:
+ *  get:
+ *      summary: get  job-seeker profile summary 
+ *      description: this is  used to get job-seeker profile summary with specific id
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seeekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: job-seeker profile summary retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/jobseekerprofile' 
+ */
+router.get('/:seekerid/profiles/:profileid/profilesummary',controller.getprofilesummary) //get profile summary
+
 
 /**
  * @swagger

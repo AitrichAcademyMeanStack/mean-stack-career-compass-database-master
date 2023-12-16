@@ -2,6 +2,46 @@ import asyncerrorhandler from "../utils/asyncerrorhandler.js"; //importing async
 import service from './Service.js' //importing service
 
 
+//get profilename
+const getprofilename=asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const fetchprofilename=await service.getprofilename(seekerid,profileid)
+    res.status(200).json(fetchprofilename)
+})
+
+//get profile summary
+const getprofilesummary= asyncerrorhandler(async(req,res)=>{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const fetchprofilesummary=await service.getprofilesummary(seekerid,profileid)
+    res.status(200).json(fetchprofilesummary)
+})
+
+
+//get qualification
+const getqualification=asyncerrorhandler(async(req,res)=>
+{
+    const seekerid=req.params.seekerid
+    const profileid=req.params.profileid
+    const fetchqualification=await service.getqualification(seekerid,profileid)
+    res.status(200).json(fetchqualification)
+})
+
+//getskills
+const getskills=asyncerrorhandler(async(req,res)=>
+{
+  const seekerid=req.params.seekerid
+  const profileid=req.params.profileid
+  const fetchskill=await service.getskills(seekerid,profileid)
+  res.status(200).json(fetchskill)
+
+})
+
+
+
+
+
 //add skills to profile
 const addskill  = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.seekerid
@@ -54,6 +94,7 @@ const resumeupload = asyncerrorhandler(async(req,res)=>{
     res.status(201).json({ message: "Resume uploaded successfully" });
 })
 
+//uploading profile picture
 const addprofilepicture = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.seekerid
     const profileid = req.params.profileid
@@ -71,6 +112,7 @@ const addworkexperience = asyncerrorhandler(async(req,res)=>{
     res.status(200).json(newexperience)
 })
 
+//deleting skills
 const deleteskills = asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
     const profileid=req.params.profileid
@@ -79,6 +121,7 @@ const deleteskills = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("skill deleted successfully")
 })
 
+//deleting qualifications
 const deletequalification = asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
     const profileid=req.params.profileid
@@ -87,6 +130,7 @@ const deletequalification = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("qualification deleted successfully")
 })
 
+//deleting work experiences
 const deleteworkexperience = asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
     const profileid=req.params.profileid
@@ -95,6 +139,7 @@ const deleteworkexperience = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("workexperience deleted successfully")
 })
 
+//deleting resume
 const deleteresume = asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
     const profileid=req.params.profileid
@@ -102,6 +147,7 @@ const deleteresume = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("Resume deleted successfully")
 })
 
+//deleting profile picture
 const deleteprofilepictre = asyncerrorhandler(async(req,res)=>{
     const seekerid=req.params.seekerid
     const profileid=req.params.profileid
@@ -109,18 +155,38 @@ const deleteprofilepictre = asyncerrorhandler(async(req,res)=>{
     res.status(202).json("profile picture deleted successfully")
 })
 
+//getting workexperience
 const getWorkExperience = asyncerrorhandler( async (req , res) => {
     const seekerId = req.params.seekerid;
     const profileId = req.params.profileid;
-    await service.getWorkExperience(seekerId,profileId)
-    res.status(200).json("WorkExperience Fetched")
-    
+    const workexperienceresult =  await service.getWorkExperience(seekerId,profileId)
+    res.status(200).json(workexperienceresult)
+})
 
+//getting resume
+const getresume = asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.seekerid
+    const profileid = req.params.profileid
+    const gettresume = await service.getresume(seekerid,profileid)
+    res.status(200).json(gettresume)
+})
+
+//getting profile picture
+const getprofilepicture = asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.seekerid
+    const profileid = req.params.profileid
+    const gettprofilepicture = await service.getprofilepicture(seekerid,profileid)
+    res.status(200).json(gettprofilepicture)
 })
 
 
+
 export default {resumeupload,
+    getprofilename,
+    getprofilesummary,
+    getqualification,
     getallprofile,
+    getskills,
     addskill,
     qualificationupdate,
     addprofilename,
@@ -132,5 +198,7 @@ export default {resumeupload,
     deleteworkexperience,
     deleteresume,
     deleteprofilepictre,
-    getWorkExperience
+    getWorkExperience,
+    getresume,
+    getprofilepicture
 }
