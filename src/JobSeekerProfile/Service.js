@@ -632,6 +632,7 @@ export default {
   getqualification,
   resumeupload,
   getallprofile,
+  getskills,
   addskill,
   qualificationupdate,
   updateprofilesummary,
