@@ -164,6 +164,31 @@ router.put('/:id',controller.updateseeker)
  * 
  */
 router.delete('/:id',controller.deleteseeker)
-
+/**
+ * @swagger
+ * /api/v1/jobseekers/login:
+ *  post:
+ *      summary: JobSeeker Login
+ *      description: JobSeeker Login
+ *      tags:
+ *          - JobSeeker
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/jobseeker'
+ *      responses:
+ *          201:
+ *              description: Login Successfull
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseeker'
+ *          400:
+ *              description: not found error, check request body
+ *  
+ */
+router.post("/login",controller.loginJobSeeker)
 
 export default router

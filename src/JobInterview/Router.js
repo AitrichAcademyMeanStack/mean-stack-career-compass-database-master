@@ -38,30 +38,18 @@ const router = express.Router()
 
 /**
  * @swagger
- *  /api/v1/jobPosts/{jobPostId}/jobSeeker/{jobSeekerId}/jobApplication/{jobApplicationId}:
+ *  /api/v1/jobApplication/{jobApplicationId}/schedule-interview:
  *      post:
  *          summary: Post Job Interview
  *          tags:
  *              - JobInterview
  *          parameters:
  *              - in: path
- *                name: jobPostId
+ *                name: job-ApplicationId
  *                required: true
  *                schema:
  *                  type: string
- *                description: ID of the JobPost
- *              - in: path
- *                name: jobSeekerId
- *                required: true
- *                schema:
- *                  type: string
- *                description: ID of the JobSeeker
- *              - in: path
- *                name: jobApplicationId
- *                required: true
- *                schema:
- *                  type: string
- *                description: ID of the JobApplication
+ *                description: ID of the Job-Application
  *          requestBody:
  *              required: true
  *              content:
@@ -79,6 +67,6 @@ const router = express.Router()
  *                  description: Bad request , check request body
  */
 
-router.post('/:jobPostId/jobSeeker/:jobSeekerId/jobApplication/:jobApplicationId/jobInterview',Controller.addJobInterview)
+router.post('/:job-applicationId/schedule-interview',Controller.addJobInterview)
 
 export default router

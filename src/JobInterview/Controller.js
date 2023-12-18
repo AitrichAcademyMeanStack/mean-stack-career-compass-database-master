@@ -12,11 +12,9 @@ const getAllJobInterview = asyncHandler( async(req , res) => {
 
 // Adding JobInterview
 const addJobInterview = asyncHandler( async(req , res) => {
-    const jobPost = req.params.jobPostId;
-    const seeker = req.params.jobSeekerId;
     const application = req.params.jobApplicationId
     const data = req.body;
-    const interview = await jobInterviewService.addJobInterview(jobPost,seeker,application,data);
+    const interview = await jobInterviewService.addJobInterview(application,data);
     res.status(201).json(interview)
 
 })

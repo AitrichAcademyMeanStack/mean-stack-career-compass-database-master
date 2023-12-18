@@ -128,19 +128,19 @@ app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 app.use('/api/v1/qualifications',qualificationRouter) //configuring routes for qulaification
 app.use('/api/v1/skills',skillrouter); // configuring routes for skill
 app.use('/api/v1/roles', rolesRouter); // Configuring routes for roles
-app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker
-app.use('/api/v1/jobseekers',seekerprofile) //configuring routes for seeker profile
-app.use('/api/v1/jobseekers',JobSubscriptionRouter) //configuring routes for job alert subscription
-app.use('/api/v1/jobseekers',savedjobrouter) //configuring routes for saved jobs module
-app.use('/api/v1/jobseekerprofiles',jobapplicationrouter) //configuring routes for job application module
+app.use('/api/v1/job-seekers',seekerrouter) //configuring routes for seeker
+app.use('/api/v1/job-seekers',seekerprofile) //configuring routes for seeker profile
+app.use('/api/v1/job-seekers',JobSubscriptionRouter) //configuring routes for job alert subscription
+app.use('/api/v1/job-seekers',savedjobrouter) //configuring routes for saved jobs module
+app.use('/api/v1/job-seekerprofiles',jobapplicationrouter) //configuring routes for job application module
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
-app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
-app.use('/api/v1/jobProviderCompany', companyUserRouter) // Configuring routes for JobProviderCompany
+app.use('/api/v1/job-providerCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
+app.use('/api/v1/job-providerCompany', companyUserRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/workexperiences',workexperience) //configuring routes for work experience
 app.use('/api/v1/resume',resumerouter)//configuring routes for resume
-app.use('/api/v1/companyUsers',jobPostRouter) // configuring routes for JobPosts
-app.use('/api/v1/jobPosts',jobInterviewRoute) // configuring routes for JobInterview
-app.use('/api/v1/jobtitle',JobTitleRouter)// configuring routes for jobtitle
+app.use('/api/v1/company-users',jobPostRouter) // configuring routes for JobPosts
+app.use('/api/v1/job-application',jobInterviewRoute) // configuring routes for JobInterview
+app.use('/api/v1/job-title',JobTitleRouter)// configuring routes for jobtitle
 app.use('/api/v1/platFormAdmin',platFormAdminRouter)
 
 
