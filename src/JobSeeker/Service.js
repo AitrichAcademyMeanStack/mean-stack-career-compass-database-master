@@ -8,19 +8,21 @@ import jobseeker from "../models/JobSeekerModel.js" //importing job seeker
 import seekerProfile from "../models/JobSeekerProfileModel.js"
 
 //get all job seekers
-const getallseekers = async()=>{
+const getallseekers = async(req)=>{
     try {
         const result = await jobseeker.find()
-        console.log(result);
+        // const result = await jobseeker.find()
+        // .where('email')
+        // .equals(req.query.email)
         if (result) {
             logger.info("All job seekers are : ",result)
             return result
-        } else {
+        } else { 
             logger.error("Error occured in getting all job seekers")
             throw new NotFoundError("Error occured in getting all job seekers")
         }
     } catch (error) {
-        throw error
+        throw error 
     }
 }
 

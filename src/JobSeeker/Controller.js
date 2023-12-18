@@ -4,7 +4,7 @@ import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynch
 
 //get all job seekers
 const getallseekers = asyncerrorhandler(async(req,res)=>{
-    const allseekers = await service.getallseekers()
+    const allseekers = await service.getallseekers(req)
     res.status(200).json(allseekers)
 })
 

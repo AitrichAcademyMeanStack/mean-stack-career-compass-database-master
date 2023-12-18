@@ -159,7 +159,7 @@ const deleteprofilepictre = asyncerrorhandler(async(req,res)=>{
 const getWorkExperience = asyncerrorhandler( async (req , res) => {
     const seekerId = req.params.seekerid;
     const profileId = req.params.profileid;
-    const workexperienceresult =  await service.getWorkExperience(seekerId,profileId)
+    const workexperienceresult =  await service.getWorkExperience(seekerId,profileId,req)
     res.status(200).json(workexperienceresult)
 })
 

@@ -84,7 +84,7 @@ const router = express.Router();
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/jobseekerprofile' 
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
  */
 router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profiles
 
@@ -117,11 +117,9 @@ router.get('/:id1/profiles/:id2',controller.getallprofile) //getting all profile
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/jobseekerprofile' 
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
  */
-
-router.get('/:seekerid/profiles/:profileid/skills',controller.getskills)
-
+router.get('/:seekerid/profiles/:profileid/skills',controller.getskills) ///getting all skills
 
 /**
  * @swagger
@@ -152,12 +150,107 @@ router.get('/:seekerid/profiles/:profileid/skills',controller.getskills)
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/jobseekerprofile' 
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
  */
 router.get('/:seekerid/profiles/:profileid/qualifications',controller.getqualification) //geting qualifications
 
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/workexperiences:
+ *  get:
+ *      summary: get job-seeker workexperiences
+ *      description: this is is used to get all job-seeker workexperiences
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: job-seeker workexperiences retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
+ */
 router.get('/:seekerid/profiles/:profileid/workexperiences',controller.getWorkExperience) //getting work experiences
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/resume:
+ *  get:
+ *      summary: get job-seeker resume
+ *      description: this is is used to get  job-seeker resume
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: job-seeker resume retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          items:
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
+ */
 router.get('/:seekerid/profiles/:profileid/resume',controller.getresume)//getting jobseeeker profile resume
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/profilepicture:
+ *  get:
+ *      summary: get job-seeker profilepicture
+ *      description: this is is used to get all job-seeker profilepicture
+ *      tags:
+ *          - JobSeeker-Profile
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *          - in: path
+ *            name: profileid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      responses:
+ *          200:
+ *              description: job-seeker profilepicture retrived successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          items:
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
+ */
 router.get('/:seekerid/profiles/:profileid/profilepicture',controller.getprofilepicture)//getting profile picture
 
 /**
@@ -189,7 +282,7 @@ router.get('/:seekerid/profiles/:profileid/profilepicture',controller.getprofile
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/jobseekerprofile' 
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
  */
 router.get('/:seekerid/profiles/:profileid/profilename',controller.getprofilename) //get profile name
 
@@ -222,10 +315,9 @@ router.get('/:seekerid/profiles/:profileid/profilename',controller.getprofilenam
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/jobseekerprofile' 
+ *                              $ref: '#/components/schemas/JobSeeker-Profile' 
  */
 router.get('/:seekerid/profiles/:profileid/profilesummary',controller.getprofilesummary) //get profile summary
-
 
 /**
  * @swagger
@@ -266,7 +358,7 @@ router.get('/:seekerid/profiles/:profileid/profilesummary',controller.getprofile
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/jobseekerprofile'
+ *                $ref: '#/components/schemas/JobSeeker-Profile'
  *        400:
  *          description: Not found error, check the request body
  */
@@ -309,7 +401,7 @@ router.put('/:seekerid/profiles/:profileid/resume',uploadresume.single('Resume')
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body
  *                  
@@ -362,7 +454,7 @@ router.put('/:seekerid/profiles/:profileid/skill',controller.addskill) //adding 
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body
  *                  
@@ -408,7 +500,7 @@ router.put('/:seekerid/profiles/:profileid/qualification',controller.qualificati
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/jobseekerprofile'
+ *                $ref: '#/components/schemas/JobSeeker-Profile'
  *        400:
  *          description: Not found error, check the request body
  */
@@ -449,7 +541,7 @@ router.put('/:seekerid/profiles/:profileid/profilepicture',uploadprofilepicture.
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body
  *                  
@@ -491,7 +583,7 @@ router.put('/:seekerid/profiles/:profileid/profilename',controller.addprofilenam
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body
  *                  
@@ -546,7 +638,7 @@ router.put('/:seekerid/profiles/:profileid/profilesummary',controller.updateprof
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body
  *                  
@@ -586,7 +678,7 @@ router.put('/:seekerid/profiles/:profileid/workexperience',controller.addworkexp
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body
  *                  
@@ -626,7 +718,7 @@ router.delete('/:seekerid/profiles/:profileid/skills/:skillname',controller.dele
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body  
  */
@@ -665,7 +757,7 @@ router.delete('/:seekerid/profiles/:profileid/qualifications/:qualificationid',c
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body  
  */
@@ -698,7 +790,7 @@ router.delete('/:seekerid/profiles/:profileid/workexperiences/:workexperienceid'
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body  
  */
@@ -731,12 +823,10 @@ router.delete('/:seekerid/profiles/:profileid/resume',controller.deleteresume) /
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/jobseekerprofile'
+ *                          $ref: '#/components/schemas/JobSeeker-Profile'
  *          400:
  *              description: not found error , check request body  
  */
 router.delete('/:seekerid/profiles/:profileid/profilepicture',controller.deleteprofilepictre) //deleting profile picture
-
-
 
 export default router

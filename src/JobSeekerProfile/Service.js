@@ -586,7 +586,7 @@ const deleteprofilepictre = async (seekerid, profileid) => {
 }
 
 //get all work experiences
-const getWorkExperience = async (seekerId, profileId) => {
+const getWorkExperience = async (seekerId, profileId,req) => {
   try {
     const existingSeeker = await jobseeker.findById(seekerId)
     if (existingSeeker) {

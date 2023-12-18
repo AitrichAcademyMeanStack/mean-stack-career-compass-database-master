@@ -16,27 +16,29 @@ import jobtitle from '../../data/JobTitle.json' assert{type:'json'}
 
 
 //to establish connect to database
-const connecttodatabase = async()=>{
-    try {
-        // mongoose connection setup
-        const connectDB = await mongoose.connect(process.env.MONGO_URL)
-        if (connectDB) {
-            logger.info("🍀 MongoDb Connected Successfully")
-            await insertcategorydata() // inserting data into collection
-            await insertLocationData() // inserting data into collection
-            await insertqualificationsdata() // inserting data into collection
-            await insertskillsdata() // inserting data into collection
-            await insertIndustryData()  // inserting data into collection
-            await insertjobtitledata() //inserting data into collection
-        }else {
-            logger.error("❌ MongoDb Not Connected")
+const connectToDatabase = () => {
+    // mongoose connection setup
+    mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
-        }
-    } catch (error) {
-        logger.error("Error In Connecting database")
-        process.exit()
-    }
-}
+    mongoose.connection.on("connected", async() => {
+        logger.info("🍀 MongoDB Connected Successfully");
+        await insertIndustryData()
+        await insertLocationData()
+        await insertcategorydata()
+        await insertskillsdata()
+        await insertjobtitledata()
+        await insertqualificationsdata()
+    });
+
+    mongoose.connection.on("error", (err) => {
+        logger.error("Error while connecting to database: " + err);
+    });
+
+    mongoose.connection.on("disconnected", () => {
+        logger.warn("MongoDB connection disconnected");
+    });
+};
+
 
 //importing json data
 const insertcategorydata = async()=>{
@@ -116,4 +118,4 @@ const insertIndustryData = async() => {
     }
 }
 
-export default connecttodatabase
+export default connectToDatabase
