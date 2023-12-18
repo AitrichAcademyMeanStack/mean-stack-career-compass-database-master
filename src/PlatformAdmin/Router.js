@@ -7,7 +7,7 @@ const router = express.Router();
  * @swagger
  *  components:
  *      schemas:
- *          PlatformAdmin:
+ *          PlatFormAdmin:
  *              type: object
  *              required:
  *                  - firstName
@@ -31,12 +31,12 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v1/platformadmin:
+ * /api/v1/platFormAdmin:
  *  get:
  *      summary: get all job-seekers details
  *      description: this api is used to get all job seekers list
  *      tags:
- *          - Platformadmin
+ *          - PlatFormAdmin
  *      responses:
  *          200:
  *              description:  returns an array of platformadmin
@@ -45,7 +45,7 @@ const router = express.Router();
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/platformadmin'
+ *                              $ref: '#/components/schemas/PlatFormAdmin'
  */
 router.get('/',controller.getadmin)
 
@@ -53,25 +53,25 @@ router.get('/',controller.getadmin)
 
 /**
  * @swagger
- * /api/v1/platformadmin:
+ * /api/v1/platFormAdmin:
  *  post:
  *      summary: create new job admin details
  *      description: this api is used to create new admin
  *      tags:
- *          - Platform admin
+ *          - PlatFormAdmin
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/platformadmin'
+ *                      $ref: '#/components/schemas/PlatFormAdmin'
  *      responses:
  *          201:
  *              description: platformadmin added successfully
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/platformadmin'
+ *                          $ref: '#/components/schemas/PlatFormAdmin'
  *          400:
  *              description: not found error, check request body
  * 
@@ -80,12 +80,12 @@ router.post('/',controller.createadmin)
 
 /**
  * @swagger
- * /api/v1/platformadmin/{id}:
+ * /api/v1/platFormAdmin/{id}:
  *  put:
  *      summary: update platformadmin details
  *      description: this api is used to update  platformadmin details
  *      tags:
- *          - platformadmin
+ *          - PlatFormAdmin
  *      parameters:
  *          - in: path
  *            name: id
@@ -98,14 +98,14 @@ router.post('/',controller.createadmin)
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/platformadmin'
+ *                      $ref: '#/components/schemas/PlatFormAdmin'
  *      responses:
  *          200:
  *              description: platformadmin updated successfully
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/platformadmin'
+ *                          $ref: '#/components/schemas/PlatFormAdmin'
  *          400:
  *              description: not found error , check request body
  *                  
@@ -114,12 +114,12 @@ router.put('/:id',controller.updateadmin)
 
 /**
  * @swagger
- * /api/v1/platformadmin/{id}:
+ * /api/v1/platFormAdmin/{id}:
  *  delete:
  *      summary: delete platformadmin details
  *      description: this api is used to deleteplatformadmin details
  *      tags:
- *          - platformadmin
+ *          - PlatFormAdmin
  *      parameters:
  *          - in: path
  *            name: id
@@ -135,10 +135,33 @@ router.put('/:id',controller.updateadmin)
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/platformadmin'
+ *                              $ref: '#/components/schemas/PlatFormAdmin'
  * 
  */
 router.delete('/:id',controller.deleteadmin)
+
+/**
+ * @swagger
+ * /api/v1/platFormAdmin/jobProviders:
+ *  get:
+ *      summary: Get all JobProviders
+ *      description: Fetch all JobProviders
+ *      tags:
+ *          - PlatFormAdmin
+ *      responses:
+ *          200:
+ *              description: Returns array of JobProviders
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref:   'components/schemas/PlatFormAdmin'
+ *                                  
+ *              
+ *      
+ */
+router.get("/jobProviders",controller.getAllProviders)
 
 
 export default router

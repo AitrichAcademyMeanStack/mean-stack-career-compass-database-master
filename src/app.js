@@ -26,6 +26,7 @@ import jobInterviewRoute from './JobInterview/Router.js' // importing routes for
 import jobPostRouter from "./JobPost/Router.js" // importing routes for Job Post
 import jobapplicationrouter from './JobApplication/Router.js' //importing routes for job application
 import JobTitleRouter from './JobTitle/Router.js'
+import platFormAdminRouter from './PlatformAdmin/Router.js'
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
 
 
@@ -76,6 +77,7 @@ const options = {
         path.join(__dirname,"JobInterview","Router.js"),
         path.join(__dirname,"JobApplication","Router.js"),
         path.join(__dirname,"JobTitle","Router.js"),
+        path.join(__dirname,"PlatformAdmin","Router.js")
     ],
 };
 
@@ -112,7 +114,7 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs,{
     .swagger-ui .response-col_status {color: #fff } 
     .swagger-ui .model {color: #fff}
     .swagger-ui .info {margin:0 ; padding-top:25px}
-    .swagger-ui section.models.is-open, {margin:0}
+    .swagger-ui section.models.is-open {margin:0}
     .swagger-ui section.models{margin:0}
     .swagger-ui .models-control{color:#fff}
     .swagger-ui .model-title {color: #fff}
@@ -139,6 +141,7 @@ app.use('/api/v1/resume',resumerouter)//configuring routes for resume
 app.use('/api/v1/companyUsers',jobPostRouter) // configuring routes for JobPosts
 app.use('/api/v1/jobPosts',jobInterviewRoute) // configuring routes for JobInterview
 app.use('/api/v1/jobtitle',JobTitleRouter)// configuring routes for jobtitle
+app.use('/api/v1/platFormAdmin',platFormAdminRouter)
 
 
 

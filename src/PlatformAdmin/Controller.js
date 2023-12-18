@@ -29,5 +29,14 @@ const deleteadmin = asyncerrorhandler(async(req,res)=>{
     res.status(200).json("admin deleted successfully")
 })
 
+const getAllProviders = asyncerrorhandler ( async (req , res) => {
+    const providers = await service.getAllJobProviders();
+    res.status(200).json(providers);
+})
 
-export default {getadmin,createadmin,updateadmin,deleteadmin}
+const deleteJobPost = asyncerrorhandler ( async (req , res) => {
+    
+})
+
+
+export default {getadmin,createadmin,updateadmin,deleteadmin,getAllProviders}

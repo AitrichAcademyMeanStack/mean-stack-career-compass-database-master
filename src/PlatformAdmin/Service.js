@@ -1,10 +1,11 @@
-import logger from "../middleware/Logger.js" 
+import logger from "../middleware/logger.js" 
 import AuthUser from "../models/AuthUserModel.js"
 import systemuser from "../models/SystemUserModel.js"
 import BadRequestError from "../Exceptions/Badrequesterror.js"
 import NotFoundError from "../Exceptions/NotFoundError.js"
 import ValidationError from "../Exceptions/ValidationError.js"
 import PlatformAdmin from "../models/PlatformAdminModel.js"
+import JobProviderCompany from "../models/JobProviderCompanyModel.js"
 
 const getadmin = async()=>{
     try {
@@ -64,6 +65,20 @@ const createadmin = async(admindata) => {
     }
 };
 
+const getAllJobProviders = async () => {
+    try {
+        const providers = await JobProviderCompany.find()
+        if (providers) {
+            logger.info(providers)
+            return providers
+        } else {
+            throw new NotFoundError("JobProviders not found")
+        }
+    } catch (error) {
+        throw new BadRequestError("Something went wrong")
+    }
+}
 
 
-export default{getadmin,createadmin}
+
+export default{getadmin,createadmin,getAllJobProviders}
