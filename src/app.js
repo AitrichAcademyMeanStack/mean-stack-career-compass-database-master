@@ -110,11 +110,12 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs,{
     .parameter__name { color: #1e1e1e; color: #fff } 
     .responses-wrapper { background-color: #1e1e1e; color: #fff } 
     .swagger-ui .response-col_status {color: #fff } 
-    .swagger-ui .model, .model-title, {color: #fff}
+    .swagger-ui .model {color: #fff}
     .swagger-ui .info {margin:0 ; padding-top:25px}
     .swagger-ui section.models.is-open, {margin:0}
     .swagger-ui section.models{margin:0}
     .swagger-ui .models-control{color:#fff}
+    .swagger-ui .model-title {color: #fff}
    
   `,
 }));
