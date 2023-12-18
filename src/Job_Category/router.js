@@ -27,7 +27,7 @@ const router = express.Router();
  *      summary: get all job-category details
  *      description: this api is used to get all job-category list
  *      tags:
- *          - job-category
+ *          - JobCategory
  *      responses:
  *          200:
  *              description:  returns an array of job_categories
@@ -47,7 +47,7 @@ router.get('/',controller.getallcategories)
  *      summary: get job-category details with specific id
  *      description: this is is used to get category details with specific id
  *      tags:
- *          - job-category
+ *          - JobCategory
  *      parameters:
  *          - in: path
  *            name: id
@@ -74,7 +74,7 @@ router.get('/:id',controller.getcategorybyid)
  *      summary: create new job category details
  *      description: this api is used to create new job category
  *      tags:
- *          - job-category
+ *          - JobCategory
  *      requestBody:
  *          required: true
  *          content:
@@ -101,7 +101,7 @@ router.post('/',controller.createcategory)
  *      summary: update category details
  *      description: this api is used to update job category details
  *      tags:
- *          - job-category
+ *          - JobCategory
  *      parameters:
  *          - in: path
  *            name: id
@@ -135,7 +135,7 @@ router.put('/:id',controller.updatecategory)
  *      summary: delete category details
  *      description: this api is used to delete category details
  *      tags:
- *          - job-category
+ *          - JobCategory
  *      parameters:
  *          - in: path
  *            name: id
