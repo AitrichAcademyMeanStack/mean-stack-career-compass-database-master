@@ -36,9 +36,18 @@ const addJobPost = async (companyUserId,jobPost) => {
 };
 
 // fetching all job posts
-const getAllJobPosts = async () => {
+const getAllJobPosts = async (page , limit) => {
   try {
-    const allPosts = await JobPost.find();
+    const perPage = limit;
+    const totalPost = await JobPost.countDocuments();
+    const totalPages = Math.ceil(totalPost / perPage)
+
+    if (page > totalPages) {
+      logger.error("Page not found")
+      throw new NotFoundError("Page not found")
+    }
+
+    const allPosts = await JobPost.find().skip((page - 1) * perPage).limit(perPage).exec();
     if (allPosts) {
       logger.info("List of Job Posts");
       return allPosts;

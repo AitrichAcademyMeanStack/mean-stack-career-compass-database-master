@@ -9,27 +9,9 @@ const router = express.Router()
  *          JobInterview:
  *                  type: object
  *                  required: 
- *                      - job
- *                      - interviewee
- *                      - jobApplication
- *                      - scheduledBy
  *                      - dateScheduled
  *                      - status
  *                  properties:
- *                      job:
- *                          type: object
- *                          items:
- *                              type: string
- *                      interviewee:
- *                          type: object
- *                          items: 
- *                              type: string
- *                      jobApplication:
- *                          type: object
- *                          items:
- *                              type: string
- *                      scheduledBy:
- *                              type: string
  *                      dateScheduled: 
  *                              type: string
  *                      status:
@@ -45,7 +27,7 @@ const router = express.Router()
  *              - JobInterview
  *          parameters:
  *              - in: path
- *                name: job-ApplicationId
+ *                name: jobApplicationId
  *                required: true
  *                schema:
  *                  type: string
@@ -67,6 +49,6 @@ const router = express.Router()
  *                  description: Bad request , check request body
  */
 
-router.post('/:job-applicationId/schedule-interview',Controller.addJobInterview)
+router.post('/:jobApplicationId/schedule-interview',Controller.addJobInterview)
 
 export default router
