@@ -28,7 +28,7 @@ import jobapplicationrouter from './JobApplication/Router.js' //importing routes
 import JobTitleRouter from './JobTitle/Router.js'
 import platFormAdminRouter from './PlatformAdmin/Router.js'
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
-
+import { urlencoded } from "express";
 
 // configuring .env file
 dotenv.config({     
@@ -110,6 +110,7 @@ app.use('/api/v1/company-users',jobPostRouter) // configuring routes for JobPost
 app.use('/api/v1/job-application',jobInterviewRoute) // configuring routes for JobInterview
 app.use('/api/v1/job-title',JobTitleRouter)// configuring routes for jobtitle
 app.use('/api/v1/platFormAdmin',platFormAdminRouter)
+app.use(express.urlencoded({ extended: true }));
 
 
 

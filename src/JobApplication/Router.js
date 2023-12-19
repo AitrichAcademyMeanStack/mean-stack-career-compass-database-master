@@ -19,17 +19,33 @@ const router = Express.Router()
  *                      type: string
  */
 
+
+
 /**
  * @swagger
- * /api/v1/jobapplications:
+ * /api/v1/jobapplications?page={pagenumber}&limit={limit}:
  *  get:
  *      summary: getting all job applications
  *      description: this api is used to getting all job applications
  *      tags:
  *          - JobApplication
+ *      parameters:
+ *          
+ *          - in: query
+ *            name: page
+ *            required: true
+ *            description: the number of page
+ *            schema:
+ *                  type: string
+ *          - in: query
+ *            name: limit
+ *            required: true
+ *            description: the number of limit
+ *            schema:
+ *                  type: string
  *      responses:
  *          200:
- *              description: returns an array of Job Applications
+ *              description: returns an array of all Job Applications
  *              content:
  *                  application/json:
  *                       schema:
@@ -37,12 +53,13 @@ const router = Express.Router()
  *          400:
  *              description: not found error, check request body
  */
-router.get('/jobapplications',controller.getalljobapplications) //get all job applications
+router.get('/jobapplications',controller.getalljobapplications) 
 
 
+//get all jobapplication by seeker
 /**
  * @swagger
- * /api/v1/jobseekers/{seekerid}/jobapplications:
+ * /api/v1/jobseekers/{seekerid}/jobapplications?page={pagenumber}&limit={limit}:
  *  get:
  *      summary: getting all job applications
  *      description: this api is used to getting all job applications
@@ -55,9 +72,21 @@ router.get('/jobapplications',controller.getalljobapplications) //get all job ap
  *            description: numeric id is required
  *            schema:
  *                  type: string
+ *          - in: query
+ *            name: page
+ *            required: true
+ *            description: the number of page
+ *            schema:
+ *                  type: string
+ *          - in: query
+ *            name: limit
+ *            required: true
+ *            description: the number of limit
+ *            schema:
+ *                  type: string
  *      responses:
  *          200:
- *              description: returns an array of Job Applications
+ *              description: returns an array of all Job Applications
  *              content:
  *                  application/json:
  *                       schema:
