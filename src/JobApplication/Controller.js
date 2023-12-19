@@ -7,6 +7,15 @@ const getalljobapplications = asyncerrorhandler(async(req,res)=>{
     res.status(200).json(result)
 })
 
+const getjobapplications = asyncerrorhandler(async(req,res)=>{
+    const page = parseInt(req.query.page)
+    const limit = parseInt(req.query.limit) 
+    const companyuserid = req.params.companyuserid
+    const jobpostid = req.params.jobpostid
+    const result = await service.getjobapplications(companyuserid,jobpostid,page,limit)
+    res.status(200).json(result)    
+})
+
 //getting all job applications
 const getallapplications = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.seekerid
@@ -32,4 +41,4 @@ const createapplication = asyncerrorhandler(async(req,res)=>{
     res.status(200).json(result)
 })
 
-export default {getallapplications,deleteapplication,createapplication,getalljobapplications}
+export default {getallapplications,deleteapplication,createapplication,getalljobapplications,getjobapplications}

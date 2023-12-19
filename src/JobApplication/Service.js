@@ -1,6 +1,7 @@
 import BadRequestError from "../Exceptions/BadRequestError.js"; //importing custom bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js";// importing custom not found error handler
 import logger from "../middleware/logger.js"; //importing logger
+import CompanyUser from "../models/CompanyUserModel.js";
 import Jobapplication from "../models/JobApplicationModel.js"; //importing job application model
 import JobPost from "../models/JobPostModel.js"; //importing job post model
 import jobseeker from "../models/JobSeekerModel.js"; //importing jobseeker model
@@ -16,6 +17,45 @@ const getalljobapplications = async()=>{
         } else {
             logger.error("error occured in getting all job aplications")
             throw new BadRequestError("error occured in getting all job applications")
+        }
+    } catch (error) {
+        throw error
+    }
+}
+
+
+const getjobapplications = async(companyuserid,jobpostid,page,limit)=>{
+    try {
+        const existingcompanyuser = await CompanyUser.findById(companyuserid)
+        if (existingcompanyuser) {
+            const existingjobpost = await JobPost.findById(jobpostid)
+            if (existingjobpost && existingjobpost.company.companyId.toString() === existingcompanyuser._id.toString()){
+                
+                const totalposts = await jobseeker.countDocuments()
+                const totalpages = Math.ceil(totalposts / limit)
+                if (page > totalpages) {
+                    logger.error("Page not  found")
+                    throw new NotFoundError("page not found")
+                }
+        
+                const result = await Jobapplication.find({"job.JobpostId" : existingjobpost._id})
+                .skip((page - 1) * limit)
+                .limit(limit)
+                .exec()
+                if (result.length > 0) {
+                    logger.info("successfully geetting all job applications with company user id")
+                    return result
+                } else {
+                    logger.error("error occured in getting all job applications")
+                    throw new BadRequestError("error occured in getting all job applications")
+                }
+            } else {
+                logger.error("jobpost not found with specific id")
+                throw new NotFoundError("jobpost not found with specific id")
+            }
+        } else {
+            logger.error("company user not found with specific id")
+            throw new NotFoundError("company user not found with specific id")
         }
     } catch (error) {
         throw error
@@ -133,4 +173,4 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
     }
 }
 
-export default {createapplication,getallapplications,deleteapplication,getalljobapplications}
+export default {createapplication,getallapplications,deleteapplication,getalljobapplications,getjobapplications}

@@ -10,17 +10,16 @@ import seekerProfile from "../models/JobSeekerProfileModel.js"
 //get all job seekers
 const getallseekers = async(page,limit)=>{
     try {
-        const perpage = limit
         const totalposts = await jobseeker.countDocuments()
-        const totalpages = Math.ceil(totalposts / perpage)
+        const totalpages = Math.ceil(totalposts / limit)
         if (page > totalpages) {
             logger.error("Page not  found")
             throw new NotFoundError("page not found")
         }
 
         const result = await jobseeker.find()
-        .skip((page - 1) * perpage)
-        .limit(perpage)
+        .skip((page - 1) * limit)
+        .limit(limit)
         .exec()
 
         if (result) {
