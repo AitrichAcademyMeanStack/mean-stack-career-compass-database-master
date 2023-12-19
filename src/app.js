@@ -87,42 +87,11 @@ app.use('/api-docs',swaggerui.serve,swaggerui.setup(swaggerspecs,{
     swaggerOptions: {
         docExpansion: "none",
     },
-    customSiteTitle: "JobPortal API",
-    customCss: `
-    .swagger-ui {background-color: #1e1e1e; color: #fff}
-    .swagger-ui .topbar { display: none; }
-    .body { background-color: #1e1e1e; color: #fff }
-    .swagger-ui .opblock-description-wrapper {background-color:#1e1e1e}
-    .swagger-ui .opblock-description-wrapper p{color:#fff}
-    .swagger-ui .scheme-container{background-color:#1e1e1e; color:#fff}
-    .swagger-ui .parameter__name , .parameter_type{color:#fff}
-    .swagger-ui .opblock .opblock-summary-description{color:#fff}
-    .swagger-ui a.nostyle, .swagger-ui a.nostyle:visited {color:#fff }
-    .swagger-ui .info .title, .swagger-ui .renderedMarkdown p {color:#fff}
-    .opblock-tag { background-color: #1e1e1e; color: #fff } 
-    .opblock-summary { background-color: #1e1e1e; color: #fff } 
-    .opblock { border: 1px solid #1e1e1e; color: #fff }
-    .opblock-section-header { background-color: #1e1e1e; color: #fff } 
-    .opblock-description { background-color: #1e1e1e; color: #fff }
-    .swagger-ui .response-col_description {color:#fff}
-    .swagger-ui table thead tr th {color:#fff}
-    .swagger-ui .parameters-col_description{color:#fff}
-    .swagger-ui .parameter__type {color:#fff}
-    .swagger-ui .tab li button.tablinks {background-color: #1e1e1e; color:#fff}
-    .parameter__name { color: #1e1e1e; color: #fff } 
-    .responses-wrapper { background-color: #1e1e1e; color: #fff } 
-    .swagger-ui .response-col_status {color: #fff } 
-    .swagger-ui .model {color: #fff}
-    .swagger-ui .info {margin:0 ; padding-top:25px}
-    .swagger-ui section.models.is-open {margin:0}
-    .swagger-ui section.models{margin:0}
-    .swagger-ui .models-control{color:#fff}
-    .swagger-ui .model-title {color: #fff}
-   
-  `,
+    customSiteTitle: "JobPortal API"
 }));
 
 // Defining routes
+app.use('/api/v1',jobapplicationrouter) //configuring routes for job application module
 app.use('/api/v1/job-categories',jobcategoryrouter); // configuring routes for Job Category
 app.use('/api/v1/locations',locationRouter); // configuring routes for Location
 app.use('/api/v1/qualifications',qualificationRouter) //configuring routes for qulaification
@@ -132,7 +101,6 @@ app.use('/api/v1/jobseekers',seekerrouter) //configuring routes for seeker
 app.use('/api/v1/jobseekers',seekerprofile) //configuring routes for seeker profile
 app.use('/api/v1/jobseekers',JobSubscriptionRouter) //configuring routes for job alert subscription
 app.use('/api/v1/jobseekers',savedjobrouter) //configuring routes for saved jobs module
-app.use('/api/v1/jobseekerprofiles',jobapplicationrouter) //configuring routes for job application module
 app.use('/api/v1/industries', industryRouter) // Configuring routes for industry
 app.use('/api/v1/jobProviderCompanies', jobProviderCompanyRouter) // Configuring routes for JobProviderCompany
 app.use('/api/v1/jobProviderCompany', companyUserRouter) // Configuring routes for JobProviderCompany

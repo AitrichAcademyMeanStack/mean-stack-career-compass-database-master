@@ -21,7 +21,28 @@ const router = Express.Router()
 
 /**
  * @swagger
- * /api/v1/jobseekerprofiles/{profileid}/jobpost/{jobpostid}/jobapplication:
+ * /api/v1/jobapplications:
+ *  get:
+ *      summary: getting all job applications
+ *      description: this api is used to getting all job applications
+ *      tags:
+ *          - JobApplication
+ *      responses:
+ *          200:
+ *              description: returns an array of Job Applications
+ *              content:
+ *                  application/json:
+ *                       schema:
+ *                          $ref: '#/components/schemas/jobapplication'
+ *          400:
+ *              description: not found error, check request body
+ */
+router.get('/jobapplications',controller.getalljobapplications) //get all job applications
+
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/jobapplications:
  *  get:
  *      summary: getting all job applications
  *      description: this api is used to getting all job applications
@@ -29,13 +50,7 @@ const router = Express.Router()
  *          - JobApplication
  *      parameters:
  *          - in: path
- *            name: profileid
- *            required: true
- *            description: numeric id is required
- *            schema:
- *                  type: string
- *          - in: path
- *            name: jobpostid
+ *            name: seekerid
  *            required: true
  *            description: numeric id is required
  *            schema:
@@ -50,11 +65,11 @@ const router = Express.Router()
  *          400:
  *              description: not found error, check request body
  */
-router.get('/:profileid/jobpost/:jobpostid/jobapplication',controller.getallapplications) //get all job applications
+router.get('/jobseekers/:seekerid/jobapplications',controller.getallapplications) //get all job applications
 
 /**
  * @swagger
- * /api/v1/jobseekerprofiles/{profileid}/jobpost/{jobpostid}/jobapplication/{applicationid}:
+ * /api/v1/jobseekers/{seekerid}/jobapplications/{applicationid}:
  *  delete:
  *      summary: deleting job application with id
  *      description: this api is used to delete job application with id
@@ -62,13 +77,7 @@ router.get('/:profileid/jobpost/:jobpostid/jobapplication',controller.getallappl
  *          - JobApplication
  *      parameters:
  *          - in: path
- *            name: profileid
- *            required: true
- *            description: numeric id is required
- *            schema:
- *                  type: string
- *          - in: path
- *            name: jobpostid
+ *            name: seekerid
  *            required: true
  *            description: numeric id is required
  *            schema:
@@ -89,17 +98,23 @@ router.get('/:profileid/jobpost/:jobpostid/jobapplication',controller.getallappl
  *          400:
  *              description: not found error, check request body
  */
-router.delete('/:profileid/jobpost/:jobpostid/jobapplication/:applicationid',controller.deleteapplication) //delete job application with specific id
+router.delete('/jobseekers/:seekerid/jobapplications/:applicationid',controller.deleteapplication) //delete job application with specific id
 
 /**
  * @swagger
- * /api/v1/jobseekerprofiles/{profileid}/jobpost/{jobpostid}/jobapplication:
+ * /api/v1/jobseekers/{seekerid}/profiles/{profileid}/jobposts/{jobpostid}/jobapplications:
  *  post:
  *      summary: added new job application
  *      description: this api is used to add new job application
  *      tags:
  *          - JobApplication
  *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
  *          - in: path
  *            name: profileid
  *            required: true
@@ -128,7 +143,7 @@ router.delete('/:profileid/jobpost/:jobpostid/jobapplication/:applicationid',con
  *          400:
  *              description: not found error, check request body
  */
-router.post('/:profileid/jobpost/:jobpostid/jobapplication',controller.createapplication) //add new job application
+router.post('/jobseekers/:seekerid/profiles/:profileid/jobposts/:jobpostid/jobapplications',controller.createapplication) //add new job application
 
 
 export default router
