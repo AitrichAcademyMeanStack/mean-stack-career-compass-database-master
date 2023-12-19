@@ -31,12 +31,25 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v1/jobseekers:
+ * /api/v1/jobseekers?page={pagenumber}&limit={limit}:
  *  get:
  *      summary: get all job-seekers details
  *      description: this api is used to get all job seekers list
  *      tags:
  *          - JobSeeker
+ *      parameters:
+ *          - in: query
+ *            name: page
+ *            required: true
+ *            description: the number of page 
+ *            schema:
+ *                  type: string
+ *          - in: query
+ *            name: limit
+ *            required: true
+ *            description: the number of limit
+ *            schema:
+ *                  type: string
  *      responses:
  *          200:
  *              description:  returns an array of job-seekers

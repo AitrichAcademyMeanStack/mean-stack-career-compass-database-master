@@ -8,12 +8,21 @@ import jobseeker from "../models/JobSeekerModel.js" //importing job seeker
 import seekerProfile from "../models/JobSeekerProfileModel.js"
 
 //get all job seekers
-const getallseekers = async(req)=>{
+const getallseekers = async(page,limit)=>{
     try {
+        const perpage = limit
+        const totalposts = await jobseeker.countDocuments()
+        const totalpages = Math.ceil(totalposts / perpage)
+        if (page > totalpages) {
+            logger.error("Page not  found")
+            throw new NotFoundError("page not found")
+        }
+
         const result = await jobseeker.find()
-        // const result = await jobseeker.find()
-        // .where('email')
-        // .equals(req.query.email)
+        .skip((page - 1) * perpage)
+        .limit(perpage)
+        .exec()
+
         if (result) {
             logger.info("All job seekers are : ",result)
             return result
