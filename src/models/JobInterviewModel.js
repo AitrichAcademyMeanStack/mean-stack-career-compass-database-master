@@ -12,7 +12,7 @@ const jobInterviewSchema = new Schema({
     industry: String,
     jobResponsibilities: String,
     postedBy: String,
-    postedDate: { type: Date, default: Date.now() },
+    postedDate: { type: Date}
   },
   interviewee: {
     firstName: String,
@@ -21,8 +21,51 @@ const jobInterviewSchema = new Schema({
     email: String,
     phone: Number,
   },
-  jobApplication: String,
-  scheduledBy: String, //companyUser
+  jobApplication: {
+    job:{
+      JobpostId: mongoose.Schema.Types.ObjectId,
+      jobTitle: [String],
+      jobSummary: { type: String },
+      jobLocation: [String],
+      company: {
+        companyId: mongoose.Schema.Types.ObjectId,
+        legalName: { type: String },
+        summary: { type: String },
+        industry: [String],
+        email: { type: String },
+        phone: { type: String },
+        address: { type: String },
+        website: { type: String },
+        location: [String],
+      },
+      category: [String],
+      qualifications: [String],
+      skills: [String],
+      industry: [String],
+      jobResponsibilities: [String],
+      postedBy: { type: String },
+      postedDate: { type: Date},
+  },
+  applicant:{
+      seekerId: mongoose.Schema.Types.ObjectId,
+      firstName: String,
+      lastName: String,
+      userName: String,
+      email: String,
+      phone: String
+  },
+  resume:{
+      title:{type: String},
+      Resume:{type:String}
+  },
+  coverletter:String,
+  datesubmitted:{
+      type:Date,
+  },
+  status:{
+      type:String,
+  }},
+  scheduledBy: String, 
   dateScheduled: { type: Date, default: Date.now() },
   status: {
     type: String,
@@ -35,7 +78,7 @@ const jobInterviewSchema = new Schema({
       "CANCELLED_BY_EMPLOYER",
     ],
   },
-});
+},{versionKey:false});
 
 const collectionName = "Job Interview"
 

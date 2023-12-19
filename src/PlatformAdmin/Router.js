@@ -140,28 +140,7 @@ router.put('/:id',controller.updateadmin)
  */
 router.delete('/:id',controller.deleteadmin)
 
-/**
- * @swagger
- * /api/v1/platFormAdmin/jobProviders:
- *  get:
- *      summary: Get all JobProviders
- *      description: Fetch all JobProviders
- *      tags:
- *          - PlatFormAdmin
- *      responses:
- *          200:
- *              description: Returns array of JobProviders
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: array
- *                          items:
- *                              $ref:   'components/schemas/PlatFormAdmin'
- *                                  
- *              
- *      
- */
-router.get("/jobProviders",controller.getAllProviders)
+
 
 
 export default router
