@@ -7,21 +7,6 @@ import jobseeker from "../models/JobSeekerModel.js"; //importing jobseeker model
 import seekerProfile from "../models/JobSeekerProfileModel.js"; ///importing seeker profile model
 
 
-// const getalljobapplications = async()=>{
-//     try {
-//         const applications = await Jobapplication.find()
-//         if (applications) {
-//             logger.info("all job applications getting successfully")
-//             return applications
-//         } else {
-//             logger.error("error occured in getting all job aplications")
-//             throw new BadRequestError("error occured in getting all job applications")
-//         }
-//     } catch (error) {
-//         throw error
-//     }
-// }
-
 //get all job applications
 const getalljobapplications = async (page, limit) => {
     try {
@@ -107,12 +92,6 @@ const getallapplications = async (seekerid, page, limit) => {
         throw error;
     }
 };
-
-
-
-
-
-
 
 
 //deleting job application with specific id

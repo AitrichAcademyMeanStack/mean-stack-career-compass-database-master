@@ -2,11 +2,6 @@ import service from './Service.js' //importing service
 import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynchronous error handler
 
 
-// const getalljobapplications = asyncerrorhandler(async(req,res)=>{
-//     const result = await service.getalljobapplications()
-//     res.status(200).json(result)
-// })
-
 const getalljobapplications = asyncerrorhandler(async (req, res) => {
   
     const page = parseInt(req.query.page) || 1;
