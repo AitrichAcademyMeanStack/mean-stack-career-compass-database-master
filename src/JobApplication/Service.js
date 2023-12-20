@@ -8,20 +8,37 @@ import jobseeker from "../models/JobSeekerModel.js"; //importing jobseeker model
 import seekerProfile from "../models/JobSeekerProfileModel.js"; ///importing seeker profile model
 
 
-const getalljobapplications = async()=>{
+//get all job applications
+const getalljobapplications = async (page, limit) => {
     try {
         const applications = await Jobapplication.find()
-        if (applications) {
-            logger.info("all job applications getting successfully")
-            return applications
-        } else {
-            logger.error("error occured in getting all job aplications")
-            throw new BadRequestError("error occured in getting all job applications")
-        }
-    } catch (error) {
-        throw error
-    }
-}
+        if (applications)
+        {
+            const perpage = limit
+            const totalposts = await Jobapplication.countDocuments()
+            const totalpages = Math.ceil( totalposts/perpage)
+            if (page > totalpages) {
+                logger.error("page not found")
+                throw new NotFoundError("page not found")   
+               }
+               const result = await Jobapplication.find()
+                   .skip((page - 1) * perpage)
+                   .limit(perpage)
+                   .exec()
+   
+               if (result.length > 0) {
+                   logger.info("Successfully getting paginated job applications");
+                   return result;
+               } else {
+                   logger.error("Error occurred in getting paginated job applications");
+                   throw new BadRequestError("Error occurred in getting paginated job applications");
+               }
+           } }
+        catch (error) {
+           console.error('Error in getallapplications:', error);
+           throw error;
+       }
+};
 
 
 const getjobapplications = async(companyuserid,jobpostid,page,limit)=>{
@@ -62,27 +79,40 @@ const getjobapplications = async(companyuserid,jobpostid,page,limit)=>{
     }
 }
 
-//getting all job applications
-const getallapplications = async(seekerid)=>{
+//get all jobaplication by seekerid
+const getallapplications = async (seekerid, page, limit) => {
     try {
-        const existingseeker = await jobseeker.findById(seekerid)
+        const existingseeker = await jobseeker.findById(seekerid);
         if (existingseeker) {
-                const result = await Jobapplication.find({"applicant.seekerId":existingseeker._id})
-                if (result.length>0) {
-                    logger.info("successfully getting all job applications")
-                    return result
-                } else {
-                    logger.error("error occured in getting all job aplications")
-                    throw new BadRequestError("error occured in getting all job applications")
-                }
+            const perpage = limit
+            const totalposts = await Jobapplication.countDocuments()
+            const totalpages = Math.ceil( totalposts/perpage)
+
+            if (page > totalpages) {
+             logger.error("page not found")
+             throw new NotFoundError("page not found")   
+            }
+            const result = await Jobapplication.find({ "applicant.seekerId": existingseeker._id })
+                .skip((page - 1) * perpage)
+                .limit(perpage)
+                .exec()
+
+            if (result.length > 0) {
+                logger.info("Successfully getting paginated job applications");
+                return result;
+            } else {
+                logger.error("Error occurred in getting paginated job applications");
+                throw new BadRequestError("Error occurred in getting paginated job applications");
+            }
         } else {
-            logger.error("job seeker not found with specific id")
-            throw new NotFoundError("job seeker not found with specific id")
+            logger.error("Job seeker not found with specific id");
+            throw new NotFoundError("Job seeker not found with specific id");
         }
     } catch (error) {
-        throw error
+        console.error('Error in getallapplications:', error);
+        throw error;
     }
-}
+};
 
 //deleting job application with specific id
 const deleteapplication = async (seekerid,applicationid) => {

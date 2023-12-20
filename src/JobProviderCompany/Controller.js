@@ -3,15 +3,16 @@ import jobProviderService from "./Service.js";
 
 // Fetching all JobProviders
 const getAllJobProviders = asyncerrorhandler(async (req, res) => {
-  
-  
-  
+  const providers = await service.getAllJobProviders();
+  res.status(200).json(providers);
 });
 
 // Fetching JobProvider by ID
 const getJobProviderById = asyncerrorhandler(async (req, res) => {
   const jobProviderId = req.params.id;
-  const getJobProvider = await jobProviderService.getJobProviderById(jobProviderId);
+  const getJobProvider = await jobProviderService.getJobProviderById(
+    jobProviderId
+  );
   res.status(200).json(getJobProvider);
 });
 

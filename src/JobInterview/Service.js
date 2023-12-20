@@ -9,6 +9,11 @@ const addJobInterview = async(application,data) => {
     try {
                 const jobApplication = await Jobapplication.findById(application)
                 if (jobApplication) {
+                    // data.job = {
+                        
+                    // }
+                    data.interviewee = jobApplication.applicant
+                    data.scheduledBy = jobApplication.job.postedBy
                     data.jobApplication = {
                         job: jobApplication.job,
                         applicant: jobApplication.applicant,

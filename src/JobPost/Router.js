@@ -55,11 +55,24 @@ const router = express.Router()
  */
 /**
  * @swagger
- *  /api/v1/jobPosts:
+ *  /api/v1/jobPosts?page={page-number}&limit={limit}:
  *      get:
  *          summary: Get all JobPosts
  *          tags:
  *              - JobPost
+ *          parameters:
+ *              - in: query
+ *                name: page
+ *                required: true
+ *                description: Enter Page Number
+ *                schema:
+ *                      type: string
+ *              - in: query
+ *                name: limit
+ *                required: true
+ *                description: Enter the limit
+ *                schema:
+ *                      type: string
  *          responses:
  *              200:
  *                  description: Return Array of JobPosts
@@ -106,7 +119,7 @@ router.get("/",jobPostController.getAllJobPosts);
  *          
  *  
  */
-router.post("/:companyUserId/jobPosts",jobPostController.createJobPost)
+router.post("/companyUsers/:companyUserId/jobPosts",jobPostController.createJobPost)
 
 /**
  * @swagger
@@ -139,7 +152,7 @@ router.post("/:companyUserId/jobPosts",jobPostController.createJobPost)
  *                  description: JobPost not found
  *                          
  */
-router.get("/:companyUserId/jobPosts/:jobPostId",jobPostController.getJobPostById)
+router.get("/companyUsers/:companyUserId/jobPosts/:jobPostId",jobPostController.getJobPostById)
 
 /**
  * @swagger
@@ -179,7 +192,7 @@ router.get("/:companyUserId/jobPosts/:jobPostId",jobPostController.getJobPostByI
  *      
  *          
  */
-router.put("/:companyUserId/jobPosts/:jobPostId",jobPostController.updateJobPost)
+router.put("/companyUsers/:companyUserId/jobPosts/:jobPostId",jobPostController.updateJobPost)
 
 /**
  * @swagger
@@ -207,6 +220,6 @@ router.put("/:companyUserId/jobPosts/:jobPostId",jobPostController.updateJobPost
  *              404:
  *                  description: PostId not found
  */
-router.delete("/:companyUserId/jobPosts/:jobPostId",jobPostController.deleteJobPost)
+router.delete("/companyUsers/:companyUserId/jobPosts/:jobPostId",jobPostController.deleteJobPost)
 
 export default router
