@@ -58,13 +58,23 @@ const createsavedjobs = async (seekerid, savedjobdata, jobpostid) => {
 }
 
 // get all saved jobs
-const getallsavedjobs = async (seekerid, jobpostid) => {
+const getallsavedjobs = async (seekerid, jobpostid,page,limit) => {
     try {
         const existingseeker = await jobseeker.findById(seekerid);
         if (existingseeker) {
             const existingjobpost = await JobPost.findById(jobpostid)
             if (existingjobpost) {
+                const totalposts = await jobseeker.countDocuments()
+                const totalpages = Math.ceil(totalposts / limit)
+                if (page > totalpages) {
+                    logger.error("Page not  found")
+                    throw new NotFoundError("page not found")
+                }
                 const getalljobs = await savedjobs.find({ "savedBy.seekerId": seekerid })
+                .skip((page - 1) * limit)
+                .limit(limit)
+                .exec()
+
                 if (getalljobs.length > 0) {
                     logger.info("Getting all saved jobs successfully");
                     return getalljobs;

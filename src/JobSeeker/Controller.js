@@ -5,7 +5,7 @@ import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynch
 //get all job seekers
 const getallseekers = asyncerrorhandler(async(req,res)=>{
     const page =  parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 3
+    const limit = parseInt(req.query.limit) || 5
     const allseekers = await service.getallseekers(page,limit)
     res.status(200).json(allseekers)
 })
@@ -49,13 +49,17 @@ const getTotalJobseeker = asyncerrorhandler( async (req, res) => {
 
 // Login Seeker
 const loginJobSeeker = asyncerrorhandler ( async ( req , res ) => {
-    res.status(200).json("Login Successfull")
+    const seekerid = req.params.seekerid
+    const data = req.body
+    await service.loginJobSeeker(seekerid,data)
+    res.status(200).json("job seeker login Successfully")
 })
 
-export default {getallseekers,
-    getseekerbyid,
-    createseeker,
-    updateseeker,
-    deleteseeker,
-    loginJobSeeker,
-    getTotalJobseeker}
+const changepassword = asyncerrorhandler(async(req,res)=>{
+    const seekerid = req.params.seekerid
+    const data = req.body
+    await service.changepassword(seekerid,data)
+    res.status(200).json("job seeker password changed successfully")
+})
+
+export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker,loginJobSeeker,getTotalJobseeker,changepassword}

@@ -1,5 +1,5 @@
 import express from "express"; // importing express
-import cors from 'cors'
+import cors from 'cors' //importing cors
 import dotenv from "dotenv";   // importing .env file
 import swaggerjsdoc from 'swagger-jsdoc' // importing swagger-jsdoc
 import swaggerui from 'swagger-ui-express' // imorting swagger-ui-express
