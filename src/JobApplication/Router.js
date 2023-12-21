@@ -53,7 +53,7 @@ const router = Express.Router()
  *          400:
  *              description: not found error, check request body
  */
-router.get('/jobapplications',controller.getalljobapplications) 
+router.get('/jobapplications',controller.getalljobapplications)  //get all job applications
 
 /**
  * @swagger
@@ -98,9 +98,8 @@ router.get('/jobapplications',controller.getalljobapplications)
  *          400:
  *              description: not found error, check request body
  */
-router.get('/companyusers/:companyuserid/jobposts/:jobpostid/jobapplications',controller.getjobapplications)
+router.get('/companyusers/:companyuserid/jobposts/:jobpostid/jobapplications',controller.getjobapplications)//get all job applications with company user id
 
-//get all jobapplication by seeker
 /**
  * @swagger
  * /api/v1/jobseekers/{seekerid}/jobapplications?page={pagenumber}&limit={limit}:
@@ -138,7 +137,7 @@ router.get('/companyusers/:companyuserid/jobposts/:jobpostid/jobapplications',co
  *          400:
  *              description: not found error, check request body
  */
-router.get('/jobseekers/:seekerid/jobapplications',controller.getallapplications) //get all job applications
+router.get('/jobseekers/:seekerid/jobapplications',controller.getallapplications) //get all job applications with seeker id
 
 /**
  * @swagger

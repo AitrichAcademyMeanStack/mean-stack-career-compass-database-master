@@ -114,6 +114,13 @@ const getallapplications = async (seekerid, page, limit) => {
     }
 };
 
+
+
+
+
+
+
+
 //deleting job application with specific id
 const deleteapplication = async (seekerid,applicationid) => {
     try {

@@ -6,6 +6,7 @@ import NotFoundError from "../Exceptions/NotFoundError.js" //importing not found
 import ValidationError from "../Exceptions/ValidationError.js" // importing validation error handler
 import jobseeker from "../models/JobSeekerModel.js" //importing job seeker
 import seekerProfile from "../models/JobSeekerProfileModel.js"
+import BadRequestError from "../Exceptions/BadRequestError.js"
 
 //get all job seekers
 const getallseekers = async(page,limit)=>{
@@ -57,6 +58,7 @@ const createseeker = async(seekerdata) => {
         const findseeker = await jobseeker.findOne({email:seekerdata.email})
         if (!findseeker) {
             const seekerresult = await jobseeker.create(seekerdata);
+            console.log(seekerresult);
             logger.info("Job seeker created successfully");
     
             if (seekerresult) {
@@ -75,7 +77,7 @@ const createseeker = async(seekerdata) => {
                     const authuserdata = {
                         _id: systemresult._id,
                         userName: seekerresult.userName,
-                        password: "12345",
+                        password: seekerresult.password,
                         firstName: systemresult.firstName,
                         lastName: systemresult.lastName,
                         email: systemresult.email,
@@ -164,5 +166,82 @@ const deleteseeker = async(seekerid)=>{
     }
 }
 
+const loginJobSeeker = async (seekerid, data) => {
+    try {
+        const existingSeeker = await jobseeker.findById(seekerid);
+        if (existingSeeker) {
+            const  authvalue  = await AuthUser.findById(seekerid)
+            if (authvalue && authvalue.role === "Job Seeker" ) {
+                const existingAuth = await AuthUser.findOne({_id:seekerid,password:data.password,email:data.email});
+                if (existingAuth) {
+                    logger.info("Job seeker login successful");
+                    return existingAuth;
+                } else {
+                    logger.error("Incorrect email or password for job seeker");
+                    throw new BadRequestError("Incorrect email or password");
+                }
+            } else {
+                logger.error("Job seeker authentication not found with specific id");
+                throw new NotFoundError("Job seeker authentication not found with specific id");
+            }
+        } else {
+            logger.error("Job seeker not found with specific id");
+            throw new NotFoundError("Job seeker not found with specific id");
+        }
+    } catch (error) {
+        logger.error(`Error in login job seeker: ${error.message}`);
+        throw error;
+    }
+};
 
-export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker}
+const changepassword = async (seekerid, data) => {
+    try {
+        const existingSeeker = await jobseeker.findById(seekerid);
+
+        if (existingSeeker) {
+            const authValue = await AuthUser.findById(seekerid);
+
+            if (authValue && authValue.role === "Job Seeker") {
+                if (data.oldpassword && data.oldpassword !== authValue.password) {
+                    logger.error("Old password does not match the current password");
+                    throw new BadRequestError("Old password does not match");
+                }
+
+                authValue.password = data.newpassword;
+
+                if (authValue.password === data.confirmpassword) {
+                    const existingauth = await AuthUser.findOneAndUpdate(
+                        { _id: seekerid },
+                        { $set: { password: authValue.password } },
+                        { new: true }
+                    );
+
+                    if (existingauth) {
+                        logger.info("Job seeker password changed successfully");
+                        return existingauth;
+                    } else {
+                        logger.error("Error occurred in changing password");
+                        throw new BadRequestError("Error occurred in changing password");
+                    }
+                } else {
+                    logger.error("New password and confirm password do not match");
+                    throw new BadRequestError("New password and confirm password do not match");
+                }
+            } else {
+                logger.error("Job seeker authentication not found with specific id");
+                throw new NotFoundError("Job seeker authentication not found with specific id");
+            }
+        } else {
+            logger.error("Job seeker not found with specific id");
+            throw new NotFoundError("Job seeker not found with specific id");
+        }
+    } catch (error) {
+        logger.error(`Error in changing password of job seeker: ${error.message}`);
+        throw error;
+    }
+};
+
+
+
+
+export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker,loginJobSeeker,changepassword}

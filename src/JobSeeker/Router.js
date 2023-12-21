@@ -177,20 +177,32 @@ router.put('/:id',controller.updateseeker)
  * 
  */
 router.delete('/:id',controller.deleteseeker)
+
 /**
  * @swagger
- * /api/v1/jobseekers/login:
+ * /api/v1/jobseekers/{seekerid}/login:
  *  post:
  *      summary: JobSeeker Login
  *      description: JobSeeker Login
  *      tags:
  *          - JobSeeker
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/jobseeker'
+ *                      properties:
+ *                         email:
+ *                          type: string
+ *                         password:
+ *                          type: string
  *      responses:
  *          201:
  *              description: Login Successfull
@@ -200,8 +212,46 @@ router.delete('/:id',controller.deleteseeker)
  *                          $ref: '#/components/schemas/jobseeker'
  *          400:
  *              description: not found error, check request body
- *  
  */
-router.post("/login",controller.loginJobSeeker)
+router.post("/:seekerid/login",controller.loginJobSeeker)
+
+/**
+ * @swagger
+ * /api/v1/jobseekers/{seekerid}/changepassword:
+ *  put:
+ *      summary: job seeker change password
+ *      description: this api is used  to change password
+ *      tags:
+ *          - JobSeeker
+ *      parameters:
+ *          - in: path
+ *            name: seekerid
+ *            required: true
+ *            description: numeric id is required
+ *            schema:
+ *                  type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      properties:
+ *                         oldpassword:
+ *                          type: string
+ *                         newpassword:
+ *                          type: string
+ *                         confirmpassword:
+ *                          type: string
+ *      responses:
+ *          201:
+ *              description: password changes  successfullly
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/jobseeker'
+ *          400:
+ *              description: not found error, check request body
+ */
+router.put('/:seekerid/changepassword',controller.changepassword)
 
 export default router
