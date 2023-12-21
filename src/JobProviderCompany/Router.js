@@ -44,11 +44,24 @@ const router = express.Router()
 
 /**
  * @swagger
- *  /api/v1/jobProviderCompanies:
+ *  /api/v1/jobProviderCompanies?page={pagenumber}&limit={limit}:
  *      get:
  *          summary: Get all JobProviderCompany
  *          tags:
  *              - JobProviderCompany
+ *          parameters:
+ *              - in: query
+ *                name: page
+ *                required: true
+ *                description: the number of page 
+ *                schema:
+ *                     type: string
+ *              - in: query
+ *                name: limit
+ *                required: true
+ *                description: the number of limit
+ *                schema:
+ *                   type: string
  *          responses: 
  *              200:
  *               description: Return array of JobProviderCompany
