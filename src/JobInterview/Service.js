@@ -9,11 +9,26 @@ const addJobInterview = async(application,data) => {
     try {
                 const jobApplication = await Jobapplication.findById(application)
                 if (jobApplication) {
-                    // data.job = {
-                        
-                    // }
-                    data.interviewee = jobApplication.applicant
-                    data.scheduledBy = jobApplication.job.postedBy
+                    data.job = {
+                        jobTitle:jobApplication.job.jobTitle[0],
+                        jobSummary:jobApplication.job.jobSummary,
+                        jobLocation:jobApplication.job.jobLocation[0],
+                        company:jobApplication.job.company,
+                        category:jobApplication.job.category[0],
+                        qualifications:jobApplication.job.qualifications[0],
+                        skills:jobApplication.job.skills[0],
+                        industry:jobApplication.job.industry[0],
+                        jobResponsibilities:jobApplication.job.jobResponsibilities[0],
+                        postedBy:jobApplication.job.postedBy,
+                        postedDate:jobApplication.job.postedDate
+                    }            
+                    data.interviewee  = {
+                        firstName: jobApplication.applicant.firstName,
+                        lastName: jobApplication.applicant.lastName,
+                        userName: jobApplication.applicant.userName,
+                        email: jobApplication.applicant.email,
+                        phone: jobApplication.applicant.phone
+                    }
                     data.jobApplication = {
                         job: jobApplication.job,
                         applicant: jobApplication.applicant,
@@ -22,6 +37,8 @@ const addJobInterview = async(application,data) => {
                         dateSubmitted: jobApplication.datesubmitted,
                         status: jobApplication.status
                     }
+                    data.scheduledBy = jobApplication.job.postedBy
+                    
                     const addInterview = await JobInterview.create(data)
                     if(addInterview){
                         logger.info("Interview Added")
@@ -37,9 +54,15 @@ const addJobInterview = async(application,data) => {
 }
 
 // Fetching all JobInterview
-const getAllJobInterview = async() => {
+const getAllJobInterview = async(page , limit) => {
     try {
-        const data = await JobInterview.find()
+        const totalPost = await JobInterview.countDocuments()
+        const totalPages = Math.ceil(totalPost/limit)
+        if (page > totalPages) {
+            logger.error("Page not  found")
+            throw new NotFoundError("page not found")
+        }
+        const data = await JobInterview.find().skip((page - 1) * limit).limit(limit).exec()
         if (data) {
             return data
         }else {
@@ -51,13 +74,19 @@ const getAllJobInterview = async() => {
 }
 
 // Deleting JobInterview
-const deleteJobInterview = async(id) => {
+const deleteJobInterview = async(applicationId,jobIntervieId) => {
     try {
-        const deleteInterview = await JobInterview.findByIdAndDelete(id)
-        if (deleteInterview) {
-            return deleteInterview
-        }else{
-            throw new NotFoundError("ID Not found")
+        const application = await Jobapplication.findById(applicationId)
+        if (application) {
+            const deleteInterview = await JobInterview.findByIdAndDelete(jobIntervieId)
+            if (deleteInterview) {
+                return deleteInterview
+            }else{
+                throw new NotFoundError("ID Not found")
+            }    
+        }else {
+            logger.error("JobApplication ID Not Found")
+            throw new NotFoundError("JobApplication ID Not Found")
         }
     } catch (error) {
         throw error
