@@ -7,9 +7,16 @@ import ValidationError from "../Exceptions/ValidationError.js";
 import Industry from "../models/IndustryModel.js";
 
 // fetching all JobProviderCompany
-const getAllJobProviders = async () => {
+const getAllJobProviders = async (page,limit) => {
   try {
-    const jobProviders =  await JobProviderCompany.find();
+    const totalPosts = await JobProviderCompany.countDocuments();
+    const totalPages = Math.ceil(totalPosts/limit);
+    if (page > totalPages) {
+      logger.error("Page Not Found");
+      throw new Notfounderror("Page Not Found")
+    }
+
+    const jobProviders =  await JobProviderCompany.find().skip((page -1) * limit).limit(limit).exec();
     if (jobProviders) {
       return jobProviders
     }else {

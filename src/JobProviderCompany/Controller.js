@@ -3,7 +3,9 @@ import jobProviderService from "./Service.js";
 
 // Fetching all JobProviders
 const getAllJobProviders = asyncerrorhandler(async (req, res) => {
-  const providers = await service.getAllJobProviders();
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 5;
+  const providers = await jobProviderService.getAllJobProviders(page,limit);
   res.status(200).json(providers);
 });
 
