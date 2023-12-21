@@ -53,6 +53,7 @@ const router = express.Router()
  *                      type: string
  *                      
  */
+
 /**
  * @swagger
  *  /api/v1/jobPosts?page={page-number}&limit={limit}:
@@ -120,9 +121,6 @@ router.get("/",jobPostController.getAllJobPosts);
  *  
  */
 router.post("/companyUsers/:companyUserId/jobPosts",jobPostController.createJobPost)
-
-
-
 
 /**
  * @swagger

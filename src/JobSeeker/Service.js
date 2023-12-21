@@ -1,7 +1,6 @@
 import logger from "../middleware/logger.js"; //importing logger middleware
 import AuthUser from "../models/AuthUserModel.js"; // importing authetication model
 import systemuser from "../models/SystemUserModel.js"; //importing system user model
-
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing not found error handler
 import ValidationError from "../Exceptions/ValidationError.js"; // importing validation error handler
 import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker
@@ -14,7 +13,7 @@ const getallseekers = async (page, limit) => {
     const totalposts = await jobseeker.countDocuments();
     const totalpages = Math.ceil(totalposts / limit);
     if (page > totalpages) {
-      logger.error("Page not  found");
+      logger.error("Page not found");
       throw new NotFoundError("page not found");
     }
 
@@ -156,16 +155,10 @@ const createseeker = async (seekerdata) => {
 // // //update job seeker with specific id
 const updateseeker = async (seekerid, seekerdata) => {
   try {
-    const seekerresult = await jobseeker.findByIdAndUpdate(
-      seekerid,
-      seekerdata
-    );
+    const seekerresult = await jobseeker.findByIdAndUpdate(seekerid, seekerdata);
     logger.info("job seeker updated successfully");
     if (seekerresult) {
-      const systemresult = await systemuser.findByIdAndUpdate(
-        seekerid,
-        seekerdata
-      );
+      const systemresult = await systemuser.findByIdAndUpdate(seekerid,seekerdata);
       logger.info("system user updated successfully");
       if (systemresult) {
         await AuthUser.findByIdAndUpdate(seekerid, seekerdata);
