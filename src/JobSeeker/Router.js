@@ -89,6 +89,12 @@ router.get('/',controller.getallseekers)
  */
 router.get('/:id',controller.getseekerbyid)
 
+
+
+router.get('/count',controller.getTotalJobseeker);
+
+
+
 /**
  * @swagger
  * /api/v1/jobseekers:

@@ -59,6 +59,31 @@ const getAllJobPosts = async (page , limit) => {
   }
 };
 
+
+// count total job posts
+const countTotalJobPosts = async () => {
+  try {
+    const totalJobPosts = await JobPost.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+
+    if (totalJobPosts.length > 0) {
+      return totalJobPosts[0].total;
+    } else {
+      return 0;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
 // Fetching Job Post By ID
 const getJobPostsById = async (companyUserId,postId) => {
   try {
@@ -132,4 +157,5 @@ export default {
   getJobPostsById,
   updatePost,
   deletePost,
+  countTotalJobPosts,
 };

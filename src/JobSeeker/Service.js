@@ -1,7 +1,7 @@
 import logger from "../middleware/logger.js" //importing logger middleware
 import AuthUser from "../models/AuthUserModel.js" // importing authetication model
 import systemuser from "../models/SystemUserModel.js" //importing system user model
-// import BadRequestError from "../Exceptions/BadRequestError.js" //importing bad request error handler
+
 import NotFoundError from "../Exceptions/NotFoundError.js" //importing not found error handler
 import ValidationError from "../Exceptions/ValidationError.js" // importing validation error handler
 import jobseeker from "../models/JobSeekerModel.js" //importing job seeker
@@ -51,6 +51,35 @@ const getseekerbyid = async(seekerid)=>{
         throw error
     }
 }
+
+
+
+
+const getTotalJobseeker = async () => {
+  try {
+    const totalJobSeeker = await jobseeker.aggregate([
+        {
+            $group: {
+              id: null,
+              total: {
+                $sum: 1
+              }
+              
+            }
+          }
+    ]);
+
+    if (totalJobSeeker.length > 0) {
+      return totalJobSeeker;
+    } else {
+      return 0;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 //create new job seeker
 const createseeker = async(seekerdata) => {
@@ -166,4 +195,9 @@ const deleteseeker = async(seekerid)=>{
 }
 
 
-export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker}
+export default {getallseekers,
+    getseekerbyid,
+    createseeker,
+    updateseeker,
+    deleteseeker,
+    getTotalJobseeker}

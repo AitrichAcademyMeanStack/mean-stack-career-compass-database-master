@@ -25,6 +25,14 @@ const getJobPostById = asyncHandler(async (req, res) => {
   res.status(200).json(getJobPost);
 });
 
+
+//counting all jobs
+const getTotalJobPosts = async (req, res) => {
+    const totalJobPosts = await jobPostService.countTotalJobPosts();
+    res.status(200).json({ totalJobPosts });
+};
+
+
 // Updating Job Post
 const updateJobPost = asyncHandler(async (req, res) => {
   const postId = req.params.jobPostId;
@@ -48,4 +56,5 @@ export default {
   createJobPost,
   updateJobPost,
   deleteJobPost,
+  getTotalJobPosts ,
 };

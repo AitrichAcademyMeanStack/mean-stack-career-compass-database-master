@@ -39,9 +39,23 @@ const deleteseeker = asyncerrorhandler(async(req,res)=>{
     res.status(200).json("job seeker deleted successfully")
 })
 
+//count the jobseeker
+
+const getTotalJobseeker = asyncerrorhandler( async (req, res) => {
+    const totalJobseeker = await service.getTotalJobseeker();
+    res.status(200).json(totalJobseeker);
+  })
+  
+
 // Login Seeker
 const loginJobSeeker = asyncerrorhandler ( async ( req , res ) => {
     res.status(200).json("Login Successfull")
 })
 
-export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker,loginJobSeeker}
+export default {getallseekers,
+    getseekerbyid,
+    createseeker,
+    updateseeker,
+    deleteseeker,
+    loginJobSeeker,
+    getTotalJobseeker}
