@@ -43,10 +43,16 @@ const deleteJobProvider = asyncerrorhandler(async (req, res) => {
   res.status(200).json({ message: "JobProvider deleted Successfully" });
 });
 
+const gettotalprovider = asyncerrorhandler(async(req,res)=>{
+  const totaljobproviders = await jobProviderService.gettotalprovider()
+  res.status(200).json({totaljobproviders})
+})
+
 export default {
   getAllJobProviders,
   getJobProviderById,
   addJobProvider,
   updateJobProvider,
   deleteJobProvider,
+  gettotalprovider
 };

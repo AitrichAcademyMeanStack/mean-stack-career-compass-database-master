@@ -39,6 +39,14 @@ const deleteseeker = asyncerrorhandler(async(req,res)=>{
     res.status(200).json("job seeker deleted successfully")
 })
 
+//count the jobseeker
+
+const getTotalJobseeker = asyncerrorhandler( async (req, res) => {
+    const totalJobseekers = await service.getTotalJobseeker();
+    res.status(200).json({totalJobseekers});
+  })
+  
+
 // Login Seeker
 const loginJobSeeker = asyncerrorhandler ( async ( req , res ) => {
     const seekerid = req.params.seekerid
@@ -54,4 +62,4 @@ const changepassword = asyncerrorhandler(async(req,res)=>{
     res.status(200).json("job seeker password changed successfully")
 })
 
-export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker,loginJobSeeker,changepassword}
+export default {getallseekers,getseekerbyid,createseeker,updateseeker,deleteseeker,loginJobSeeker,getTotalJobseeker,changepassword}

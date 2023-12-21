@@ -77,6 +77,23 @@ const router = express.Router()
  */
 router.get("/",jobProviderController.getAllJobProviders);
 
+/**
+ * @swagger
+ * /api/v1/jobproviderCompanies/count:
+ *  get:
+ *      summary: get all job-providers count 
+ *      description: this api is used to get all job providers count
+ *      tags:
+ *          - JobProviderCompany
+ *      responses:
+ *          200:
+ *              description:  returns the count of all job providers
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ */
+router.get("/count",jobProviderController.gettotalprovider)
 
 /**
  * @swagger
@@ -102,8 +119,8 @@ router.get("/",jobProviderController.getAllJobProviders);
  *                      description: Bad request , check the request body
  *              
  */
-
 router.post("/",jobProviderController.addJobProvider);
+
 /**
  * @swagger
  *  /api/v1/jobProviderCompanies/{id}:
@@ -130,8 +147,8 @@ router.post("/",jobProviderController.addJobProvider);
  * 
  *  
  */
+router.get("/:id",jobProviderController.getJobProviderById)
 
-router.get("/:id",jobProviderController.getJobProviderById);
 /**
  * @swagger
  *  /api/v1/jobProviderCompanies/{id}:
@@ -168,6 +185,7 @@ router.get("/:id",jobProviderController.getJobProviderById);
  *       
  */
 router.put("/:id",jobProviderController.updateJobProvider);
+
 /**
  * @swagger
  *  /api/v1/jobProviderCompanies/{id}:
