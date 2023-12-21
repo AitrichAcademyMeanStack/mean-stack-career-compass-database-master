@@ -126,24 +126,21 @@ router.post("/companyUsers/:companyUserId/jobPosts",jobPostController.createJobP
 
 /**
  * @swagger
- * /api/v1/jobposts/total-job-posts:
+ * /api/v1/jobposts/count:
  *  get:
- *      summary: get total job posts count
- *      description: this api is used to get the total count of job posts
+ *      summary: get all job-posts count 
+ *      description: this api is used to get all job posts count
  *      tags:
  *          - JobPost
  *      responses:
  *          200:
- *              description: returns the total count of job posts
+ *              description:  returns the count of all job posts
  *              content:
  *                  application/json:
  *                      schema:
- *                          type: object
- *                          properties:
- *                              totalJobPosts:
- *                                  type: integer
+ *                          type: array
  */
-router.get('/jobposts/total-job-posts', jobPostController.getTotalJobPosts);
+router.get('/jobposts/count', jobPostController.getTotalJobPosts);
 
 /**
  * @swagger

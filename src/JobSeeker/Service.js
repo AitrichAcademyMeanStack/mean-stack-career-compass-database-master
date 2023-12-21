@@ -58,20 +58,28 @@ const getseekerbyid = async (seekerid) => {
 const getTotalJobseeker = async () => {
   try {
     const totalJobSeeker = await jobseeker.aggregate([
-      {
-        $group: {
-          id: null,
-          total: {
-            $sum: 1,
-          },
+        {
+          $group: {
+            _id: null,
+            count: {
+              $sum: 1
+            }
+          }
         },
-      },
-    ]);
+               {
+            $project:{
+                _id:0,
+                count:1
+            }
+          }
+      ]);
 
-    if (totalJobSeeker.length > 0) {
+    if (totalJobSeeker) {
+        logger.info("successfully getting all count of seekers")
       return totalJobSeeker;
     } else {
-      return 0;
+        logger.error("error occured in getting all seekers count")
+
     }
   } catch (error) {
     throw error;

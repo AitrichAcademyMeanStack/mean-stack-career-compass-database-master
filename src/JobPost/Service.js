@@ -73,9 +73,10 @@ const countTotalJobPosts = async () => {
     ]);
 
     if (totalJobPosts.length > 0) {
+      logger.info("successfully getting all count of jobposts")
       return totalJobPosts[0].total;
     } else {
-      return 0;
+      logger.error("error occured in getting all jobposts count")
     }
   } catch (error) {
     throw error;

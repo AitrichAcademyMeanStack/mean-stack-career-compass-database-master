@@ -42,8 +42,8 @@ const deleteseeker = asyncerrorhandler(async(req,res)=>{
 //count the jobseeker
 
 const getTotalJobseeker = asyncerrorhandler( async (req, res) => {
-    const totalJobseeker = await service.getTotalJobseeker();
-    res.status(200).json(totalJobseeker);
+    const totalJobseekers = await service.getTotalJobseeker();
+    res.status(200).json({totalJobseekers});
   })
   
 
