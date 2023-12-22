@@ -5,12 +5,12 @@ import NotFoundError from "../Exceptions/NotFoundError.js"
 import Jobapplication from "../models/JobApplicationModel.js"
 
 // Adding Job Interview
-const addJobInterview = async(application,data) => {
+const scheduleInterview = async(application,data) => {
     try {
                 const jobApplication = await Jobapplication.findById(application)
                 if (jobApplication) {
                     data.job = {
-                        jobTitle:jobApplication.job.jobTitle[0],
+                        jobTitle:jobApplication.job.jobTitle,
                         jobSummary:jobApplication.job.jobSummary,
                         jobLocation:jobApplication.job.jobLocation[0],
                         company:jobApplication.job.company,
@@ -93,4 +93,4 @@ const deleteJobInterview = async(applicationId,jobIntervieId) => {
     }
 }
 
-export default {addJobInterview, getAllJobInterview , deleteJobInterview}
+export default {scheduleInterview, getAllJobInterview , deleteJobInterview}

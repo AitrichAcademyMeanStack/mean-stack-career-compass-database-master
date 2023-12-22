@@ -163,10 +163,104 @@ const deleteCompanyUser = async (jobProviderCompanyId, userId) => {
   }
 };
 
+// CompanyUser Login
+const loginCompanyUser = async(jobProviderId , companyUserId , data) => {
+  try {
+    const jobProvider = await JobProviderCompany.findById(jobProviderId);
+    if (jobProvider) {
+      const companyUser = await CompanyUser.findById(companyUserId)
+      if (companyUser) {
+        const authUser = await AuthUser.findById(companyUserId)
+        if (authUser && authUser.role === "Company Admin" || "Hiring Manager") {
+          const existingAuthUser = await AuthUser.findOne({
+            _id:companyUserId,
+            email:data.email,
+            password:data.password
+          })
+          if (existingAuthUser) {
+            logger.info("Login Successfull")
+            return existingAuthUser
+          }else {
+            logger.error("Login Failed")
+            throw new BadRequestError("Login failed , check Request Body")
+          }
+          
+        }else {
+          logger.error("Auth user with particular role not found")
+          throw new NotFoundError("Auth user with particular role not found")
+        }
+      }else {
+        logger.error("Company User Not Found  With Specific Id")
+        throw new NotFoundError("Company User Not Found  With Specific Id")
+      }
+    }else {
+      logger.error("JobProvider Not Found With Specific Id")
+      throw new NotFoundError("JobProvider Not Found With Specific Id")
+    }
+  } catch (error) {
+    throw error
+  }
+
+}
+
+// CompnayUser change password
+const changeUserPassword = async (jobProviderId , companyUserId , data) => {
+  try {
+    const jobProvider = await JobProviderCompany.findById(jobProviderId);
+    if (jobProvider) {
+      const companyUser = await CompanyUser.findById(companyUserId)
+      if (companyUser) {
+        const authUser = await AuthUser.findById(companyUserId)
+        if (authUser && authUser.role === "Company Admin" || "Hiring Manager") {
+          if (data.OldPassword && data.OldPassword === authUser.password) {
+            authUser.password = data.NewPassword
+            if (authUser.password === data.ConfirmPassword) {
+              const updatePassword = await AuthUser.findOneAndUpdate(
+                {_id: companyUserId},
+                {$set: {password: authUser.password}},
+                {new: true}
+              );
+              if (updatePassword) {
+                logger.info("Password Changed Successfully")
+                return updatePassword
+              }else {
+                logger.error("Error while changing password")
+                throw new BadRequestError("Error while changing password")
+              }
+              
+            }else {
+              logger.error("Password didn't Match")
+              throw new BadRequestError("Password didn't Match")
+            }
+          }else {
+            logger.error("Old Password did'nt Match")
+            throw new BadRequestError("Old Password did'nt Match")
+          }
+        }else {
+          logger.error("Auth user with particular role not found")
+          throw new NotFoundError("Auth user with particular role not found")
+        }
+      }else {
+        logger.error("Company User Not Found  With Specific Id")
+        throw new NotFoundError("Company User Not Found  With Specific Id")
+      }
+    }else {
+      logger.error("JobProvider Not Found With Specific Id")
+      throw new NotFoundError("JobProvider Not Found With Specific Id")
+    }
+  } catch (error) {
+    throw error
+  }
+
+
+}
+
 export default {
   getAllCompanyUsers,
   getCompanyUserById,
   addCompanyUser,
   updateCompanyUser,
   deleteCompanyUser,
+  loginCompanyUser,
+  changeUserPassword
 };

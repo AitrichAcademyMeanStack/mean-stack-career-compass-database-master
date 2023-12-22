@@ -4,7 +4,9 @@ import logger from "../middleware/logger.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
 import {authschema} from "../middleware/ValidationSchema.js";
 import ValidationError from "../Exceptions/ValidationError.js";
-import Industry from "../models/IndustryModel.js";
+import AuthUser from "../models/AuthUserModel.js";
+import NotFoundError from "../Exceptions/NotFoundError.js";
+import InternalServerError from "../Exceptions/InternalServerError.js"
 
 // fetching all JobProviderCompany
 const getAllJobProviders = async (page,limit) => {
@@ -149,5 +151,5 @@ export default {
     addJobProvider,
     updateJobProvider,
     deleteJobProvider,
-    gettotalprovider
+    gettotalprovider,
   };

@@ -127,6 +127,69 @@ router.post("/:jobProviderCompanyId/companyUsers",userController.addCompanyUser)
 
 /**
  * @swagger
+ *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers/{companyUserId}/login:
+ *      post:
+ *          summary: CompanyUser Login
+ *          tags:
+ *              - CompanyUser 
+ *          parameters:
+ *              - in: path
+ *                name: jobProviderCompanyId
+ *                required: true
+ *                description: ID of the jobProviderCompany
+ *              - in: path
+ *                name: companyUserId
+ *                required: true
+ *                description: ID of the CompanyUser 
+ *          requestBody:
+ *                  required: true
+ *                  content:
+ *                      application/json:
+ *                          schema:            
+ *                           properties:
+ *                                email:
+ *                                      type: string
+ *                                password:
+ *                                      type: string
+ *          responses:
+ *              201:
+ *                  description: Login Successfull
+ *              404:
+ *                  description: CompanyUser ID not found
+ * 
+ *              
+ */
+router.post("/:jobProviderCompanyId/companyUsers/:companyUserId/login",userController.loginUser);
+
+/**
+ * @swagger
+ *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers/{companyUserId}:
+ *      delete:
+ *          summary: Delete CompanyUser by ID
+ *          tags:
+ *              - CompanyUser 
+ *          parameters:
+ *              - in: path
+ *                name: jobProviderCompanyId
+ *                required: true
+ *                description: ID of the jobProviderCompany
+ *              - in: path
+ *                name: companyUserId
+ *                required: true
+ *                description: ID of the CompanyUser to delete
+ *          responses:
+ *              204:
+ *                  description: CompanyUser Deleted Successfully
+ *              404:
+ *                  description: CompanyUser ID not found
+ * 
+ *              
+ */
+router.delete("/:jobProviderCompanyId/companyUser/:companyUserId",userController.deleteCompanyUser);
+
+
+/**
+ * @swagger
  *  /api/v1/CompanyUsers/{id}:
  *      put:
  *          summary:    Update CompanyUser by ID
@@ -161,13 +224,14 @@ router.post("/:jobProviderCompanyId/companyUsers",userController.addCompanyUser)
  *       
  */
 router.put("/:id",userController.updateCompanyUser);
+
 /**
  * @swagger
- *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers/{companyUserId}:
- *      delete:
- *          summary: Delete CompanyUser by ID
+ *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers/{companyUserId}/change-password:
+ *      put:
+ *          summary:    Update CompanyUser by ID
  *          tags:
- *              - CompanyUser 
+ *              - CompanyUser
  *          parameters:
  *              - in: path
  *                name: jobProviderCompanyId
@@ -176,16 +240,41 @@ router.put("/:id",userController.updateCompanyUser);
  *              - in: path
  *                name: companyUserId
  *                required: true
- *                description: ID of the CompanyUser to delete
+ *                description: ID of the CompanyUser 
+ *          requestBody:
+ *                  required: true
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                           properties:
+ *                                OldPassword:
+ *                                      type: string
+ *                                NewPassword:
+ *                                      type: string
+ *                                ConfirmPassword:
+ *                                      type: string
+ *  
  *          responses:
- *              204:
- *                  description: CompanyUser Deleted Successfully
- *              404:
- *                  description: CompanyUser ID not found
+ *              200:
+ *                  description: Password Changed Successfully
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                               properties:
+ *                                OldPassword:
+ *                                      type: string
+ *                                NewPassword:
+ *                                      type: string
+ *                                ConfirmPassword:
+ *                                      type: string
+ *              400:
+ *                  decription: CompanyUser not found
+ *                                 
  * 
- *              
+ *  
+ *       
  */
-router.delete("/:jobProviderCompanyId/companyUser/:companyUserId",userController.deleteCompanyUser);
+router.put("/:jobProviderCompanyId/companyUsers/:companyUserId/change-password",userController.changePassword);
 
 
 export default router
