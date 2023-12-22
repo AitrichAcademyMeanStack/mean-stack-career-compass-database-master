@@ -54,7 +54,7 @@ const router = express.Router()
 
 /**
  * @swagger
- *  /api/v1/jobPosts?page={page-number}&limit={limit}:
+ *  /api/v1/jobPosts?page={page-number}&limit={limit}&jobtitle={jobtitle}:
  *      get:
  *          summary: Get all JobPosts
  *          tags:
@@ -70,6 +70,12 @@ const router = express.Router()
  *                name: limit
  *                required: true
  *                description: Enter the limit
+ *                schema:
+ *                      type: string
+ *              - in: query
+ *                name: jobtitle
+ *                required: true
+ *                description: filter with jobtitle
  *                schema:
  *                      type: string
  *          responses:
