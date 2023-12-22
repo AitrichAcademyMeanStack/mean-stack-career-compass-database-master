@@ -48,7 +48,7 @@ router.get('/count',controller.getTotalJobseeker);
 
 /**
  * @swagger
- * /api/v1/jobseekers?page={pagenumber}&limit={limit}:
+ * /api/v1/jobseekers?page={pagenumber}&limit={limit}&name={firstname}:
  *  get:
  *      summary: get all job-seekers details
  *      description: this api is used to get all job seekers list
@@ -65,6 +65,12 @@ router.get('/count',controller.getTotalJobseeker);
  *            name: limit
  *            required: true
  *            description: the number of limit
+ *            schema:
+ *                  type: string
+ *          - in: query
+ *            name: name
+ *            required: true
+ *            description: filter with name
  *            schema:
  *                  type: string
  *      responses:

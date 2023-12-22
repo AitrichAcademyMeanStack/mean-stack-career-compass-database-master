@@ -8,8 +8,17 @@ import seekerProfile from "../models/JobSeekerProfileModel.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 
 //get all job seekers
-const getallseekers = async (page, limit) => {
+const getallseekers = async (page, limit,filtername) => {
   try {
+    let query = {}
+    if (filtername) {
+      query = {
+        $or:[
+         { firstName: { $regex: new RegExp(filtername, 'i') } }
+        ]
+      }
+    }
+    
     const totalposts = await jobseeker.countDocuments();
     const totalpages = Math.ceil(totalposts / limit);
     if (page > totalpages) {
@@ -18,7 +27,7 @@ const getallseekers = async (page, limit) => {
     }
 
     const result = await jobseeker
-      .find()
+      .find(query)
       .skip((page - 1) * limit)
       .limit(limit)
       .exec();

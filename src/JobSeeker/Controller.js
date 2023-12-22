@@ -6,7 +6,8 @@ import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynch
 const getallseekers = asyncerrorhandler(async(req,res)=>{
     const page =  parseInt(req.query.page) || 1
     const limit = parseInt(req.query.limit) || 5
-    const allseekers = await service.getallseekers(page,limit)
+    const filtername = req.query.name || null
+    const allseekers = await service.getallseekers(page,limit,filtername)
     res.status(200).json(allseekers)
 })
 
