@@ -80,7 +80,75 @@ router.post('/',controller.createadmin)
 
 /**
  * @swagger
- * /api/v1/platFormAdmin/{id}:
+ * /api/v1/platformadmin/login:
+ *  post:
+ *      summary: PlatformAdmin Login
+ *      description: PlatformAdmin Login
+ *      tags:
+ *          - PlatFormAdmin
+ *     
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      properties:
+ *                         email:
+ *                          type: string
+ *                         password:
+ *                          type: string
+ *      responses:
+ *          201:
+ *              description: Login Successfull
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ PlatFormAdmin'
+ *          400:
+ *              description: not found error, check request body
+ */
+router.post("/login", controller.loginAdmin)
+
+
+
+/**
+ * @swagger
+ * /api/v1/platformadmin/changepassword:
+ *  put:
+ *      summary: Platformadmin change password
+ *      description: this api is used  to change password
+ *      tags:
+ *          - PlatFormAdmin
+ *     
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      properties:
+ *                         oldpassword:
+ *                          type: string
+ *                         newpassword:
+ *                          type: string
+ *                         confirmpassword:
+ *                          type: string
+ *      responses:
+ *          201:
+ *              description: password changes  successfullly
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/platformadmin'
+ *          400:
+ *              description: not found error, check request body
+ */
+router.put('/changepassword')
+
+
+
+/**
+ * @swagger
+ * /api/v1/platformadmin/{id}:
  *  put:
  *      summary: update platformadmin details
  *      description: this api is used to update  platformadmin details
@@ -110,11 +178,11 @@ router.post('/',controller.createadmin)
  *              description: not found error , check request body
  *                  
  */
-router.put('/:id',controller.updateadmin)
+router.put('/:id',controller.changepassword)
 
 /**
  * @swagger
- * /api/v1/platFormAdmin/{id}:
+ * /api/v1/platformadmin:
  *  delete:
  *      summary: delete platformadmin details
  *      description: this api is used to deleteplatformadmin details
@@ -139,6 +207,7 @@ router.put('/:id',controller.updateadmin)
  * 
  */
 router.delete('/:id',controller.deleteadmin)
+
 
 
 
