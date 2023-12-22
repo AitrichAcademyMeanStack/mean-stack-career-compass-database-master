@@ -20,9 +20,7 @@ const router = express.Router()
  *                  - postedBy
  *              properties :
  *                  jobTitle:
- *                      type: array
- *                      items:
- *                          type: string
+ *                      type: string
  *                  jobSummary:
  *                      type: string
  *                  jobLocation:
@@ -53,6 +51,7 @@ const router = express.Router()
  *                      type: string
  *                      
  */
+
 /**
  * @swagger
  *  /api/v1/jobPosts?page={page-number}&limit={limit}:
@@ -84,7 +83,7 @@ const router = express.Router()
  *                                      $ref:   '#/components/schemas/JobPost'
  *                        
  */
-router.get("/",jobPostController.getAllJobPosts);
+router.get("/jobPosts",jobPostController.getAllJobPosts);
 
 /**
  * @swagger
@@ -121,29 +120,23 @@ router.get("/",jobPostController.getAllJobPosts);
  */
 router.post("/companyUsers/:companyUserId/jobPosts",jobPostController.createJobPost)
 
-
-
-
 /**
  * @swagger
- * /api/v1/jobposts/total-job-posts:
+ * /api/v1/jobposts/count:
  *  get:
- *      summary: get total job posts count
- *      description: this api is used to get the total count of job posts
+ *      summary: get all job-posts count 
+ *      description: this api is used to get all job posts count
  *      tags:
  *          - JobPost
  *      responses:
  *          200:
- *              description: returns the total count of job posts
+ *              description:  returns the count of all job posts
  *              content:
  *                  application/json:
  *                      schema:
- *                          type: object
- *                          properties:
- *                              totalJobPosts:
- *                                  type: integer
+ *                          type: array
  */
-router.get('/jobposts/total-job-posts', jobPostController.getTotalJobPosts);
+router.get('/jobposts/count', jobPostController.getTotalJobPosts);
 
 /**
  * @swagger

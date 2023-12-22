@@ -114,10 +114,40 @@ const deleteJobProvider = async (id) => {
   }
 };
 
+const gettotalprovider = async()=>{
+  try {
+    const resultcount = await  JobProviderCompany.aggregate([
+      {
+        $group: {
+          _id: null,
+          count: {
+            $sum: 1
+          }
+        }
+      },
+             {
+          $project:{
+              _id:0,
+              count:1
+          }
+        }
+    ])
+    if (resultcount) {
+      logger.info("successfully getting all count of providers")
+      return resultcount
+    } else {
+      logger.error("error occured in getting all providers count")
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 export default {
     getAllJobProviders,
     getJobProviderById,
     addJobProvider,
     updateJobProvider,
     deleteJobProvider,
+    gettotalprovider
   };

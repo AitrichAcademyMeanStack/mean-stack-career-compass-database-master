@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 const jobPostSchema = new Schema(
   {
-    jobTitle: [String],
+    jobTitle: {type:String},
     jobSummary: { type: String },
     jobLocation: [String],
     company: {

@@ -4,7 +4,9 @@ import jobInterviewService from "./Service.js"
 
 // GetAllJobInterviews
 const getAllJobInterview = asyncHandler( async(req , res) => {
-    const data = await jobInterviewService.getAllJobInterview()
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 3;
+    const data = await jobInterviewService.getAllJobInterview(page , limit)
     res.status(200).json(data)
 
 })
@@ -20,8 +22,9 @@ const addJobInterview = asyncHandler( async(req , res) => {
 })
 
 const deleteJobInterview  = asyncHandler( async(req , res) => {
-    const JobInterviewID = req.params.id;
-    const deleteInterview = await jobInterviewService.deleteJobInterview(JobInterviewID);
+    const application = req.params.jobApplicationId
+    const JobInterviewID = req.params.jobInterviewId;
+    const deleteInterview = await jobInterviewService.deleteJobInterview(application,JobInterviewID);
     res.status(200).json(deleteInterview)
 })
 

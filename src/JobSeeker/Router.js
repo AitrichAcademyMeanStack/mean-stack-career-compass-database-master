@@ -28,6 +28,23 @@ const router = express.Router();
  *                      type: string
  */
 
+/**
+ * @swagger
+ * /api/v1/jobseekers/count:
+ *  get:
+ *      summary: get all job-seekers count 
+ *      description: this api is used to get all job seekers count
+ *      tags:
+ *          - JobSeeker
+ *      responses:
+ *          200:
+ *              description:  returns the count of all job seekers
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ */
+router.get('/count',controller.getTotalJobseeker);
 
 /**
  * @swagger
@@ -62,6 +79,7 @@ const router = express.Router();
  */
 router.get('/',controller.getallseekers)
 
+
 /**
  * @swagger
  * /api/v1/jobseekers/{id}:
@@ -88,11 +106,6 @@ router.get('/',controller.getallseekers)
  *                              $ref: '#/components/schemas/jobseeker' 
  */
 router.get('/:id',controller.getseekerbyid)
-
-
-
-router.get('/count',controller.getTotalJobseeker);
-
 
 
 /**
