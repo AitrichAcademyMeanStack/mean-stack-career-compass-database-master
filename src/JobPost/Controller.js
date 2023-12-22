@@ -12,7 +12,7 @@ const createJobPost = asyncHandler(async (req, res) => {
 // Fetching all JobPosts
 const getAllJobPosts = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 3;
+  const limit = parseInt(req.query.limit) || 10
   const jobtitle = req.query.jobtitle || null
   const result = await jobPostService.getAllJobPosts(page , limit,jobtitle);
   res.status(200).json(result);

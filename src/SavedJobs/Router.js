@@ -6,7 +6,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /api/v1/jobseekers/{seekerid}/jobpost/{jobpostid}/savedjobs?page={pagenumber}&limit={limit}:
+ * /api/v1/jobseekers/{seekerid}/jobpost/{jobpostid}/savedjobs:
  *  get:
  *      summary: getting all saved jobs
  *      description: this api is used to getting all saved jobs
@@ -27,13 +27,11 @@ const router = express.Router()
  *                  type: string
  *          - in: query
  *            name: page
- *            required: true
  *            description: the number of page 
  *            schema:
  *                  type: string
  *          - in: query
  *            name: limit
- *            required: true
  *            description: the number of limit
  *            schema:
  *                  type: string

@@ -48,7 +48,7 @@ router.get('/count',controller.getTotalJobseeker);
 
 /**
  * @swagger
- * /api/v1/jobseekers?page={pagenumber}&limit={limit}&name={firstname}:
+ * /api/v1/jobseekers:
  *  get:
  *      summary: get all job-seekers details
  *      description: this api is used to get all job seekers list
@@ -57,19 +57,16 @@ router.get('/count',controller.getTotalJobseeker);
  *      parameters:
  *          - in: query
  *            name: page
- *            required: true
  *            description: the number of page 
  *            schema:
  *                  type: string
  *          - in: query
  *            name: limit
- *            required: true
  *            description: the number of limit
  *            schema:
  *                  type: string
  *          - in: query
  *            name: name
- *            required: true
  *            description: filter with name
  *            schema:
  *                  type: string
@@ -271,9 +268,15 @@ router.post("/:seekerid/login",controller.loginJobSeeker)
  *          201:
  *              description: password changes  successfullly
  *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/jobseeker'
+ *               application/json:
+ *                  schema:
+ *                      properties:
+ *                         oldpassword:
+ *                          type: string
+ *                         newpassword:
+ *                          type: string
+ *                         confirmpassword:
+ *                          type: string
  *          400:
  *              description: not found error, check request body
  */

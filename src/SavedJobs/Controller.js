@@ -13,7 +13,7 @@ const createsavedjobs = asyncerrorhandler(async(req,res)=>{
 // get all saved jobs
 const getallsavedjobs = asyncerrorhandler(async(req,res)=>{
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 2;  
+    const limit = parseInt(req.query.limit) || 10;  
     const seekerid = req.params.seekerid
     const jobpostid = req.params.jobpostid
     const getsavedjob = await service.getallsavedjobs(seekerid,jobpostid,page,limit)
