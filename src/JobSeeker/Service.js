@@ -282,6 +282,8 @@ const changepassword = async (seekerid, data) => {
   }
 };
 
+
+
 export default {
   getallseekers,
   getseekerbyid,

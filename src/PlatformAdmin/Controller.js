@@ -22,13 +22,27 @@ const updateadmin = asyncerrorhandler(async(req,res)=>{
     res.status(200).json(update)
 })
 
-// delete job seeker with specific id
+// delete admin with specific id
 const deleteadmin = asyncerrorhandler(async(req,res)=>{
     const adminid = req.params.id
     await service.adminseeker(adminid)
     res.status(200).json("admin deleted successfully")
 })
 
+//Login admin
+const loginAdmin = asyncerrorhandler(async(req,res)=>{
+    const data=req.body
+    await service.loginAdmin(data)
+    res.status(200).json("Admin Login successfully!!")
+})
+
+const changepassword = asyncerrorhandler(async(req,res)=>{
+  
+    const data = req.body
+    await service.changepassword(data)
+    res.status(200).json("platform admin password changed successfully")
+})
 
 
-export default {getadmin,createadmin,updateadmin,deleteadmin}
+
+export default {getadmin,createadmin,updateadmin,deleteadmin,loginAdmin,changepassword}
