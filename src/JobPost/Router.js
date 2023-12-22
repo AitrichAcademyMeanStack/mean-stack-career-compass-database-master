@@ -20,9 +20,7 @@ const router = express.Router()
  *                  - postedBy
  *              properties :
  *                  jobTitle:
- *                      type: array
- *                      items:
- *                          type: string
+ *                      type: string
  *                  jobSummary:
  *                      type: string
  *                  jobLocation:
@@ -85,7 +83,7 @@ const router = express.Router()
  *                                      $ref:   '#/components/schemas/JobPost'
  *                        
  */
-router.get("/",jobPostController.getAllJobPosts);
+router.get("/jobPosts",jobPostController.getAllJobPosts);
 
 /**
  * @swagger
