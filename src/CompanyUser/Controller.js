@@ -38,10 +38,30 @@ const deleteCompanyUser = asyncerrorhandler(async (req, res) => {
   res.status(200).json(deleteData);
 });
 
+// Compnay User Login
+const loginUser = asyncerrorhandler ( async (req , res) => {
+  const jobProviderCompany  = req.params.jobProviderCompanyId
+  const userId = req.params.companyUserId;
+  const data = req.body
+  await userService.loginCompanyUser(jobProviderCompany , userId , data)
+  res.status(200).json("Login Successfull")
+})
+
+// Change Password of Company User
+const changePassword = asyncerrorhandler ( async ( req, res )=>{
+  const jobProviderCompany  = req.params.jobProviderCompanyId
+  const userId = req.params.companyUserId;
+  const data = req.body
+  await userService.changeUserPassword(jobProviderCompany,userId,data)
+  res.status(200).json("Password Changed")
+})
+
 export default {
   getAllCompanyUsers,
   getCompanyUserById,
   addCompanyUser,
   updateCompanyUser,
   deleteCompanyUser,
+  loginUser,
+  changePassword
 };

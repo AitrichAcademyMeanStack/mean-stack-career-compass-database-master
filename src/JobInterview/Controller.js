@@ -16,7 +16,7 @@ const getAllJobInterview = asyncHandler( async(req , res) => {
 const addJobInterview = asyncHandler( async(req , res) => {
     const application = req.params.jobApplicationId
     const data = req.body;
-    const interview = await jobInterviewService.addJobInterview(application,data);
+    const interview = await jobInterviewService.scheduleInterview(application,data);
     res.status(201).json(interview)
 
 })

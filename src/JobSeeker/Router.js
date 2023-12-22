@@ -263,7 +263,7 @@ router.post("/:seekerid/login",controller.loginJobSeeker)
  *                          type: string
  *      responses:
  *          201:
- *              description: password changes  successfullly
+ *              description: password changed  successfullly
  *              content:
  *                  application/json:
  *                      schema:
