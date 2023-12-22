@@ -54,7 +54,7 @@ router.post('/:jobApplicationId/schedule-interview',Controller.addJobInterview)
 
 /**
  * @swagger
- *  /api/v1/job-Application/scheduled-interview?page={pagenumber}&limit={limit}:
+ *  /api/v1/job-Application/scheduled-interview:
  *      get:
  *          summary: Get All Interview
  *          tags: 
