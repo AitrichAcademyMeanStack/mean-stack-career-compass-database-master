@@ -3,6 +3,7 @@ import logger from "../middleware/logger.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
 import CompanyUser from "../models/CompanyUserModel.js";
+import eventService from "../utils/EventService.js";
 
 // creating job post
 const addJobPost = async (companyUserId,jobPost) => {
@@ -126,6 +127,7 @@ const updatePost = async (postId,companyUserId,updateData) => {
         const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
         if (updatePost) {
           logger.info("Job Post Updated Successfully");
+          eventService.emitEvent("jobPostUpdated")
           return updatePost;
         } else {
           throw new BadRequestError("Error while updating Job Post");
