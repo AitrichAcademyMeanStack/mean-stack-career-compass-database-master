@@ -1,4 +1,3 @@
-import eventService from "../utils/EventService.js";
 import asyncHandler from "../utils/asyncerrorhandler.js";
 import jobPostService from "./Service.js";
 
