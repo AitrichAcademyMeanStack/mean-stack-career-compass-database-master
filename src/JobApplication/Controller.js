@@ -5,7 +5,7 @@ import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynch
 const getalljobapplications = asyncerrorhandler(async (req, res) => {
   
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 2;   
+    const limit = parseInt(req.query.limit) || 10;   
     const result = await service.getalljobapplications( page, limit);  
     res.status(200).json(result);
 });
@@ -13,14 +13,14 @@ const getalljobapplications = asyncerrorhandler(async (req, res) => {
 const getallapplications = asyncerrorhandler(async (req, res) => {
     const seekerid = req.params.seekerid;
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 2;   
+    const limit = parseInt(req.query.limit) || 10;   
     const result = await service.getallapplications(seekerid, page, limit);  
     res.status(200).json(result);
 });
 
 const getjobapplications = asyncerrorhandler(async(req,res)=>{
-    const page = parseInt(req.query.page)
-    const limit = parseInt(req.query.limit) 
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 10
     const companyuserid = req.params.companyuserid
     const jobpostid = req.params.jobpostid
     const result = await service.getjobapplications(companyuserid,jobpostid,page,limit)
