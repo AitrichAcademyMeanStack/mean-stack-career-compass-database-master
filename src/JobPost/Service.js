@@ -3,10 +3,12 @@ import logger from "../middleware/logger.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
 import CompanyUser from "../models/CompanyUserModel.js";
+import  connection  from "mongoose";
 
 // creating job post
 const addJobPost = async (companyUserId,jobPost) => {
   try {
+    const session = await connection.startSession();
     const companyUser = await CompanyUser.findById(companyUserId)
     if (companyUser) {
       jobPost.company = {
@@ -20,6 +22,7 @@ const addJobPost = async (companyUserId,jobPost) => {
         website: companyUser.website,
         location: companyUser.location,
       }
+    
       const jobs = await JobPost.create(jobPost);
       if (jobs) {
         logger.info("Job Posted Successfully");

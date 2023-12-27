@@ -1,4 +1,3 @@
-import eventService from "../utils/EventService.js";
 import asyncHandler from "../utils/asyncerrorhandler.js";
 import jobInterviewService from "./Service.js"
 
@@ -18,9 +17,6 @@ const addJobInterview = asyncHandler( async(req , res) => {
     const application = req.params.jobApplicationId
     const data = req.body;
     const interview = await jobInterviewService.scheduleInterview(application,data);
-    eventService.subscribe("jobPostUpdated" , () => {
-        logger.info("Job Post Updated")
-    })
     res.status(201).json(interview)
 
 })
