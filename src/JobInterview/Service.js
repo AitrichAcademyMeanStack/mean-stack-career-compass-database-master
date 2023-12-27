@@ -4,7 +4,7 @@ import BadRequestError from "../Exceptions/BadRequestError.js"
 import NotFoundError from "../Exceptions/NotFoundError.js"
 import Jobapplication from "../models/JobApplicationModel.js"
 
-// Adding Job Interview
+// Scheduling Job Interview
 const scheduleInterview = async(application,data) => {
     try {
                 const jobApplication = await Jobapplication.findById(application)
