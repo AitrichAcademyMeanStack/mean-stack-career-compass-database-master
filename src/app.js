@@ -53,7 +53,7 @@ const swaggerDefinition = {
         },
     servers: [
         {
-            url: "JOBPORTAL APIs",
+            url: "http://localhost:7000"
         },
     ],
     

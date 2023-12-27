@@ -164,25 +164,44 @@ const createseeker = async (seekerdata) => {
 // // //update job seeker with specific id
 const updateseeker = async (seekerid, seekerdata) => {
   try {
-    const seekerresult = await jobseeker.findByIdAndUpdate(seekerid, seekerdata);
+    const seekerresult = await jobseeker.findOneAndUpdate(
+      { _id: seekerid },
+      { $set: seekerdata },
+      { new: true }
+    );
+    
     logger.info("job seeker updated successfully");
+
     if (seekerresult) {
-      const systemresult = await systemuser.findByIdAndUpdate(seekerid,seekerdata);
+      const systemresult = await systemuser.findOneAndUpdate(
+        { _id: seekerid },
+        { $set: seekerdata },
+        { new: true }
+      );
+
       logger.info("system user updated successfully");
+
       if (systemresult) {
-        await AuthUser.findByIdAndUpdate(seekerid, seekerdata);
+        await AuthUser.findOneAndUpdate(
+          { _id: seekerid },
+          { $set: seekerdata },
+          { new: true }
+        );
+
         logger.info("auth user updated successfully");
       } else {
         logger.error("error in updating system user");
       }
     } else {
-      logger.info("error in updating job seeker");
+      logger.error("error in updating job seeker");
     }
+
     return seekerresult;
   } catch (error) {
     throw error;
   }
 };
+
 
 // //delete job seeker with specific id
 const deleteseeker = async (seekerid) => {
