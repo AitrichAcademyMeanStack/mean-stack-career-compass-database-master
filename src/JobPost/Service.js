@@ -39,28 +39,35 @@ const addJobPost = async (companyUserId,jobPost) => {
 };
 
 // fetching all job posts
-const getAllJobPosts = async (page , limit,jobtitle) => {
+const getAllJobPosts = async (page, limit, jobtitle, sortOrder) => {
   try {
-    let query = {}
+    let query = {};
     if (jobtitle) {
       query = {
-        $or:[
-         { jobTitle: { $regex: new RegExp(jobtitle, 'i') } }
+        $or: [
+          { jobTitle: { $regex: new RegExp(jobtitle, 'i') } }
         ]
-      }
+      };
     }
-
 
     const perPage = limit;
     const totalPost = await JobPost.countDocuments();
-    const totalPages = Math.ceil(totalPost / perPage)
+    const totalPages = Math.ceil(totalPost / perPage);
 
     if (page > totalPages) {
-      logger.error("Page not found")
-      throw new NotFoundError("Page not found")
+      logger.error("Page not found");
+      throw new NotFoundError("Page not found");  
     }
 
-    const allPosts = await JobPost.find(query).skip((page - 1) * perPage).limit(perPage).exec();
+    const sortOption = sortOrder === 'oldest' ? { postedDate: 1 } : { postedDate: -1 };
+
+    const allPosts = await JobPost
+      .find(query)
+      .sort(sortOption)
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .exec();
+
     if (allPosts) {
       logger.info("List of Job Posts");
       return allPosts;
@@ -71,6 +78,7 @@ const getAllJobPosts = async (page , limit,jobtitle) => {
     throw error;
   }
 };
+
 
 
 // count total job posts

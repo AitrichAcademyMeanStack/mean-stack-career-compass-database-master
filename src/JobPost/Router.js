@@ -75,6 +75,11 @@ const router = express.Router()
  *                description: filter with jobtitle
  *                schema:
  *                      type: string
+ *              - in: query
+ *                name: sort
+ *                description: newest or oldest
+ *                schema:
+ *                      type: string
  *          responses:
  *              200:
  *                  description: Return Array of JobPosts
