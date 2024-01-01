@@ -32,14 +32,17 @@ const router = Express.Router()
  *      parameters:  
  *          - in: query
  *            name: page
- *            required: true
  *            description: the number of page
  *            schema:
  *                  type: string
  *          - in: query
  *            name: limit
- *            required: true
  *            description: the number of limit
+ *            schema:
+ *                  type: string
+ *          - in: query
+ *            name: sort
+ *            description: newest or oldest
  *            schema:
  *                  type: string
  *      responses:
@@ -77,14 +80,17 @@ router.get('/jobapplications',controller.getalljobapplications)  //get all job a
  *                  type: string
  *          - in: query
  *            name: page
- *            required: true
  *            description: the number of page 
  *            schema:
  *                  type: string
  *          - in: query
  *            name: limit
- *            required: true
  *            description: the number of limit
+ *            schema:
+ *                  type: string
+ *          - in: query
+ *            name: sort
+ *            description: newest or oldest
  *            schema:
  *                  type: string
  *      responses:
@@ -102,7 +108,7 @@ router.get('/companyusers/:companyuserid/jobposts/:jobpostid/jobapplications',co
 /**
  * @swagger
  * /api/v1/jobseekers/{seekerid}/jobapplications:
- *  get:
+ *  get: 
  *      summary: getting all job applications
  *      description: this api is used to getting all job applications
  *      tags:
@@ -116,14 +122,17 @@ router.get('/companyusers/:companyuserid/jobposts/:jobpostid/jobapplications',co
  *                  type: string
  *          - in: query
  *            name: page
- *            required: true
  *            description: the number of page
  *            schema:
  *                  type: string
  *          - in: query
  *            name: limit
- *            required: true
  *            description: the number of limit
+ *            schema:
+ *                  type: string
+ *          - in: query
+ *            name: sort
+ *            description: newest or oldest
  *            schema:
  *                  type: string
  *      responses:
