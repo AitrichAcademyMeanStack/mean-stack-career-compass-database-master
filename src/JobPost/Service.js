@@ -3,12 +3,12 @@ import logger from "../middleware/logger.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
 import CompanyUser from "../models/CompanyUserModel.js";
-import  connection  from "mongoose";
+import InternalServerError from "../Exceptions/InternalServerError.js"
+
 
 // creating job post
 const addJobPost = async (companyUserId,jobPost) => {
   try {
-    const session = await connection.startSession();
     const companyUser = await CompanyUser.findById(companyUserId)
     if (companyUser) {
       jobPost.company = {
@@ -22,6 +22,26 @@ const addJobPost = async (companyUserId,jobPost) => {
         website: companyUser.website,
         location: companyUser.location,
       }
+      jobPost.companyUser = {
+        company: {
+          companyId: companyUser._id,
+          legalName: companyUser.legalName,
+          summary: companyUser.summary,
+          industry: companyUser.industry,
+          email: companyUser.email,
+          phone: companyUser.phone,
+          address: companyUser.address,
+          website: companyUser.website,
+          location: companyUser.location,
+        },
+        firstName: companyUser.firstName,
+        role: companyUser.role,
+        lastName: companyUser.lastName,
+        userName: companyUser.userName,
+        email: companyUser.email
+
+      }
+
     
       const jobs = await JobPost.create(jobPost);
       if (jobs) {
@@ -34,8 +54,9 @@ const addJobPost = async (companyUserId,jobPost) => {
       throw new NotFoundError("CompanyUser not found")
     }
   } catch (error) {
-    throw error;
-  }
+    logger.error("Error posting job:", error);
+    throw new InternalServerError("Error posting Job")
+  } 
 };
 
 // fetching all job posts
@@ -124,7 +145,7 @@ const updatePost = async (postId,companyUserId,updateData) => {
   try {
     const companyUser = await CompanyUser.findById(companyUserId);
     if (companyUser) {
-      const job = await JobPost.findById(postId)
+      const job = await JobPost.findById(postId);
       if (job) {
         const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
         if (updatePost) {
@@ -141,10 +162,10 @@ const updatePost = async (postId,companyUserId,updateData) => {
       throw new NotFoundError("Company User not found")
     }
   } catch (error) {
-    throw error;
-  }
-};
-
+    logger.error("Error while updating job:", error);
+   throw error
+}
+}
 // Deleting Job Post
 const deletePost = async (postId,companyUserId) => {
   try {
@@ -173,13 +194,3 @@ export default {
   deletePost,
   countTotalJobPosts,
 };
-// {
-//   $group: {
-//     _id: "$postedDate",
-//   },
-// },
-// {
-//   $sort: {
-//     count: -1
-//   }
-// },
