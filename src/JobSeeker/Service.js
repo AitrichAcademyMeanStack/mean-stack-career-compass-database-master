@@ -218,7 +218,8 @@ const deleteseeker = async (seekerid) => {
         logger.error("error in deleting system user");
       }
     } else {
-      logger.info("error in deleting job seeker");
+      logger.error("error in deleting job seeker");
+      throw new NotFoundError("User not found with specific ID")
     }
     return seekerresult;
   } catch (error) {

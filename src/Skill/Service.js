@@ -1,5 +1,5 @@
 import logger from '../middleware/logger.js' //importing logger middleware
-import Badrequesterror from '../Exceptions/Badrequesterror.js' //importing badrequest error handler
+import BadRequestError from '../Exceptions/BadRequestError.js' //importing badrequest error handler
 import Notfounderror from '../Exceptions/NotFoundError.js' // importing notfound error handler
 import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
 import skill from '../models/SkillModel.js' // importing skill module schema
@@ -36,7 +36,7 @@ const getskillbyid = async(skillid)=>{
     } catch (error) {
         if (error.name === 'CastError') {
             logger.error("invalid skill id")
-            throw new Badrequesterror("invalid skill id")
+            throw new BadRequestError("invalid skill id")
         } else {
             throw error
         }
@@ -53,7 +53,7 @@ const createskill = async(skilldata)=>{
             return result
         } else {
             logger.error("error in create new skill")
-            throw new Badrequesterror("error in create new skill")
+            throw new BadRequestError("error in create new skill")
         }
     } catch (error) {
         if (error.name === "ValidationError") {
@@ -81,7 +81,7 @@ const updateskill = async(skillid,skilldata)=>{
     } catch (error) {
         if (error.name === "CastError") {
             logger.error("invalid skill id")
-            throw new Badrequesterror("invalid skill id")
+            throw new BadRequestError("invalid skill id")
         } else if(error.name === 'ValidationError'){
             logger.error(`validation Error : ${error.message}`)
             throw new ValidationError(error.message)
@@ -105,7 +105,7 @@ const deleteskill = async(skillid)=>{
     } catch (error) {
         if (error.name === "CastError") {
             logger.error("invalid skill id")
-            throw new Badrequesterror("invalid skill id")
+            throw new BadRequestError("invalid skill id")
         } else {
             throw error
         }
