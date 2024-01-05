@@ -11,29 +11,23 @@ const addJobPost = async (companyUserId,jobPost) => {
   try {
     const companyUser = await CompanyUser.findById(companyUserId)
     if (companyUser) {
+      
+      //Embedding JobProviderCompany
       jobPost.company = {
-        companyId: companyUser._id,
-        legalName: companyUser.legalName,
-        summary: companyUser.summary,
-        industry: companyUser.industry,
-        email: companyUser.email,
-        phone: companyUser.phone,
-        address: companyUser.address,
-        website: companyUser.website,
-        location: companyUser.location,
+        companyId: companyUser.company.companyId,
+        legalName: companyUser.company.legalName,
+        summary: companyUser.company.summary,
+        industry: companyUser.company.industry,
+        email: companyUser.company.email,
+        phone: companyUser.company.phone,
+        address: companyUser.company.address,
+        website: companyUser.company.website,
+        location: companyUser.company.location,
       }
-      jobPost.companyUser = {
-        company: {
-          companyId: companyUser._id,
-          legalName: companyUser.legalName,
-          summary: companyUser.summary,
-          industry: companyUser.industry,
-          email: companyUser.email,
-          phone: companyUser.phone,
-          address: companyUser.address,
-          website: companyUser.website,
-          location: companyUser.location,
-        },
+
+      //Embedding CompanyUser
+      jobPost.postedBy = {
+        companyuserId:companyUser._id,
         firstName: companyUser.firstName,
         role: companyUser.role,
         lastName: companyUser.lastName,

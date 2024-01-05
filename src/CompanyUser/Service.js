@@ -6,6 +6,7 @@ import logger from "../middleware/logger.js";
 import systemuser from "../models/SystemUserModel.js";
 import AuthUser from "../models/AuthUserModel.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
+import { companyUserValidate } from "../middleware/ValidationSchema.js";
 
 // Fetchng all CompanyUser
 const getAllCompanyUsers = async (id) => {
@@ -42,12 +43,13 @@ const getCompanyUserById = async (id) => {
 // Adding new CompanyUser
 const addCompanyUser = async (companyId, data) => {
   try {
+    await companyUserValidate.validateAsync(data)
     const jobProvider = await JobProviderCompany.findById(companyId);
     if (!jobProvider) {
       logger.error("JobProvider not found with Id:", companyId);
       return { error: "JobProvider not found" };
     }
-
+``
     data.company = {
       companyId: jobProvider._id,
       legalName: jobProvider.legalName,
