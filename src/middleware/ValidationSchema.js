@@ -266,6 +266,4 @@ const jobseekervalidation = Joi.object({
 });
 
 
-export { authschema, experiencevalid, jobProviderValidate,companyUserValidate
-
-,jobseekervalidation};
+export { authschema, experiencevalid, jobProviderValidate ,jobseekervalidation};
