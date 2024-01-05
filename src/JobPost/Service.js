@@ -3,10 +3,12 @@ import logger from "../middleware/logger.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
 import CompanyUser from "../models/CompanyUserModel.js";
-
+import {jobpostvalid} from "../middleware/ValidationSchema.js"
+import ValidationError from "../Exceptions/ValidationError.js";
 // creating job post
 const addJobPost = async (companyUserId,jobPost) => {
   try {
+    await jobpostvalid.validateAsync(jobPost)
     const companyUser = await CompanyUser.findById(companyUserId)
     if (companyUser) {
       jobPost.company = {
@@ -31,7 +33,13 @@ const addJobPost = async (companyUserId,jobPost) => {
       throw new NotFoundError("CompanyUser not found")
     }
   } catch (error) {
-    throw error;
+    if (error.name === "ValidationError") {
+      logger.error(`validation error: ${error.message}`)
+      throw new ValidationError(error.message)
+    }else {
+      throw error;
+
+    }
   }
 };
 
@@ -170,13 +178,3 @@ export default {
   deletePost,
   countTotalJobPosts,
 };
-// {
-//   $group: {
-//     _id: "$postedDate",
-//   },
-// },
-// {
-//   $sort: {
-//     count: -1
-//   }
-// },

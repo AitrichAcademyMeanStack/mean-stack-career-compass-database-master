@@ -50,7 +50,43 @@ const experiencevalid = Joi.object({
         'date.base': 'End date field must be a valid date',
         'any.required': 'End date field is required',
     }),
-})
+});
+
+const jobpostvalid=Joi.object({
+    jobTitle: Joi.string().required().min(3).pattern(/^[a-zA-Z\s]+$/)
+    .messages({
+        'string.pattern.base': 'jobTitle field only contains alphabets',
+        'string.min': 'jobTitle field must be at least 3 characters long',
+        'any.required': 'jobTitle field is required',
+        'string.empty': 'jobTitle field should not be empty. Please provide a value for the jobTitle field.',
+    }),
+    jobSummary:Joi.string().required().min(5).pattern(/^[a-zA-Z\s]+$/)
+    .messages({
+        'string.pattern.base': 'jobsummary field only contains alphabets',
+        'string.min': 'jobsummary field must be at least 3 characters long',
+        'any.required': 'jobsummary field is required',
+        'string.empty': 'jobsummary field should not be empty. Please provide a value for the jobTitle field.',
+    }),
 
 
-export  {authschema,experiencevalid}
+    jobResponsibilities:Joi.string().required().min(5).pattern(/^[a-zA-Z\s]+$/)
+    .messages({'string.pattern.base': 'jobResponsibilities field only contains alphabets',
+    'string.min': 'jobResponsibilities field must be at least 3 characters long',
+    'any.required': 'jobResponsibilities field is required',
+    'string.empty': 'jobResponsibilities field should not be empty. Please provide a value for the   jobResponsibilities field.',
+    })
+});
+    const jobapplicationvalid=Joi.object({
+
+        coverletter:Joi.string().required().min(20).pattern(/^[a-zA-Z\s]+$/)
+        .messages({
+            'string.pattern.base': 'coverletter field only contains alphabets',
+            'string.min': 'coverletter field must be at least 3 characters long',
+            'any.required': 'coverletter field is required',
+            'string.empty': 'coverletter field should not be empty. Please provide a value for the coverletter field.',
+        }),
+
+    });
+
+
+export  {authschema,experiencevalid,jobpostvalid,jobapplicationvalid}

@@ -6,11 +6,13 @@ import Jobapplication from "../models/JobApplicationModel.js"; //importing job a
 import JobPost from "../models/JobPostModel.js"; //importing job post model
 import jobseeker from "../models/JobSeekerModel.js"; //importing jobseeker model
 import seekerProfile from "../models/JobSeekerProfileModel.js"; ///importing seeker profile model
-
+import {jobapplicationvalid} from "../middleware/ValidationSchema.js"
+import ValidationError from "../Exceptions/ValidationError.js";
 
 //get all job applications
 const getalljobapplications = async (page, limit) => {
     try {
+      
         const applications = await Jobapplication.find()
         if (applications)
         {
@@ -151,6 +153,7 @@ const deleteapplication = async (seekerid,applicationid) => {
 //adding new job application
 const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
     try {
+        await jobapplicationvalid.validateAsync(applicationdata)
         const existingseeker = await jobseeker.findById(seekerid)
         if (existingseeker) {
             const existingprofile = await seekerProfile.findById(profileid)
@@ -206,8 +209,13 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
             throw new NotFoundError("job seeker not found with specific id")
         }
     } catch (error) {
-        throw error
-    }
+        if (error.name === "ValidationError") {
+          logger.error(`validation error: ${error.message}`)
+          throw new ValidationError(error.message)
+        }else {
+          throw error;
+        }
+      }
 }
 
 export default {createapplication,getallapplications,deleteapplication,getalljobapplications,getjobapplications}

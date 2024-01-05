@@ -1,5 +1,5 @@
 import logger from "../middleware/logger.js"; //importing logger middleware
-import BadRequestError from "../Exceptions/Badrequesterror.js"; //importing badrequest error handler
+import BadRequestError from "../Exceptions/BadRequestError.js"; //importing badrequest error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing notfound error handler
 import ValidationError from "../Exceptions/ValidationError.js"; //importing Validation error handler
 import JobTitle from "../models/JobTitle.js";
