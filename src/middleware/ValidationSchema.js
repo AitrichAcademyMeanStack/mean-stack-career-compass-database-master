@@ -200,11 +200,6 @@ const companyUserValidate = Joi.object({
 
 })
 
-const jobInterviewValidate = Joi.object({
-  
-})
-
-
 const jobseekervalidation = Joi.object({
   firstName: Joi.string()
     .required()
@@ -266,4 +261,4 @@ const jobseekervalidation = Joi.object({
 });
 
 
-export { authschema, experiencevalid, jobProviderValidate ,jobseekervalidation};
+export { authschema, experiencevalid, jobProviderValidate ,jobseekervalidation,companyUserValidate};
