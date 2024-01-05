@@ -17,7 +17,6 @@ const router = express.Router()
  *                  - skills
  *                  - industry
  *                  - jobResponsibilities
- *                  - postedBy
  *              properties :
  *                  jobTitle:
  *                      type: string
@@ -47,8 +46,6 @@ const router = express.Router()
  *                      type: array
  *                      items:
  *                          type: string
- *                  postedBy:
- *                      type: string
  *                      
  */
 

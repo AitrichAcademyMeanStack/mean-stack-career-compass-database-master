@@ -160,6 +160,8 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
         if (existingseeker) {
             const existingprofile = await seekerProfile.findById(profileid)
             if (existingprofile) {
+
+                //Embedding Applicant(JobSeeker)
                 applicationdata.applicant={
                     seekerId:existingprofile.jobSeeker.seekerId,
                     firstName:existingprofile.jobSeeker.firstName,
@@ -170,6 +172,8 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
                 }
                 const existingjobpost = await JobPost.findById(jobpostid)
                 if (existingjobpost) {
+
+                    // Embedding JobPost
                     applicationdata.job ={
                         JobpostId:existingjobpost._id,
                         jobTitle:existingjobpost.jobTitle,
@@ -185,6 +189,7 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
                         postedDate:existingjobpost.postedDate
                     }
     
+                    //Embedding Resume
                     applicationdata.resume = {
                         title: existingprofile.Resume.title,
                         Resume:existingprofile.Resume.resume

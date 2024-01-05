@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 const jobPostSchema = new Schema(
   {
-    jobTitle: {type:String},
+    jobTitle: { type: String },
     jobSummary: { type: String },
     jobLocation: [String],
     company: {
@@ -20,7 +20,19 @@ const jobPostSchema = new Schema(
     skills: [String],
     industry: [String],
     jobResponsibilities: [String],
-    postedBy: { type: String },
+    postedBy: {
+      companyuserId: mongoose.Schema.Types.ObjectId,
+      firstName: String,
+      role: {type: Schema.Types.Mixed,
+      default: {
+          name: 'Company Admin',
+          description: ''
+      }},
+      lastName: String,
+      userName: String,
+      email: String,
+      phone: String,
+    },
     postedDate: { type: Date, default: Date.now() },
   },
   { versionKey: false }
