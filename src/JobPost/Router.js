@@ -17,7 +17,6 @@ const router = express.Router()
  *                  - skills
  *                  - industry
  *                  - jobResponsibilities
- *                  - postedBy
  *              properties :
  *                  jobTitle:
  *                      type: string
@@ -47,8 +46,6 @@ const router = express.Router()
  *                      type: array
  *                      items:
  *                          type: string
- *                  postedBy:
- *                      type: string
  *                      
  */
 
@@ -73,6 +70,11 @@ const router = express.Router()
  *              - in: query
  *                name: jobtitle
  *                description: filter with jobtitle
+ *                schema:
+ *                      type: string
+ *              - in: query
+ *                name: sort
+ *                description: newest or oldest
  *                schema:
  *                      type: string
  *          responses:

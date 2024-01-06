@@ -1,4 +1,4 @@
-import Badrequesterror from "../Exceptions/Badrequesterror.js"; // importing Custom Exception Handler
+import BadRequestError from "../Exceptions/BadRequestError.js"; // importing Custom Exception Handler
 import Notfounderror from "../Exceptions/NotFoundError.js"; // importing Custom Exception Handler
 import ValidationError from "../Exceptions/ValidationError.js"; // importing Custom Exception Handler
 import logger from "../middleware/logger.js"; // importing logger
@@ -32,7 +32,7 @@ const getQualificationById = async (id) => {
   } catch (error) {
     if (error.name === "CastError") {
       logger.error("ID not found");
-      throw new Badrequesterror("Error while fetching ID");
+      throw new BadRequestError("Error while fetching ID");
     } else {
       throw error;
     }
@@ -48,7 +48,7 @@ const addQualification = async (data) => {
       return newData;
     } else {
       logger.error("Error while adding location");
-      throw new Badrequesterror("Error while adding new location");
+      throw new BadRequestError("Error while adding new location");
     }
   } catch (error) {
     if (error.name === "ValidationError") {
@@ -99,7 +99,7 @@ const deleteQualification = async (id) => {
   } catch (error) {
     if (error.name === "CastError") {
       logger.error("Error while deleting Qualification");
-      throw new Badrequesterror("Qualification unable to delete");
+      throw new BadRequestError("Qualification unable to delete");
     }
   }
 };

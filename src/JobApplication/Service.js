@@ -10,7 +10,7 @@ import {jobapplicationvalid} from "../middleware/ValidationSchema.js"
 import ValidationError from "../Exceptions/ValidationError.js";
 
 //get all job applications
-const getalljobapplications = async (page, limit) => {
+const getalljobapplications = async (page, limit,sortorder) => {
     try {
       
         const applications = await Jobapplication.find()
@@ -23,7 +23,10 @@ const getalljobapplications = async (page, limit) => {
                 logger.error("page not found")
                 throw new NotFoundError("page not found")   
                }
+
+               const sortOption = sortorder === 'oldest' ? {datesubmitted : 1} : {datesubmitted : -1}   
                const result = await Jobapplication.find()
+                   .sort(sortOption)
                    .skip((page - 1) * perpage)
                    .limit(perpage)
                    .exec()
@@ -43,7 +46,7 @@ const getalljobapplications = async (page, limit) => {
 };
 
 
-const getjobapplications = async(companyuserid,jobpostid,page,limit)=>{
+const getjobapplications = async(companyuserid,jobpostid,page,limit,sortorder)=>{
     try {
         const existingcompanyuser = await CompanyUser.findById(companyuserid)
         if (existingcompanyuser) {
@@ -56,8 +59,12 @@ const getjobapplications = async(companyuserid,jobpostid,page,limit)=>{
                     logger.error("Page not  found")
                     throw new NotFoundError("page not found")
                 }
-        
-                const result = await Jobapplication.find({"job.JobpostId" : existingjobpost._id})
+
+                const sortOption = sortorder === 'oldest' ? {datesubmitted : 1} : {datesubmitted : -1}   
+
+                const result = await Jobapplication
+                .find({"job.JobpostId" : existingjobpost._id})
+                .sort(sortOption)
                 .skip((page - 1) * limit)
                 .limit(limit)
                 .exec()
@@ -82,7 +89,7 @@ const getjobapplications = async(companyuserid,jobpostid,page,limit)=>{
 }
 
 //get all jobaplication by seekerid
-const getallapplications = async (seekerid, page, limit) => {
+const getallapplications = async (seekerid, page, limit,sortorder) => {
     try {
         const existingseeker = await jobseeker.findById(seekerid);
         if (existingseeker) {
@@ -94,7 +101,12 @@ const getallapplications = async (seekerid, page, limit) => {
              logger.error("page not found")
              throw new NotFoundError("page not found")   
             }
-            const result = await Jobapplication.find({ "applicant.seekerId": existingseeker._id })
+
+            const sortOption = sortorder === 'oldest' ? {datesubmitted : 1} : {datesubmitted : -1}   
+
+            const result = await Jobapplication
+                .find({ "applicant.seekerId": existingseeker._id })
+                .sort(sortOption)
                 .skip((page - 1) * perpage)
                 .limit(perpage)
                 .exec()
@@ -115,13 +127,6 @@ const getallapplications = async (seekerid, page, limit) => {
         throw error;
     }
 };
-
-
-
-
-
-
-
 
 //deleting job application with specific id
 const deleteapplication = async (seekerid,applicationid) => {
@@ -158,6 +163,8 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
         if (existingseeker) {
             const existingprofile = await seekerProfile.findById(profileid)
             if (existingprofile) {
+
+                //Embedding Applicant(JobSeeker)
                 applicationdata.applicant={
                     seekerId:existingprofile.jobSeeker.seekerId,
                     firstName:existingprofile.jobSeeker.firstName,
@@ -168,6 +175,8 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
                 }
                 const existingjobpost = await JobPost.findById(jobpostid)
                 if (existingjobpost) {
+
+                    // Embedding JobPost
                     applicationdata.job ={
                         JobpostId:existingjobpost._id,
                         jobTitle:existingjobpost.jobTitle,
@@ -183,6 +192,7 @@ const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
                         postedDate:existingjobpost.postedDate
                     }
     
+                    //Embedding Resume
                     applicationdata.resume = {
                         title: existingprofile.Resume.title,
                         Resume:existingprofile.Resume.resume

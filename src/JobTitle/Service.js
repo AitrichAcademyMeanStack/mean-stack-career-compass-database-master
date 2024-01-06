@@ -63,7 +63,7 @@ const deleteJobTitle=async(jobtitleid)=>{
 catch (error) {
     if (error.name === "CastError") {
         logger.error("invalid jobtitle id")
-        throw new Badrequesterror("invalidjobtitle id")
+        throw new BadRequestError("invalidjobtitle id")
     } else {
         throw error
     }

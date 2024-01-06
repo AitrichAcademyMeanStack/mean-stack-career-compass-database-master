@@ -56,6 +56,7 @@ const loginJobSeeker = asyncerrorhandler ( async ( req , res ) => {
     res.status(200).json("job seeker login Successfully")
 })
 
+// Change Password for JobSeeker
 const changepassword = asyncerrorhandler(async(req,res)=>{
     const seekerid = req.params.seekerid
     const data = req.body

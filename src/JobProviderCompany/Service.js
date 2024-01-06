@@ -2,11 +2,8 @@ import Badrequesterror from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
-import {authschema} from "../middleware/ValidationSchema.js";
+import {jobProviderValidate} from "../middleware/ValidationSchema.js";
 import ValidationError from "../Exceptions/ValidationError.js";
-import AuthUser from "../models/AuthUserModel.js";
-import NotFoundError from "../Exceptions/NotFoundError.js";
-import InternalServerError from "../Exceptions/InternalServerError.js"
 
 // fetching all JobProviderCompany
 const getAllJobProviders = async (page,limit) => {
@@ -53,10 +50,10 @@ const getJobProviderById = async (id) => {
 // Adding new JobProviderCompany
 const addJobProvider = async (data) => {
   try {
-    // await authschema.validateAsync(data);
-    const newData = await JobProviderCompany.insertMany(data);
+    await jobProviderValidate.validateAsync(data);
+    const newData = await JobProviderCompany.create(data);
     if (newData) {
-      logger.info("New JobProviderCompany :", newData);
+      logger.info("JobProviderCompany Created");
       return newData;
     } else {
       logger.error("Error while adding JobProviderCompany");
@@ -75,7 +72,6 @@ const addJobProvider = async (data) => {
 // Updating JobProviderCompany
 const updateJobProvider = async (id, updateData) => {
   try {
-    await authschema.validateAsync(updateData);
     const update = await JobProviderCompany.findByIdAndUpdate(id, updateData);
     if (update) {
       logger.info("JobProviderCompany updated Successfull");
@@ -100,7 +96,7 @@ const updateJobProvider = async (id, updateData) => {
 // Deleting JobProviderCompany
 const deleteJobProvider = async (id) => {
   try {
-    const deleteData = await JobProviderCompany.findByIdAndDelete(id);
+    const deleteData = await JobProviderCompany.deleteOne(id);
     if (deleteData) {
       logger.info("JobProviderCompany Deleted Successfully");
       return deleteData;

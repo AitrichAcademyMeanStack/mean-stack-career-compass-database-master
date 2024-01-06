@@ -1,19 +1,24 @@
-import mongoose , {Schema} from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
 const JobProviderCompanySchema = new Schema(
-    {
-        legalName:{type: String},
-        summary:{type: String},
-        industry:[String],
-        email:{type: String},
-        phone: {type: Number},
-        address: {type: String},
-        website:{type: String},
-        location:[String]
-    },{versionKey:false}
-) 
+  {
+    legalName: { type: String, unique: true, required: true},
+    summary: { type: String, unique: true, required: true },
+    industry: [{type:String,unique:true,required:true}],
+    email: { type: String, unique: true, required: true },
+    phone: { type: Number, unique: true, required: true },
+    address: { type: String, unique: true, required: true },
+    website: { type: String, unique: true, required: true },
+    location: [{ type: String, unique: true, required: true }],
+  },
+  { versionKey: false }
+);
 
 const collectionName = "JobProviderCompany";
-const JobProviderCompany = mongoose.model("JobProviderCompany", JobProviderCompanySchema, collectionName);
+const JobProviderCompany = mongoose.model(
+  "JobProviderCompany",
+  JobProviderCompanySchema,
+  collectionName
+);
 
-export default JobProviderCompany
+export default JobProviderCompany;

@@ -5,23 +5,41 @@ import NotFoundError from "../Exceptions/NotFoundError.js";
 import CompanyUser from "../models/CompanyUserModel.js";
 import {jobpostvalid} from "../middleware/ValidationSchema.js"
 import ValidationError from "../Exceptions/ValidationError.js";
+import InternalServerError from "../Exceptions/InternalServerError.js"
+
+
 // creating job post
 const addJobPost = async (companyUserId,jobPost) => {
   try {
     await jobpostvalid.validateAsync(jobPost)
     const companyUser = await CompanyUser.findById(companyUserId)
     if (companyUser) {
+      
+      //Embedding JobProviderCompany
       jobPost.company = {
-        companyId: companyUser._id,
-        legalName: companyUser.legalName,
-        summary: companyUser.summary,
-        industry: companyUser.industry,
-        email: companyUser.email,
-        phone: companyUser.phone,
-        address: companyUser.address,
-        website: companyUser.website,
-        location: companyUser.location,
+        companyId: companyUser.company.companyId,
+        legalName: companyUser.company.legalName,
+        summary: companyUser.company.summary,
+        industry: companyUser.company.industry,
+        email: companyUser.company.email,
+        phone: companyUser.company.phone,
+        address: companyUser.company.address,
+        website: companyUser.company.website,
+        location: companyUser.company.location,
       }
+
+      //Embedding CompanyUser
+      jobPost.postedBy = {
+        companyuserId:companyUser._id,
+        firstName: companyUser.firstName,
+        role: companyUser.role,
+        lastName: companyUser.lastName,
+        userName: companyUser.userName,
+        email: companyUser.email
+
+      }
+
+    
       const jobs = await JobPost.create(jobPost);
       if (jobs) {
         logger.info("Job Posted Successfully");
@@ -44,28 +62,35 @@ const addJobPost = async (companyUserId,jobPost) => {
 };
 
 // fetching all job posts
-const getAllJobPosts = async (page , limit,jobtitle) => {
+const getAllJobPosts = async (page, limit, jobtitle, sortOrder) => {
   try {
-    let query = {}
+    let query = {};
     if (jobtitle) {
       query = {
-        $or:[
-         { jobTitle: { $regex: new RegExp(jobtitle, 'i') } }
+        $or: [
+          { jobTitle: { $regex: new RegExp(jobtitle, 'i') } }
         ]
-      }
+      };
     }
-
 
     const perPage = limit;
     const totalPost = await JobPost.countDocuments();
-    const totalPages = Math.ceil(totalPost / perPage)
+    const totalPages = Math.ceil(totalPost / perPage);
 
     if (page > totalPages) {
-      logger.error("Page not found")
-      throw new NotFoundError("Page not found")
+      logger.error("Page not found");
+      throw new NotFoundError("Page not found");  
     }
 
-    const allPosts = await JobPost.find(query).skip((page - 1) * perPage).limit(perPage).exec();
+    const sortOption = sortOrder === 'oldest' ? { postedDate: 1 } : { postedDate: -1 };
+
+    const allPosts = await JobPost
+      .find(query)
+      .sort(sortOption)
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .exec();
+
     if (allPosts) {
       logger.info("List of Job Posts");
       return allPosts;
@@ -76,6 +101,7 @@ const getAllJobPosts = async (page , limit,jobtitle) => {
     throw error;
   }
 };
+
 
 
 // count total job posts
@@ -129,7 +155,7 @@ const updatePost = async (postId,companyUserId,updateData) => {
   try {
     const companyUser = await CompanyUser.findById(companyUserId);
     if (companyUser) {
-      const job = await JobPost.findById(postId)
+      const job = await JobPost.findById(postId);
       if (job) {
         const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
         if (updatePost) {
@@ -146,10 +172,10 @@ const updatePost = async (postId,companyUserId,updateData) => {
       throw new NotFoundError("Company User not found")
     }
   } catch (error) {
-    throw error;
-  }
-};
-
+    logger.error("Error while updating job:", error);
+   throw error
+}
+}
 // Deleting Job Post
 const deletePost = async (postId,companyUserId) => {
   try {

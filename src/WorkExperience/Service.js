@@ -1,6 +1,6 @@
 import logger from "../middleware/logger.js"; //importing logger
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation custom error handler
-import BadRequestError from "../Exceptions/Badrequesterror.js"; // importing bad request custom error handler
+import BadRequestError from "../Exceptions/BadRequestError.js"; // importing bad request custom error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing not found custom error handler
 import WorkExperience from "../models/WorkExperienceModel.js"; //importing work experience schema model
 import {experiencevalid} from '../middleware/ValidationSchema.js' //importing schema validator

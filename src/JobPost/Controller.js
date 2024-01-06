@@ -12,11 +12,14 @@ const createJobPost = asyncHandler(async (req, res) => {
 // Fetching all JobPosts
 const getAllJobPosts = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10
-  const jobtitle = req.query.jobtitle || null
-  const result = await jobPostService.getAllJobPosts(page , limit,jobtitle);
+  const limit = parseInt(req.query.limit) || 10;
+  const jobtitle = req.query.jobtitle || null;
+  const sortOrder = req.query.sort || 'newest';
+  
+  const result = await jobPostService.getAllJobPosts(page, limit, jobtitle, sortOrder);
   res.status(200).json(result);
 });
+
 
 // Fetching Job Post by ID
 const getJobPostById = asyncHandler(async (req, res) => {

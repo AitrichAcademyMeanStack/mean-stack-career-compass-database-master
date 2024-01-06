@@ -4,11 +4,13 @@ import BadRequestError from "../Exceptions/BadRequestError.js"
 import NotFoundError from "../Exceptions/NotFoundError.js"
 import Jobapplication from "../models/JobApplicationModel.js"
 
-// Adding Job Interview
+// Scheduling Job Interview
 const scheduleInterview = async(application,data) => {
     try {
                 const jobApplication = await Jobapplication.findById(application)
                 if (jobApplication) {
+
+                    // Embedding Job
                     data.job = {
                         jobTitle:jobApplication.job.jobTitle,
                         jobSummary:jobApplication.job.jobSummary,
@@ -21,7 +23,9 @@ const scheduleInterview = async(application,data) => {
                         jobResponsibilities:jobApplication.job.jobResponsibilities[0],
                         postedBy:jobApplication.job.postedBy,
                         postedDate:jobApplication.job.postedDate
-                    }            
+                    }     
+
+                    // Embedding Interviewee       
                     data.interviewee  = {
                         firstName: jobApplication.applicant.firstName,
                         lastName: jobApplication.applicant.lastName,
@@ -29,6 +33,8 @@ const scheduleInterview = async(application,data) => {
                         email: jobApplication.applicant.email,
                         phone: jobApplication.applicant.phone
                     }
+                    
+                    // Embedding JobApplication
                     data.jobApplication = {
                         job: jobApplication.job,
                         applicant: jobApplication.applicant,

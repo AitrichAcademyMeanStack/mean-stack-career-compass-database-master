@@ -1,4 +1,4 @@
-import Badrequesterror from "../Exceptions/Badrequesterror.js";
+import BadRequestError from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import Industry from "../models/IndustryModel.js";
@@ -11,7 +11,7 @@ const getAllIndustries = async (industry) => {
     const result = await Industry.find(
       {"$or":[{name:{$regex: industry, $options: 'i' }}]},{name:true,_id:0}).limit(10)
       if (result) {
-        logger.info("",result)
+        logger.info("Industry Fetched",result)
         return result
       }else {
         logger.error("Industry Not Found")
@@ -27,24 +27,24 @@ const getAllIndustries = async (industry) => {
 
 // Adding new Industry
 const addIndustry = async (data) => {
-  // try {
-  //   await authschema.validateAsync(data);
-  //   const newData = await Industry.create(data);
-  //   if (newData) {
-  //     logger.info("New Industry :", newData);
-  //     return newData;
-  //   } else {
-  //     logger.error("Error while adding industry");
-  //     throw new Badrequesterror("Error while adding new industry");
-  //   }
-  // } catch (error) {
-  //   if (error.name === "ValidationError") {
-  //     logger.error(`validaion error : ${error.message}`);
-  //     throw new ValidationError(error.message);
-  //   } else {
-  //     throw error;
-  //   }
-  // }
+  try {
+    await authschema.validateAsync(data);
+    const newData = await Industry.create(data);
+    if (newData) {
+      logger.info("New Industry :", newData);
+      return newData;
+    } else {
+      logger.error("Error while adding industry");
+      throw new BadRequestError("Error while adding new industry");
+    }
+  } catch (error) {
+    if (error.name === "ValidationError") {
+      logger.error(`validaion error : ${error.message}`);
+      throw new ValidationError(error.message);
+    } else {
+      throw error;
+    }
+  }
 };
 
 // Updating Industry
@@ -86,7 +86,7 @@ const deleteIndustry = async (id) => {
   } catch (error) {
     if (error.name === "CastError") {
       logger.error("Error while deleting Industry");
-      throw new Badrequesterror("Industry unable to delete");
+      throw new BadRequestError("Industry unable to delete");
     }
   }
 };

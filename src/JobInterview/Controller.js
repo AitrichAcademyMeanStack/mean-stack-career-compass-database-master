@@ -12,7 +12,7 @@ const getAllJobInterview = asyncHandler( async(req , res) => {
 })
 
 
-// Adding JobInterview
+// Scheduling JobInterview
 const addJobInterview = asyncHandler( async(req , res) => {
     const application = req.params.jobApplicationId
     const data = req.body;
@@ -21,6 +21,7 @@ const addJobInterview = asyncHandler( async(req , res) => {
 
 })
 
+// Deleting Interview
 const deleteJobInterview  = asyncHandler( async(req , res) => {
     const application = req.params.jobApplicationId
     const JobInterviewID = req.params.jobInterviewId;
