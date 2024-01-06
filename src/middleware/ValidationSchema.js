@@ -261,4 +261,4 @@ const jobseekervalidation = Joi.object({
 })
 
 
-export  {authschema,experiencevalid}
+export  {authschema,experiencevalid,jobProviderValidate,jobseekervalidation,companyUserValidate}
