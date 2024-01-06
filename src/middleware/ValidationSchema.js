@@ -182,20 +182,30 @@ const companyUserValidate = Joi.object({
     .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .required()
     .messages({
-        'string.pattern.base': 'jobTitle field only contains alphabets',
-        'string.min': 'jobTitle field must be at least 3 characters long',
-        'any.required': 'jobTitle field is required',
-        'string.empty': 'jobTitle field should not be empty. Please provide a value for the jobTitle field.',
+      "string.base": "Email must be a string.",
+      "string.email": "Please enter a valid email address.",
+      "string.empty": "Email is required.",
+      "any.required": "Email is required.",
+      "string.minDomainSegments":
+        "Email must have at least two domain segments.",
+      "string.tlds.allow": 'Only ".com" and ".net" domains are allowed.',
     }),
-  industry: Joi.array().required()
-  .messages({
-    "any.required": "Industry field is required.",
-    "string.empty":
-      "Industry field should not be empty. Please provide a value for the Industry field.",
-  }),
-  email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+  phone: Joi.number().required().integer().min(10).positive().messages({
+    "number.min": "Phone Number must be length of 10.",
+    "any.required": "Phone Number is required.",
+    "any.required": "Phone must be positive.",
+    "number.empty":
+      "Phone Number should not be empty. Please provide a value for the Phone field.",
+  })
+
+})
+
+const jobseekervalidation = Joi.object({
+  firstName: Joi.string()
     .required()
+    .min(3)
+    .max(30)
+    .pattern(/^[a-zA-Z]+$/)
     .messages({
       "string.pattern.base": "firstName field only contains alphabets without spaces",
       "string.min": "firstName field must be at least 3 characters long",
@@ -242,13 +252,13 @@ const companyUserValidate = Joi.object({
     .max(15)
     .positive()
     .messages({
-      "number.min": "Phone Number must be a length of at least 10",
-      "number.max": "Phone Number must be a length of at most 15",
-      "any.required": "Phone Number is required",
-      "number.positive": "Phone must be a positive number",
-      "number.empty": "Phone Number should not be empty. Please provide a value for the Phone field.",
-    }),
-});
+      "number.min": "Phone Number must be length of at least 10.",
+      "number.max": "Phone Number must be length of at most 15.",
+      "any.required": "Phone Number is required.",
+      "number.positive": "Phone must be a positive number.",
+      "number.empty":"Phone Number should not be empty. Please provide a value for the Phone field.",
+    })
+})
 
 
-export { authschema, experiencevalid, jobProviderValidate ,jobseekervalidation,companyUserValidate};
+export  {authschema,experiencevalid}
