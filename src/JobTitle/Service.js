@@ -3,7 +3,7 @@ import BadRequestError from "../Exceptions/BadRequestError.js"; //importing badr
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing notfound error handler
 import ValidationError from "../Exceptions/ValidationError.js"; //importing Validation error handler
 import JobTitle from "../models/JobTitle.js";
-import { authschema } from "../middleware/ValidationSchema.js";
+import { commonvalidation } from "../middleware/Validation/CommonModule.js";
 
 const getalljobtitle = async () => {
   try {
@@ -27,6 +27,7 @@ const getalljobtitle = async () => {
 
 const createJobTitle=async(jobtitledata)=>{
     try {
+        await commonvalidation.validateAsync(jobtitledata)
         const result =await JobTitle.create(jobtitledata)
         if (result) {
             logger.info("new jobtitle created successfully")

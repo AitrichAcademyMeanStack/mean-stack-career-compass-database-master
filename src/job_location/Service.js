@@ -2,8 +2,8 @@ import Badrequesterror from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import Location from "../models/LocationModel.js";
-import {authschema} from "../middleware/ValidationSchema.js";
 import ValidationError from "../Exceptions/ValidationError.js";
+import { commonvalidation } from "../middleware/Validation/CommonModule.js";
 
 // fetching all locations
 const getAllLocations = async () => {
@@ -38,7 +38,7 @@ const getLocationById = async (id) => {
 // Adding new location
 const addLocation = async (data) => {
   try {
-    await authschema.validateAsync(data);
+    await commonvalidation.validateAsync(data);
     const newData = await Location.create(data);
     if (newData) {
       logger.info("New location :", newData);
