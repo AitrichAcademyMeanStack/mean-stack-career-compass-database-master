@@ -6,6 +6,7 @@ import ValidationError from "../Exceptions/ValidationError.js"; // importing val
 import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker
 import seekerProfile from "../models/JobSeekerProfileModel.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
+import { jobseekervalidation } from "../middleware/Validation/JobseekerValidation.js";
 
 //get all job seekers
 const getallseekers = async (page, limit,filtername) => {
@@ -97,6 +98,7 @@ const getTotalJobseeker = async () => {
 //create new job seeker
 const createseeker = async (seekerdata) => {
   try {
+    await jobseekervalidation.validateAsync(seekerdata)
     const findseeker = await jobseeker.findOne({ email: seekerdata.email });
     if (!findseeker) {
       const seekerresult = await jobseeker.create(seekerdata);

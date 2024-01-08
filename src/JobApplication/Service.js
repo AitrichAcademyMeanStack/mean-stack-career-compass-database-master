@@ -6,8 +6,8 @@ import Jobapplication from "../models/JobApplicationModel.js"; //importing job a
 import JobPost from "../models/JobPostModel.js"; //importing job post model
 import jobseeker from "../models/JobSeekerModel.js"; //importing jobseeker model
 import seekerProfile from "../models/JobSeekerProfileModel.js"; ///importing seeker profile model
-import {jobapplicationvalid} from "../middleware/ValidationSchema.js"
 import ValidationError from "../Exceptions/ValidationError.js";
+import { jobApplicationvalidation } from "../middleware/Validation/JobApplicationValidation.js";
 
 //get all job applications
 const getalljobapplications = async (page, limit,sortorder) => {
@@ -158,7 +158,7 @@ const deleteapplication = async (seekerid,applicationid) => {
 //adding new job application
 const createapplication = async(seekerid,profileid,jobpostid,applicationdata)=>{
     try {
-        await jobapplicationvalid.validateAsync(applicationdata)
+        await jobApplicationvalidation.validateAsync(applicationdata)
         const existingseeker = await jobseeker.findById(seekerid)
         if (existingseeker) {
             const existingprofile = await seekerProfile.findById(profileid)

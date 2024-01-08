@@ -3,7 +3,7 @@ import logger from '../middleware/logger.js' //importing logger middleware
 import BadRequestError from '../Exceptions/BadRequestError.js' //importing badrequest error handler
 import NotFoundError from '../Exceptions/NotFoundError.js' // importing notfound error handler
 import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
-import {authschema} from '../middleware/ValidationSchema.js' // importing validation schema
+import { commonvalidation } from '../middleware/Validation/CommonModule.js'
 
 
 // fetching all job-categories
@@ -25,7 +25,7 @@ const getallcategories =async()=>{
 //create new job-category
 const createcategory = async(data)=>{
     try {
-        await authschema.validateAsync(data)
+        await commonvalidation.validateAsync(data)
         const result =await Category.create(data)
         if (result) {
             logger.info("job-category created successfully")

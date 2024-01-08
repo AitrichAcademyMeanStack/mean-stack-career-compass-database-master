@@ -3,7 +3,7 @@ import BadRequestError from '../Exceptions/BadRequestError.js' //importing badre
 import Notfounderror from '../Exceptions/NotFoundError.js' // importing notfound error handler
 import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
 import skill from '../models/SkillModel.js' // importing skill module schema
-import {authschema} from '../middleware/ValidationSchema.js' // importing validation schema
+import { commonvalidation } from '../middleware/Validation/CommonModule.js'
 
 
 const getskills = async()=>{
@@ -46,7 +46,7 @@ const getskillbyid = async(skillid)=>{
 // create new skill
 const createskill = async(skilldata)=>{
     try {
-        await authschema.validateAsync(skilldata)
+        await commonvalidation.validateAsync(skilldata)
         const result =await skill.create(skilldata)
         if (result) {
             logger.info("new skill created successfully")

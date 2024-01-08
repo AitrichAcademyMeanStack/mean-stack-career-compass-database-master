@@ -3,15 +3,15 @@ import logger from "../middleware/logger.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
 import CompanyUser from "../models/CompanyUserModel.js";
-import {jobpostvalid} from "../middleware/ValidationSchema.js"
 import ValidationError from "../Exceptions/ValidationError.js";
 import InternalServerError from "../Exceptions/InternalServerError.js"
+import { jobPostvalidation } from "../middleware/Validation/JobpostValidation.js";
 
 
 // creating job post
 const addJobPost = async (companyUserId,jobPost) => {
   try {
-    await jobpostvalid.validateAsync(jobPost)
+    await jobPostvalidation.validateAsync(jobPost)
     const companyUser = await CompanyUser.findById(companyUserId)
     if (companyUser) {
       

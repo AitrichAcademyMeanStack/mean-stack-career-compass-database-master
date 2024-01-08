@@ -1,6 +1,7 @@
 import BadRequestError from "../Exceptions/BadRequestError.js"; // importing Custom Exception Handler
 import Notfounderror from "../Exceptions/NotFoundError.js"; // importing Custom Exception Handler
 import ValidationError from "../Exceptions/ValidationError.js"; // importing Custom Exception Handler
+import { commonvalidation } from "../middleware/Validation/CommonModule.js";
 import logger from "../middleware/logger.js"; // importing logger
 import Qualification from "../models/QualificationModel.js"; // importing Schema
 
@@ -42,6 +43,7 @@ const getQualificationById = async (id) => {
 // Adding new location
 const addQualification = async (data) => {
   try {
+    await commonvalidation.validateAsync(data)
     const newData = await Qualification.create(data);
     if (newData) {
       logger.info("New Qualification Added :", newData);

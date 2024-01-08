@@ -2,8 +2,8 @@ import BadRequestError from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import Industry from "../models/IndustryModel.js";
-import {authschema} from "../middleware/ValidationSchema.js";
 import ValidationError from "../Exceptions/ValidationError.js";
+import { commonvalidation } from "../middleware/Validation/CommonModule.js";
 
 // fetching all Industries
 const getAllIndustries = async (industry) => {
@@ -28,7 +28,7 @@ const getAllIndustries = async (industry) => {
 // Adding new Industry
 const addIndustry = async (data) => {
   try {
-    await authschema.validateAsync(data);
+    await commonvalidation.validateAsync(data)
     const newData = await Industry.create(data);
     if (newData) {
       logger.info("New Industry :", newData);
