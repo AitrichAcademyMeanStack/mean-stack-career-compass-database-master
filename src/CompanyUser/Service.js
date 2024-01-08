@@ -6,7 +6,7 @@ import logger from "../middleware/logger.js";
 import systemuser from "../models/SystemUserModel.js";
 import AuthUser from "../models/AuthUserModel.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
-import { companyUserValidate } from "../middleware/ValidationSchema.js";
+import { companyUserValidate } from "../middleware/Validation/CompanyUserValidation.js";
 
 // Fetchng all CompanyUser
 const getAllCompanyUsers = async (id) => {

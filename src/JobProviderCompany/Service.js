@@ -2,7 +2,7 @@ import Badrequesterror from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
-import {jobProviderValidate} from "../middleware/ValidationSchema.js";
+import {jobProviderValidate} from "../middleware/Validation/JobProviderValidation.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 
 // fetching all JobProviderCompany
