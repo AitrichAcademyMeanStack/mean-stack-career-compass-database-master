@@ -48,16 +48,17 @@ const jobseekervalidation = Joi.object({
       phone: Joi.number()
       .required()
       .integer()
-      .min(10)
-      .max(15)
+      .greater(999999999)
+      .less(999999999999999)
       .positive()
       .messages({
-        "number.min": "Phone Number must be length of at least 10.",
-        "number.max": "Phone Number must be length of at most 15.",
+        "number.greater": "Phone Number must be length of at least 10.",
+        "number.less": "Phone Number must be length of at most 15.",
         "any.required": "Phone Number is required.",
         "number.positive": "Phone must be a positive number.",
-        "number.empty":"Phone Number should not be empty. Please provide a value for the Phone field.",
+        "number.empty": "Phone Number should not be empty. Please provide a value for the Phone field.",
       })
+    
   })
 
 export {jobseekervalidation}
