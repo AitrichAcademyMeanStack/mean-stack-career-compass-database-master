@@ -7,6 +7,8 @@ import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker
 import seekerProfile from "../models/JobSeekerProfileModel.js";
 import BadRequestError from "../Exceptions/BadRequestError.js";
 import { jobseekervalidation } from "../middleware/Validation/JobseekerValidation.js";
+import savedjobs from "../models/SavedJobsModel.js";
+import Jobapplication from "../models/JobApplicationModel.js";
 
 //get all job seekers
 const getallseekers = async (page, limit,filtername) => {
@@ -184,13 +186,42 @@ const updateseeker = async (seekerid, seekerdata) => {
       logger.info("system user updated successfully");
 
       if (systemresult) {
-        await AuthUser.findOneAndUpdate(
+       const authresuult =  await AuthUser.findOneAndUpdate(
           { _id: seekerid },
           { $set: seekerdata },
           { new: true }
         );
 
         logger.info("auth user updated successfully");
+        if (authresuult) {
+
+          const profileresult = await seekerProfile.updateMany({'jobSeeker.seekerId':seekerid},{$set:{
+            'jobSeeker.firstName':seekerdata.firstName,
+            'jobSeeker.lastName':seekerdata.lastName,
+            'jobSeeker.userName':seekerdata.userName,
+            'jobSeeker.email':seekerdata.email,
+            'jobSeeker.phone':seekerdata.phone
+          }})
+          if (profileresult) {
+            const savedjobresult = await savedjobs.updateMany({'savedBy.seekerId':seekerid},{$set:{
+              'savedBy.firstName':seekerdata.firstName,
+              'savedBy.lastName':seekerdata.lastName,
+              'savedBy.userName':seekerdata.userName,
+              'savedBy.email':seekerdata.email,
+              'savedBy.phone':seekerdata.phone
+            }})
+            if (savedjobresult) {
+              await Jobapplication.updateMany({'applicant.seekerId':seekerid},{$set:{
+                'applicant.firstName':seekerdata.firstName,
+                'applicant.lastName':seekerdata.lastName,
+                'applicant.userName':seekerdata.userName,
+                'applicant.email':seekerdata.email,
+                'applicant.phone':seekerdata.phone
+              }})
+            }
+          }
+        }
+      
       } else {
         logger.error("error in updating system user");
       }
