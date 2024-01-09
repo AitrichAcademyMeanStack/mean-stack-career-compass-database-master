@@ -30,7 +30,7 @@ const router = express.Router()
  *                      type: array
  *                      items:
  *                          type: string
- *                  qualification:
+ *                  qualifications:
  *                      type: array
  *                      items:
  *                          type: string
