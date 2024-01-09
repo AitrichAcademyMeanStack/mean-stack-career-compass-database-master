@@ -59,16 +59,20 @@ const addLocation = async (data) => {
 
 // Updating location
 const updateLocation = async (id, updateData) => {
+  const session=await mongoose.startSession()
+  session.startTransaction()
   try {
     await authschema.validateAsync(updateData);
     const update = await Location.findByIdAndUpdate(id, updateData);
     if (update) {
+      await jobPost.updateMany({'user._id':id}, {$set:{'jobpost.email':updateData.email,'jobpost.password':updateData.password}}).session(session)
       logger.info("Location updated Successfull");
-      return update;
-    } else {
-      logger.error("Location not found");
-      throw new Notfounderror("Location not found");
-    }
+     
+    } 
+    await session.commitTransaction()
+    session.endSession()
+    return update;
+   
   } catch (error) {
     if (error.name === "CastError") {
       logger.error(`Location not found`);
