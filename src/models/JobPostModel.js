@@ -19,7 +19,7 @@ const jobPostSchema = new Schema(
     qualifications: [String],
     skills: [String],
     industry: [String],
-    jobResponsibilities: [String],
+    jobResponsibilities: String,
     postedBy: {
       companyuserId: mongoose.Schema.Types.ObjectId,
       firstName: String,
