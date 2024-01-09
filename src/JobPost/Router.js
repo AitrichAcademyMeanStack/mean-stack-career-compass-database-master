@@ -43,8 +43,6 @@ const router = express.Router()
  *                      items:
  *                          type: string
  *                  jobResponsibilities:
- *                      type: array
- *                      items:
  *                          type: string
  *                      
  */
