@@ -22,7 +22,19 @@ const savedjobsschema = new Schema({
         skills: [String],
         industry: [String],
         jobResponsibilities: [String],
-        postedBy: { type: String },
+        postedBy: {
+            companyuserId: mongoose.Schema.Types.ObjectId,
+            firstName: String,
+            role: {type: Schema.Types.Mixed,
+                default: {
+                    name: 'Company Admin',
+                    description: ''
+                }},
+            lastName: String,
+            userName: String,
+            email: String,
+            phone: String
+        },
         postedDate: { type: Date, default: Date.now() },
     },
     savedBy: {
