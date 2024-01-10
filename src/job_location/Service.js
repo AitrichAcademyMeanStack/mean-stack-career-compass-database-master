@@ -4,6 +4,7 @@ import logger from "../middleware/logger.js";
 import Location from "../models/LocationModel.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 import { commonvalidation } from "../middleware/Validation/CommonModule.js";
+import JobPost from "../models/JobPostModel.js";
 
 // fetching all locations
 const getAllLocations = async () => {
@@ -63,6 +64,7 @@ const updateLocation = async (id, updateData) => {
     await authschema.validateAsync(updateData);
     const update = await Location.findByIdAndUpdate(id, updateData);
     if (update) {
+      await JobPost.updateMany()
       logger.info("Location updated Successfull");
       return update;
     } else {

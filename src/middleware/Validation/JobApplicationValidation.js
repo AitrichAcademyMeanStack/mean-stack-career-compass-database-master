@@ -3,7 +3,6 @@ import Joi from "joi";
 const jobApplicationvalidation=Joi.object({
   
     coverletter:Joi.string()
-  
     .required()
     .min(20)
     .max(100)

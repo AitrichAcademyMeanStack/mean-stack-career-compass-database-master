@@ -1,9 +1,8 @@
 import service from './Service.js' //importing service
 import asyncerrorhandler from '../utils/asyncerrorhandler.js' //importing asynchronous error handler
 
-
+//get all job applications
 const getalljobapplications = asyncerrorhandler(async (req, res) => {
-  
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;   
     const sortorder = req.query.sort || 'newest'
@@ -11,6 +10,7 @@ const getalljobapplications = asyncerrorhandler(async (req, res) => {
     res.status(200).json(result);
 });
 
+//get all job applications with seeker id
 const getallapplications = asyncerrorhandler(async (req, res) => {
     const seekerid = req.params.seekerid;
     const page = parseInt(req.query.page) || 1;
@@ -20,6 +20,7 @@ const getallapplications = asyncerrorhandler(async (req, res) => {
     res.status(200).json(result);
 });
 
+//get all job applications with company user id
 const getjobapplications = asyncerrorhandler(async(req,res)=>{
     const page = parseInt(req.query.page) || 1
     const limit = parseInt(req.query.limit) || 10
