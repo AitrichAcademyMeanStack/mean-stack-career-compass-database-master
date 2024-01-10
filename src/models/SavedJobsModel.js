@@ -1,5 +1,6 @@
-import mongoose,{Schema} from 'mongoose'
+import mongoose,{Schema} from 'mongoose' //importing mongoose
 
+//schema model for saved jobs
 const savedjobsschema = new Schema({
     job:{
         JobpostId: mongoose.Schema.Types.ObjectId,

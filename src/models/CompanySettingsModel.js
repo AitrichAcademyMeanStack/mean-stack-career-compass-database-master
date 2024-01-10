@@ -1,5 +1,6 @@
-import mongoose , {Schema} from "mongoose";
+import mongoose , {Schema} from "mongoose"; //importing mongoose
 
+//schema model for company settings
 const companySettingsSchema = new Schema(
     {
         newJobApplicationEmail:{type: String},

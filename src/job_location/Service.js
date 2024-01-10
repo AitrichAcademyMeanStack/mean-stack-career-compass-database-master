@@ -64,7 +64,6 @@ const updateLocation = async (id, updateData) => {
     await authschema.validateAsync(updateData);
     const update = await Location.findByIdAndUpdate(id, updateData);
     if (update) {
-      await JobPost.updateMany()
       logger.info("Location updated Successfull");
       return update;
     } else {

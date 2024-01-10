@@ -1,5 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"; //importing mongoose
 
+//schema model for job provider company
 const JobProviderCompanySchema = new Schema(
   {
     legalName: { type: String, unique: true, required: true},

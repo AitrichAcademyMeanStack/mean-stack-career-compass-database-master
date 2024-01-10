@@ -2,9 +2,10 @@ import logger from "../middleware/logger.js"; //importing logger middleware
 import BadRequestError from "../Exceptions/BadRequestError.js"; //importing badrequest error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing notfound error handler
 import ValidationError from "../Exceptions/ValidationError.js"; //importing Validation error handler
-import JobTitle from "../models/JobTitle.js";
-import { commonvalidation } from "../middleware/Validation/CommonModule.js";
+import JobTitle from "../models/JobTitle.js"; //importing job title model
+import { commonvalidation } from "../middleware/Validation/CommonModule.js"; //importing common validation for validating job title
 
+//getting all job title
 const getalljobtitle = async () => {
   try {
     const result = await JobTitle.find({}, { name: true });
@@ -25,6 +26,7 @@ const getalljobtitle = async () => {
   }
 };
 
+//create new job title
 const createJobTitle=async(jobtitledata)=>{
     try {
         await commonvalidation.validateAsync(jobtitledata)
@@ -49,6 +51,7 @@ const createJobTitle=async(jobtitledata)=>{
     }
 }
 
+//delete job title
 const deleteJobTitle=async(jobtitleid)=>{
  try{
     const result= await JobTitle.findByIdAndDelete(jobtitleid)
@@ -71,6 +74,7 @@ catch (error) {
 }
 }
 
+//update job title
 const updateJobTitle=async(jobtitledata,jobtitleid)=>
 {
   try {
