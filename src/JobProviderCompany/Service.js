@@ -77,7 +77,11 @@ const addJobProvider = async (data) => {
 
 // Updating JobProviderCompany
 const updateJobProvider = async (id, updateData) => {
+
+  // Starting a session
   const session = await mongoose.startSession();
+
+  // Starting transaction
   session.startTransaction();
   try {
     const update = await JobProviderCompany.findOneAndUpdate(
@@ -118,6 +122,10 @@ const updateJobProvider = async (id, updateData) => {
           },
         }
       ).session(session);
+    
+      // commiting session
+      await session.commitTransaction();
+      session.endSession();
       return update;
     } else {
       logger.error("JobProviderCompany not found");
@@ -133,6 +141,10 @@ const updateJobProvider = async (id, updateData) => {
     } else {
       throw error;
     }
+  } finally {
+
+    // Aborting transaction
+    session.endSession()
   }
 };
 
