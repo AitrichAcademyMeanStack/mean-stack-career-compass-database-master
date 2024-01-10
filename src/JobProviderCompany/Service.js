@@ -2,24 +2,30 @@ import Badrequesterror from "../Exceptions/BadRequestError.js";
 import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
-import {jobProviderValidate} from "../middleware/Validation/JobProviderValidation.js";
+import { jobProviderValidate } from "../middleware/Validation/JobProviderValidation.js";
 import ValidationError from "../Exceptions/ValidationError.js";
+import mongoose from "mongoose";
+import JobPost from "../models/JobPostModel.js";
+import CompanyUser from "../models/CompanyUserModel.js";
 
 // fetching all JobProviderCompany
-const getAllJobProviders = async (page,limit) => {
+const getAllJobProviders = async (page, limit) => {
   try {
     const totalPosts = await JobProviderCompany.countDocuments();
-    const totalPages = Math.ceil(totalPosts/limit);
+    const totalPages = Math.ceil(totalPosts / limit);
     if (page > totalPages) {
       logger.error("Page Not Found");
-      throw new Notfounderror("Page Not Found")
+      throw new Notfounderror("Page Not Found");
     }
 
-    const jobProviders =  await JobProviderCompany.find().skip((page -1) * limit).limit(limit).exec();
+    const jobProviders = await JobProviderCompany.find()
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec();
     if (jobProviders) {
-      return jobProviders
-    }else {
-      throw new Notfounderror("Job provider not found")
+      return jobProviders;
+    } else {
+      throw new Notfounderror("Job provider not found");
     }
   } catch (error) {
     throw new Notfounderror("OOPS! something went wrong");
@@ -71,10 +77,47 @@ const addJobProvider = async (data) => {
 
 // Updating JobProviderCompany
 const updateJobProvider = async (id, updateData) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
-    const update = await JobProviderCompany.findByIdAndUpdate(id, updateData);
+    const update = await JobProviderCompany.findOneAndUpdate(
+      { _id: id },
+      { $set: updateData },
+      { new: true }
+    );
     if (update) {
       logger.info("JobProviderCompany updated Successfull");
+      await JobPost.updateMany(
+        { "company._id": id },
+        {
+          $set: {
+            "company.legalName": updateData.legalName,
+            "company.summary": updateData.summary,
+            "company.industry": updateData.industry,
+            "company.email": updateData.email,
+            "company.phone": updateData.phone,
+            "company.address": updateData.address,
+            "company.website": updateData.website,
+            "company.location": updateData.location,
+          },
+        }
+      ).session(session);
+
+      await CompanyUser.updateMany(
+        { "company._id": id },
+        {
+          $set: {
+            "company.legalName": updateData.legalName,
+            "company.summary": updateData.summary,
+            "company.industry": updateData.industry,
+            "company.email": updateData.email,
+            "company.phone": updateData.phone,
+            "company.address": updateData.address,
+            "company.website": updateData.website,
+            "company.location": updateData.location,
+          },
+        }
+      ).session(session);
       return update;
     } else {
       logger.error("JobProviderCompany not found");
@@ -112,40 +155,40 @@ const deleteJobProvider = async (id) => {
   }
 };
 
-const gettotalprovider = async()=>{
+const gettotalprovider = async () => {
   try {
-    const resultcount = await  JobProviderCompany.aggregate([
+    const resultcount = await JobProviderCompany.aggregate([
       {
         $group: {
           _id: null,
           count: {
-            $sum: 1
-          }
-        }
+            $sum: 1,
+          },
+        },
       },
-             {
-          $project:{
-              _id:0,
-              count:1
-          }
-        }
-    ])
+      {
+        $project: {
+          _id: 0,
+          count: 1,
+        },
+      },
+    ]);
     if (resultcount) {
-      logger.info("successfully getting all count of providers")
-      return resultcount
+      logger.info("successfully getting all count of providers");
+      return resultcount;
     } else {
-      logger.error("error occured in getting all providers count")
+      logger.error("error occured in getting all providers count");
     }
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 export default {
-    getAllJobProviders,
-    getJobProviderById,
-    addJobProvider,
-    updateJobProvider,
-    deleteJobProvider,
-    gettotalprovider,
-  };
+  getAllJobProviders,
+  getJobProviderById,
+  addJobProvider,
+  updateJobProvider,
+  deleteJobProvider,
+  gettotalprovider,
+};
