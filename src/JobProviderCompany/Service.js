@@ -118,6 +118,8 @@ const updateJobProvider = async (id, updateData) => {
           },
         }
       ).session(session);
+      await session.commitTransaction();
+      session.endSession();
       return update;
     } else {
       logger.error("JobProviderCompany not found");
@@ -133,6 +135,8 @@ const updateJobProvider = async (id, updateData) => {
     } else {
       throw error;
     }
+  } finally {
+    session.endSession()
   }
 };
 
