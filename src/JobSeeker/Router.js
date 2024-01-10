@@ -44,7 +44,7 @@ const router = express.Router();
  *                      schema:
  *                          type: array
  */
-router.get('/count',controller.getTotalJobseeker);
+router.get('/count',controller.getTotalJobseeker); //get all job seeker count
 
 /**
  * @swagger
@@ -80,7 +80,7 @@ router.get('/count',controller.getTotalJobseeker);
  *                          items:
  *                              $ref: '#/components/schemas/jobseeker'
  */
-router.get('/',controller.getallseekers)
+router.get('/',controller.getallseekers) //get all seekers
 
 
 /**
@@ -108,7 +108,7 @@ router.get('/',controller.getallseekers)
  *                          items:
  *                              $ref: '#/components/schemas/jobseeker' 
  */
-router.get('/:id',controller.getseekerbyid)
+router.get('/:id',controller.getseekerbyid) //get job seeker with specific id
 
 
 /**
@@ -136,7 +136,7 @@ router.get('/:id',controller.getseekerbyid)
  *              description: not found error, check request body
  * 
  */
-router.post('/',controller.createseeker)
+router.post('/',controller.createseeker) //create new job seeker
 
 /**
  * @swagger
@@ -170,7 +170,7 @@ router.post('/',controller.createseeker)
  *              description: not found error , check request body
  *                  
  */
-router.put('/:id',controller.updateseeker)
+router.put('/:id',controller.updateseeker) //update job seeker
 
 /**
  * @swagger
@@ -198,7 +198,7 @@ router.put('/:id',controller.updateseeker)
  *                              $ref: '#/components/schemas/jobseeker'
  * 
  */
-router.delete('/:id',controller.deleteseeker)
+router.delete('/:id',controller.deleteseeker) //delete job seeker
 
 /**
  * @swagger
@@ -235,7 +235,7 @@ router.delete('/:id',controller.deleteseeker)
  *          400:
  *              description: not found error, check request body
  */
-router.post("/:seekerid/login",controller.loginJobSeeker)
+router.post("/:seekerid/login",controller.loginJobSeeker) //log in job seeker
 
 /**
  * @swagger
@@ -280,6 +280,6 @@ router.post("/:seekerid/login",controller.loginJobSeeker)
  *          400:
  *              description: not found error, check request body
  */
-router.put('/:seekerid/changepassword',controller.changepassword)
+router.put('/:seekerid/changepassword',controller.changepassword) //job seeker change password
 
 export default router

@@ -4,11 +4,12 @@ import systemuser from "../models/SystemUserModel.js"; //importing system user m
 import NotFoundError from "../Exceptions/NotFoundError.js"; //importing not found error handler
 import ValidationError from "../Exceptions/ValidationError.js"; // importing validation error handler
 import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker
-import seekerProfile from "../models/JobSeekerProfileModel.js";
-import BadRequestError from "../Exceptions/BadRequestError.js";
-import { jobseekervalidation } from "../middleware/Validation/JobseekerValidation.js";
-import savedjobs from "../models/SavedJobsModel.js";
-import Jobapplication from "../models/JobApplicationModel.js";
+import seekerProfile from "../models/JobSeekerProfileModel.js"; //importing seeker profile model
+import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad request error handler
+import { jobseekervalidation } from "../middleware/Validation/JobseekerValidation.js"; //importing job seeker validation
+import savedjobs from "../models/SavedJobsModel.js"; //importing saved jobs model
+import Jobapplication from "../models/JobApplicationModel.js"; //importing job application model
+import mongoose from "mongoose"; //importing mongoose
 
 //get all job seekers
 const getallseekers = async (page, limit,filtername) => {
@@ -66,6 +67,7 @@ const getseekerbyid = async (seekerid) => {
   }
 };
 
+//get total job seeker count
 const getTotalJobseeker = async () => {
   try {
     const totalJobSeeker = await jobseeker.aggregate([
@@ -89,8 +91,8 @@ const getTotalJobseeker = async () => {
         logger.info("successfully getting all count of seekers")
       return totalJobSeeker;
     } else {
-        logger.error("error occured in getting all seekers count")
-
+      logger.error("error occured in getting all seekers count")
+      throw new BadRequestError('error occured in getting all seekers count') 
     }
   } catch (error) {
     throw error;
@@ -147,13 +149,15 @@ const createseeker = async (seekerdata) => {
             logger.info("profile created successfully");
           } else {
             logger.error("Error in creating auth user");
+            throw new BadRequestError("Error in creating auth user")
           }
         } else {
           logger.error("Error in creating system user");
-          return null;
+          throw new BadRequestError("Error in creating system user")
         }
       } else {
         logger.error("Error in creating job seeker");
+        throw new BadRequestError("Error in creating job seeker")
       }
       return seekerresult;
     } else {
@@ -165,101 +169,170 @@ const createseeker = async (seekerdata) => {
   }
 };
 
-// // //update job seeker with specific id
+//update job seeker with specific id
 const updateseeker = async (seekerid, seekerdata) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     const seekerresult = await jobseeker.findOneAndUpdate(
       { _id: seekerid },
       { $set: seekerdata },
-      { new: true }
+      { new: true },
+      { session }
     );
-    
+
     logger.info("job seeker updated successfully");
 
     if (seekerresult) {
       const systemresult = await systemuser.findOneAndUpdate(
         { _id: seekerid },
         { $set: seekerdata },
-        { new: true }
+        { new: true },
+        { session }
       );
 
       logger.info("system user updated successfully");
 
       if (systemresult) {
-       const authresuult =  await AuthUser.findOneAndUpdate(
+        const authresuult = await AuthUser.findOneAndUpdate(
           { _id: seekerid },
           { $set: seekerdata },
-          { new: true }
+          { new: true },
+          { session }
         );
 
         logger.info("auth user updated successfully");
         if (authresuult) {
-
-          const profileresult = await seekerProfile.updateMany({'jobSeeker.seekerId':seekerid},{$set:{
-            'jobSeeker.firstName':seekerdata.firstName,
-            'jobSeeker.lastName':seekerdata.lastName,
-            'jobSeeker.userName':seekerdata.userName,
-            'jobSeeker.email':seekerdata.email,
-            'jobSeeker.phone':seekerdata.phone
-          }})
+          const profileresult = await seekerProfile.updateMany(
+            { 'jobSeeker.seekerId': seekerid },
+            {
+              $set: {
+                'jobSeeker.firstName': seekerdata.firstName,
+                'jobSeeker.lastName': seekerdata.lastName,
+                'jobSeeker.userName': seekerdata.userName,
+                'jobSeeker.email': seekerdata.email,
+                'jobSeeker.phone': seekerdata.phone,
+              },
+            },
+            { session }
+          );
+          logger.info("seeker profile updated successfully");
           if (profileresult) {
-            const savedjobresult = await savedjobs.updateMany({'savedBy.seekerId':seekerid},{$set:{
-              'savedBy.firstName':seekerdata.firstName,
-              'savedBy.lastName':seekerdata.lastName,
-              'savedBy.userName':seekerdata.userName,
-              'savedBy.email':seekerdata.email,
-              'savedBy.phone':seekerdata.phone
-            }})
+            const savedjobresult = await savedjobs.updateMany(
+              { 'savedBy.seekerId': seekerid },
+              {
+                $set: {
+                  'savedBy.firstName': seekerdata.firstName,
+                  'savedBy.lastName': seekerdata.lastName,
+                  'savedBy.userName': seekerdata.userName,
+                  'savedBy.email': seekerdata.email,
+                  'savedBy.phone': seekerdata.phone,
+                },
+              },
+              { session }
+            );
+            logger.info("saved jobs updated successfully");
             if (savedjobresult) {
-              await Jobapplication.updateMany({'applicant.seekerId':seekerid},{$set:{
-                'applicant.firstName':seekerdata.firstName,
-                'applicant.lastName':seekerdata.lastName,
-                'applicant.userName':seekerdata.userName,
-                'applicant.email':seekerdata.email,
-                'applicant.phone':seekerdata.phone
-              }})
+              await Jobapplication.updateMany(
+                { 'applicant.seekerId': seekerid },
+                {
+                  $set: {
+                    'applicant.firstName': seekerdata.firstName,
+                    'applicant.lastName': seekerdata.lastName,
+                    'applicant.userName': seekerdata.userName,
+                    'applicant.email': seekerdata.email,
+                    'applicant.phone': seekerdata.phone,
+                  },
+                },
+                { session }
+              );
+              logger.info("job application updated successfully");
             }
           }
         }
-      
       } else {
         logger.error("error in updating system user");
+        throw new BadRequestError("error in updating system user")
       }
     } else {
       logger.error("error in updating job seeker");
+      throw new BadRequestError("error in updating job seeker")
+
     }
+
+    await session.commitTransaction();
+    session.endSession();
 
     return seekerresult;
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     throw error;
   }
 };
+
 
 
 // //delete job seeker with specific id
 const deleteseeker = async (seekerid) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
-    const seekerresult = await jobseeker.findByIdAndDelete(seekerid);
+    const seekerresult = await jobseeker.findByIdAndDelete(seekerid).session(session);
     logger.info("job seeker deleted successfully");
+
     if (seekerresult) {
-      const systemresult = await systemuser.findByIdAndDelete(seekerid);
+      const systemresult = await systemuser.findByIdAndDelete(seekerid).session(session);
       logger.info("system user deleted successfully");
+
       if (systemresult) {
-        await AuthUser.findByIdAndDelete(seekerid);
+        const authresult = await AuthUser.findByIdAndDelete(seekerid).session(session);
         logger.info("auth user deleted successfully");
+
+        if (authresult) {
+          const profileresult = await seekerProfile.deleteMany({ 'jobSeeker.seekerId': seekerid }).session(session);
+          logger.info("seeker profile deleted successfully");
+
+          if (profileresult) {
+            const savedjobresult = await savedjobs.deleteMany({ 'savedBy.seekerId': seekerid }).session(session);
+            logger.info("saved jobs deleted successfully");
+
+            if (savedjobresult) {
+              await Jobapplication.deleteMany({ 'applicant.seekerId': seekerid }).session(session);
+            } else {
+              logger.error("error in deleting job applications");
+              throw new BadRequestError("error in deleting job applications")
+            }
+          } else {
+            logger.error("error in deleting saved jobs");
+            throw new BadRequestError("error in deleting saved jobs")
+
+          }
+        } else {
+          logger.error("error in deleting seeker profile");
+          throw new BadRequestError("error in deleting seeker profile")
+
+        }
       } else {
         logger.error("error in deleting system user");
+        throw new BadRequestError("error in deleting system user")
       }
     } else {
       logger.error("error in deleting job seeker");
-      throw new NotFoundError("User not found with specific ID")
+      throw new NotFoundError("User not found with specific ID");
     }
+    await session.commitTransaction();
+    session.endSession();
     return seekerresult;
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     throw error;
   }
 };
 
+//log in job seeker
 const loginJobSeeker = async (seekerid, data) => {
   try {
     const existingSeeker = await jobseeker.findById(seekerid);
@@ -294,6 +367,8 @@ const loginJobSeeker = async (seekerid, data) => {
   }
 };
 
+
+//change password in job seeker
 const changepassword = async (seekerid, data) => {
   try {
     const existingSeeker = await jobseeker.findById(seekerid);

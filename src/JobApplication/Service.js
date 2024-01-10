@@ -45,7 +45,7 @@ const getalljobapplications = async (page, limit,sortorder) => {
        }
 };
 
-
+//get all job applications with company user id
 const getjobapplications = async(companyuserid,jobpostid,page,limit,sortorder)=>{
     try {
         const existingcompanyuser = await CompanyUser.findById(companyuserid)

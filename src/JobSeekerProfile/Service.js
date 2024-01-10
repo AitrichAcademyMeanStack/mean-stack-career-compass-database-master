@@ -4,6 +4,7 @@ import jobseeker from "../models/JobSeekerModel.js"; //importing job seeker mode
 import ValidationError from "../Exceptions/ValidationError.js"; //importing validation error handler
 import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
+import { profilenamevalidate, profilesummaryvalidate, qualificationvalidate, skillvalidate, workexperiencevalidate } from "../middleware/Validation/Jobseekerprofilevalidation.js";
 
 
 
@@ -117,6 +118,7 @@ const getskills=async(seekerid,profileid)=>
 //add skills to profile
 const addskill = async (seekerid, profileid, skillNames) => {
   try {
+    await skillvalidate.validateAsync(skillNames)
     const existingseeker = await jobseeker.findById(seekerid);
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
@@ -153,8 +155,8 @@ const addskill = async (seekerid, profileid, skillNames) => {
 //add profile name to profile
 const addprofilename = async (seekerid, profileid, profilenamedata) => {
   try {
+    await profilenamevalidate.validateAsync(profilenamedata)
     const existingseeker = await jobseeker.findById(seekerid);
-
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid);
 
@@ -217,6 +219,7 @@ const getallprofile = async (seekerid, profileid) => {
 //add qualification to seekerprofile
 const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
   try {
+    await qualificationvalidate.validateAsync(qualificationdata)
     const seekerdata = await jobseeker.findById(seekerid);
     if (seekerdata) {
       const profiledata = await seekerProfile.findById(profileid);
@@ -254,6 +257,7 @@ const qualificationupdate = async (seekerid, profileid, qualificationdata) => {
 //add profile summary to seekerprofile
 const updateprofilesummary = async (seekerid, profileid, summarydata) => {
   try {
+    await profilesummaryvalidate.validateAsync(summarydata)
     const seekerdata = await jobseeker.findById(seekerid);
     if (seekerdata) {
       const profiledata = await seekerProfile.findById(profileid);
@@ -288,6 +292,7 @@ const updateprofilesummary = async (seekerid, profileid, summarydata) => {
 //add work experience to profile
 const addworkexperience = async (seekerid, profileid, experiencedata) => {
   try {
+    await workexperiencevalidate.validateAsync(experiencedata)
     const existingseeker = await jobseeker.findById(seekerid)
     if (existingseeker) {
       const existingprofile = await seekerProfile.findById(profileid)
