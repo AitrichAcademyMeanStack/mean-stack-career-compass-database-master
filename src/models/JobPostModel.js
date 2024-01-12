@@ -1,7 +1,12 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"; //importing mongoose
+
+//schema model for job post
 const jobPostSchema = new Schema(
   {
-    jobTitle: { type: String },
+    jobTitle: {
+      Titleid:{type: mongoose.Schema.Types.ObjectId},
+      name:{type : String}
+    },
     jobSummary: { type: String },
     jobLocation: [String],
     company: {

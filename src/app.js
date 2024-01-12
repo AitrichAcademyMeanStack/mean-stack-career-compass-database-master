@@ -16,7 +16,7 @@ import rolesRouter from "./Role/Router.js" // importing routes for Role  module
 import workexperience from './WorkExperience/Router.js' //importing routes for work experience module
 import seekerrouter from './JobSeeker/Router.js' //importing routes for seeker module
 import seekerprofile from './JobSeekerProfile/Router.js' //importing routes for job seeker profile module
-import companyUserRouter from './CompanyUser/Router.js' 
+import companyUserRouter from './CompanyUser/Router.js' //importing company user
 import savedjobrouter from './SavedJobs/Router.js' //importing routes for saved jobs module
 import resumerouter from "./Resume/Router.js"; //importing routes for resume module
 import industryRouter from './Industry/Router.js'  //importing routes for Industry
@@ -25,8 +25,8 @@ import JobSubscriptionRouter from './JobAlertSubscription/Router.js'//importing 
 import jobInterviewRoute from './JobInterview/Router.js' // importing routes for job interview
 import jobPostRouter from "./JobPost/Router.js" // importing routes for Job Post
 import jobapplicationrouter from './JobApplication/Router.js' //importing routes for job application
-import JobTitleRouter from './JobTitle/Router.js'
-import platFormAdminRouter from './PlatformAdmin/Router.js'
+import JobTitleRouter from './JobTitle/Router.js' //importing routes for job title
+import platFormAdminRouter from './PlatformAdmin/Router.js' //importing router for platform admin
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Configuring dirname path
 
 

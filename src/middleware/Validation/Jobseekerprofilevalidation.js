@@ -6,9 +6,8 @@ const skillvalidate = Joi.object({
       .items(Joi.string())
       .required()
       .messages({ 'any.required': 'Skills are required. Please provide at least one skill.' })
-  })
+})
   
-
 const qualificationvalidate = Joi.object({
     qualifications: Joi
     .array()
@@ -93,6 +92,6 @@ const workexperiencevalidate = Joi.object({
       'any.required': 'Work experiences are required. Please provide at least one work experience.',
       'array.min': 'At least one work experience is required.',
     }),
-  }); 
+}); 
 
 export {profilenamevalidate,profilesummaryvalidate,workexperiencevalidate,skillvalidate,qualificationvalidate}

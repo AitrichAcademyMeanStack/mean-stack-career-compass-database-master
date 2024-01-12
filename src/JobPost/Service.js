@@ -6,60 +6,73 @@ import CompanyUser from "../models/CompanyUserModel.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 import InternalServerError from "../Exceptions/InternalServerError.js"
 import { jobPostvalidation } from "../middleware/Validation/JobpostValidation.js";
+import JobTitle from "../models/JobTitle.js";
 
 
 // creating job post
-const addJobPost = async (companyUserId,jobPost) => {
+const addJobPost = async (companyUserId, jobPost) => {
   try {
-    await jobPostvalidation.validateAsync(jobPost)
-    const companyUser = await CompanyUser.findById(companyUserId)
+    await jobPostvalidation.validateAsync(jobPost);
+    const companyUser = await CompanyUser.findById(companyUserId);
+
     if (companyUser) {
+      // Find the JobTitle document based on the selected name
+      const jobTitle = await JobTitle.findOne({ name: jobPost.jobTitle });
+
+      if (jobTitle) {
       
-      //Embedding JobProviderCompany
-      jobPost.company = {
-        companyId: companyUser.company.companyId,
-        legalName: companyUser.company.legalName,
-        summary: companyUser.company.summary,
-        industry: companyUser.company.industry,
-        email: companyUser.company.email,
-        phone: companyUser.company.phone,
-        address: companyUser.company.address,
-        website: companyUser.company.website,
-        location: companyUser.company.location,
-      }
+        // Embedding JobProviderCompany
+        jobPost.company = {
+          companyId: companyUser.company.companyId,
+          legalName: companyUser.company.legalName,
+          summary: companyUser.company.summary,
+          industry: companyUser.company.industry,
+          email: companyUser.company.email,
+          phone: companyUser.company.phone,
+          address: companyUser.company.address,
+          website: companyUser.company.website,
+          location: companyUser.company.location,
+        };
 
-      //Embedding CompanyUser
-      jobPost.postedBy = {
-        companyuserId:companyUser._id,
-        firstName: companyUser.firstName,
-        role: companyUser.role,
-        lastName: companyUser.lastName,
-        userName: companyUser.userName,
-        email: companyUser.email
+        // Embedding CompanyUser
+        jobPost.postedBy = {
+          companyuserId: companyUser._id,
+          firstName: companyUser.firstName,
+          role: companyUser.role,
+          lastName: companyUser.lastName,
+          userName: companyUser.userName,
+          email: companyUser.email,
+        };
 
-      }
+        // Assign the ObjectId of the found JobTitle
+        jobPost.jobTitle = {
+          Titleid: jobTitle._id,
+          name:jobTitle.name
+        }
 
-    
-      const jobs = await JobPost.create(jobPost);
-      if (jobs) {
-        logger.info("Job Posted Successfully");
-        return jobs;
+        const createdJobPost = await JobPost.create(jobPost);
+        if (createdJobPost) {
+          logger.info("Job Posted Successfully");
+          return createdJobPost;
+        } else {
+          throw new BadRequestError("Error while posting Job");
+        }
       } else {
-        throw new BadRequestError("Error while posting Job");
-      }  
-    }else {
-      throw new NotFoundError("CompanyUser not found")
+        throw new NotFoundError(`JobTitle not found with name: ${jobPost.jobTitle}`);
+      }
+    } else {
+      throw new NotFoundError("CompanyUser not found");
     }
   } catch (error) {
     if (error.name === "ValidationError") {
-      logger.error(`validation error: ${error.message}`)
-      throw new ValidationError(error.message)
-    }else {
+      logger.error(`Validation error: ${error.message}`);
+      throw new ValidationError(error.message);
+    } else {
       throw error;
-
     }
   }
 };
+
 
 // fetching all job posts
 const getAllJobPosts = async (page, limit, jobtitle, sortOrder) => {
@@ -157,12 +170,21 @@ const updatePost = async (postId,companyUserId,updateData) => {
     if (companyUser) {
       const job = await JobPost.findById(postId);
       if (job) {
-        const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
-        if (updatePost) {
-          logger.info("Job Post Updated Successfully");
-          return updatePost;
-        } else {
-          throw new BadRequestError("Error while updating Job Post");
+        const jobtitle = await JobTitle.findOne({name:updateData.jobTitle})
+        if (jobtitle) {
+          updateData.jobTitle = {
+            Titleid: jobtitle._id,
+            name:jobtitle.name
+          }
+          const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
+          if (updatePost) {
+            logger.info("Job Post Updated Successfully");
+            return updatePost;
+          } else {
+            throw new BadRequestError("Error while updating Job Post");
+          }
+        }else{
+          throw new NotFoundError(`JobTitle not found with name: ${updateData.jobTitle}`);
         }
       }else {
         throw new NotFoundError("JobPost not found with specific ID")

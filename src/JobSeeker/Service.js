@@ -131,6 +131,7 @@ const createseeker = async (seekerdata) => {
             email: systemresult.email,
             phone: systemresult.phone,
             role: systemresult.role,
+            password: seekerdata.password
           };
           const authuser = await AuthUser.create(authuserdata);
           logger.info("Auth user created successfully");

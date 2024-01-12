@@ -5,6 +5,7 @@ import ValidationError from "../Exceptions/ValidationError.js"; //importing vali
 import BadRequestError from "../Exceptions/BadRequestError.js"; //importing bad request error handler
 import NotFoundError from "../Exceptions/NotFoundError.js"; // importing not found error handler
 import { profilenamevalidate, profilesummaryvalidate, qualificationvalidate, skillvalidate, workexperiencevalidate } from "../middleware/Validation/Jobseekerprofilevalidation.js";
+import JobTitle from "../models/JobTitle.js";
 
 
 
@@ -292,43 +293,62 @@ const updateprofilesummary = async (seekerid, profileid, summarydata) => {
 //add work experience to profile
 const addworkexperience = async (seekerid, profileid, experiencedata) => {
   try {
-    await workexperiencevalidate.validateAsync(experiencedata)
-    const existingseeker = await jobseeker.findById(seekerid)
+    await workexperiencevalidate.validateAsync(experiencedata);
+    const existingseeker = await jobseeker.findById(seekerid);
+
     if (existingseeker) {
-      const existingprofile = await seekerProfile.findById(profileid)
+      const existingprofile = await seekerProfile.findById(profileid);
+
       if (existingprofile && existingprofile.jobSeeker.seekerId.toString() === existingseeker._id.toString()) {
-        existingprofile.workExperiences = [{
-          jobTitle: experiencedata.jobTitle,
-          companyName: experiencedata.companyName,
-          summary: experiencedata.summary,
-          serviceStart: experiencedata.serviceStart,
-          serviceEnd: experiencedata.serviceEnd
-        }]
-        const result = await seekerProfile.updateOne(
-          { _id: profileid },
-          { $addToSet: { workExperiences: { $each: experiencedata.workExperiences } } })
-        if (result) {
-          logger.info("work experience added successfully")
-          console.log(result);
-          return result
+        const titleresult = await JobTitle.findOne({ name: experiencedata.workExperiences[0].jobTitle });
+
+        if (titleresult) {
+          const result = await seekerProfile.updateOne(
+            { _id: profileid },
+            {
+              $push: {
+                workExperiences: {
+                  $each: [{
+                    jobTitle: {
+                      Titleid: titleresult._id,
+                      name: titleresult.name
+                    },
+                    companyName: experiencedata.workExperiences[0].companyName,
+                    summary: experiencedata.workExperiences[0].summary,
+                    serviceStart: experiencedata.workExperiences[0].serviceStart,
+                    serviceEnd: experiencedata.workExperiences[0].serviceEnd
+                  }]
+                }
+              }
+            }
+          );
+
+          if (result) {
+            logger.info("Work experience added successfully");
+            console.log(result);
+            return result;
+          } else {
+            logger.error("Error occurred in adding work experiences");
+            throw new BadRequestError("Error occurred in adding work experiences");
+          }
         } else {
-          logger.error("error occured  in adding work experiences")
-          throw new BadRequestError("error occured  in adding work experiences")
+          logger.error(`Job title not found with name: ${experiencedata.workExperiences[0].jobTitle}`);
+          throw new NotFoundError(`Job title not found with name: ${experiencedata.workExperiences[0].jobTitle}`);
         }
       } else {
-        logger.error("seeker profile not found with specific id")
-        throw new NotFoundError("seeker profile not found with specific id")
+        logger.error("Seeker profile not found with specific id");
+        throw new NotFoundError("Seeker profile not found with specific id");
       }
     } else {
-      logger.error("seeker not found with specific id")
-      throw new NotFoundError("Seeker not found with specific id")
-
+      logger.error("Seeker not found with specific id");
+      throw new NotFoundError("Seeker not found with specific id");
     }
   } catch (error) {
-    logger.error(`Error: ${error}`);
-    throw error
+    throw error;
   }
-}
+};
+
+
 
 // add resume to seekerprofile
 const resumeupload = async (req, seekerid, profileid) => {

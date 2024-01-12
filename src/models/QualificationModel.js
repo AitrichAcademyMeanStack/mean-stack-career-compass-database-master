@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"; //importing mongoose
 
 // Schema for Qualification
 const qualificationSchema = new Schema({

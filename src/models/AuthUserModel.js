@@ -1,5 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"; //importing mongoose
 
+//schema model for auth user
 const authUserSchema = new Schema(
   {
         userName:{type : String,ref:'systemuser',required:true},

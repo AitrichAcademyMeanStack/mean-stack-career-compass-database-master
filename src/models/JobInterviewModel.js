@@ -1,5 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"; //importing mongoose
 
+//importing schema model for job interview
 const jobInterviewSchema = new Schema({
   job: {
     jobTitle: String,

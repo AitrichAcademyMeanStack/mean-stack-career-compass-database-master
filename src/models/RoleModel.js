@@ -1,5 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"; //importing mongoose
 
+//schema model for role
 const roleSchema = new Schema(
     {
         name: {

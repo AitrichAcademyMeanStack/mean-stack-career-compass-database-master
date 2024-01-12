@@ -36,11 +36,8 @@ const router = express.Router()
  *                          items:
  *                              $ref: '#/components/schemas/jobtitle' 
  */
-router.get('/',controller.getalljobtitle)
+router.get('/',controller.getalljobtitle) //getting all job title
 
-
-
-//create new jobtitle
 /**
  * @swagger
  * /api/v1/jobtitle:
@@ -65,11 +62,8 @@ router.get('/',controller.getalljobtitle)
  *          400:
  *              description: not found error, check request body
  */
-router.post('/',controller.createJobTitle)
+router.post('/',controller.createJobTitle) //create new jobtitle
 
-
-
-//delete jobtitle
 /**
  * @swagger
  * /api/v1/jobtitle/{id}:
@@ -96,12 +90,8 @@ router.post('/',controller.createJobTitle)
  *                              $ref: '#/components/schemas/jobtitle'
  * 
  */
+router.delete('/:id',controller.deleteJobTitle) //delete jobtitle
 
-router.delete('/:id',controller.deleteJobTitle)
-
-
-
-//update jobtitle
 /**
  * @swagger
  * /api/v1/jobtitle/{id}:
@@ -134,9 +124,6 @@ router.delete('/:id',controller.deleteJobTitle)
  *              description: not found error , check request body
  *                  
  */
-
-router.put('/:id',controller.updateJobTitle)
-
-
+router.put('/:id',controller.updateJobTitle) //update jobtitle
 
 export default router

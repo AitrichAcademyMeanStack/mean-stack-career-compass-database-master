@@ -1,4 +1,4 @@
-import mongoose,{Schema} from 'mongoose'
+import mongoose,{Schema} from 'mongoose' //importing mongoose
 
 //schema for job application schema
 const jobapplicationschema = new Schema({
