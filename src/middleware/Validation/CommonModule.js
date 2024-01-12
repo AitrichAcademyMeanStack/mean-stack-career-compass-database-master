@@ -13,7 +13,6 @@ const commonvalidation = Joi.object({
           "Name field should not be empty. Please provide a value for the name field.",
       }),
     description: Joi.string()
-      .required()
       .min(3)
       .pattern(/^[a-zA-Z\s]+$/)
       .messages({

@@ -7,6 +7,9 @@ import ValidationError from "../Exceptions/ValidationError.js";
 import InternalServerError from "../Exceptions/InternalServerError.js"
 import { jobPostvalidation } from "../middleware/Validation/JobpostValidation.js";
 import JobTitle from "../models/JobTitle.js";
+import Jobapplication from "../models/JobApplicationModel.js";
+import savedjobs from "../models/SavedJobsModel.js";
+import location from "../models/LocationModel.js";
 
 
 // creating job post
@@ -18,8 +21,8 @@ const addJobPost = async (companyUserId, jobPost) => {
     if (companyUser) {
       // Find the JobTitle document based on the selected name
       const jobTitle = await JobTitle.findOne({ name: jobPost.jobTitle });
-
-      if (jobTitle) {
+      const joblocation=await location.findOne({name:jobPost.jobLocation})
+      if (jobTitle && joblocation) {
       
         // Embedding JobProviderCompany
         jobPost.company = {
@@ -49,6 +52,10 @@ const addJobPost = async (companyUserId, jobPost) => {
           Titleid: jobTitle._id,
           name:jobTitle.name
         }
+        jobPost.jobLocation={
+          locationId:joblocation._id,
+          name:joblocation.name
+        }
 
         const createdJobPost = await JobPost.create(jobPost);
         if (createdJobPost) {
@@ -58,7 +65,7 @@ const addJobPost = async (companyUserId, jobPost) => {
           throw new BadRequestError("Error while posting Job");
         }
       } else {
-        throw new NotFoundError(`JobTitle not found with name: ${jobPost.jobTitle}`);
+        throw new NotFoundError("error in found common datas");
       }
     } else {
       throw new NotFoundError("CompanyUser not found");
@@ -165,6 +172,8 @@ const getJobPostsById = async (companyUserId,postId) => {
 
 // Updating Job Post
 const updatePost = async (postId,companyUserId,updateData) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
     const companyUser = await CompanyUser.findById(companyUserId);
     if (companyUser) {
@@ -178,8 +187,31 @@ const updatePost = async (postId,companyUserId,updateData) => {
           }
           const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
           if (updatePost) {
-            logger.info("Job Post Updated Successfully");
-            return updatePost;
+            const jobapply=await Jobapplication.updateMany(
+            {'job.JobpostId':postId},
+            {$set:updateData},
+            {new:true},
+            {session});
+          logger.console('job apply update successfully')
+
+          if(jobapply)
+          {
+            const savjobed= await savedjobs.updateMany(
+            {
+              $set: {
+                'Jobapplication.jobTitle': updateData.jobTitle,
+                'Jobapplication.jobTitle': updateData.jobTitle,
+                'Jobapplication.jobTitle': updateData.jobTitle,
+                'Jobapplication.jobTitle': updateData.jobTitle,
+                'Jobapplication.jobTitle': updateData.jobTitle,
+                'Jobapplication.jobTitle': updateData.jobTitle,
+              
+
+              }
+            },
+            {session})
+          }
+            
           } else {
             throw new BadRequestError("Error while updating Job Post");
           }

@@ -5,6 +5,7 @@ import Location from "../models/LocationModel.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 import { commonvalidation } from "../middleware/Validation/CommonModule.js";
 import JobPost from "../models/JobPostModel.js";
+import mongoose from "mongoose";
 
 // fetching all locations
 const getAllLocations = async () => {
@@ -63,16 +64,15 @@ const updateLocation = async (id, updateData) => {
   const session=await mongoose.startSession()
   session.startTransaction()
   try {
-    await authschema.validateAsync(updateData);
-    const update = await Location.findByIdAndUpdate(id, updateData);
+    await commonvalidation.validateAsync(updateData);
+    const update = await Location.findByIdAndUpdate(id, updateData,{new:true});
     if (update) {
       logger.info("Location updated Successfull");
-     
+      await JobPost.updateMany({'jobLocation.locationId':id},{$set:{'jobLocation.name':updateData.name}},{new:true},session)
     } 
     await session.commitTransaction()
     session.endSession()
     return update;
-   
   } catch (error) {
     if (error.name === "CastError") {
       logger.error(`Location not found`);
