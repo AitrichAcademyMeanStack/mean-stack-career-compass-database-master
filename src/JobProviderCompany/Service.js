@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import JobPost from "../models/JobPostModel.js";
 import CompanyUser from "../models/CompanyUserModel.js";
 import NotFoundError from "../Exceptions/NotFoundError.js";
+import location from "../models/LocationModel.js";
 
 // fetching all JobProviderCompany
 const getAllJobProviders = async (page, limit) => {
@@ -57,13 +58,20 @@ const getJobProviderById = async (id) => {
 const addJobProvider = async (data) => {
   try {
     await jobProviderValidate.validateAsync(data);
-    const newData = await JobProviderCompany.create(data);
-    if (newData) {
-      logger.info("JobProviderCompany Created");
-      return newData;
-    } else {
-      logger.error("Error while adding JobProviderCompany");
-      throw new Badrequesterror("Error while adding new JobProviderCompany");
+    const locationdata = await location.findOne({name:data.location})
+    if (locationdata) {
+      data.location={
+        locationId:locationdata._id,
+        name:locationdata.name
+      }
+      const newData = await JobProviderCompany.create(data);
+      if (newData) {
+        logger.info("JobProviderCompany Created");
+        return newData;
+      } else {
+        logger.error("Error while adding JobProviderCompany");
+        throw new Badrequesterror("Error while adding new JobProviderCompany");
+      }
     }
   } catch (error) {
     if (error.name === "ValidationError") {

@@ -71,7 +71,7 @@ const jobProviderValidate = Joi.object({
         "string.empty":
           "website field should not be empty. Please provide a value for the website.",
       }),
-    location: Joi.array().required().messages({
+    location: Joi.string().required().messages({
       "any.required": "location field is required.",
       "string.empty":
         "location should not be empty. Please provide a value for the location field.",

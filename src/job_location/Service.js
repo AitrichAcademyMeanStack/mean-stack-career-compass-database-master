@@ -93,23 +93,54 @@ const updateLocation = async (id, updateData) => {
 };
 
 // Deleting location
-const deleteLocation = async (id) => {
+// const deleteLocation = async (id) => {
+//   try {
+//     const deleteData = await Location.findByIdAndDelete(id);
+//     if (deleteData) {
+//       logger.info("Location Deleted Successfully");
+//       return deleteData;
+//     } else {
+//       logger.error("Location ID not found");
+//       throw new Notfounderror("Location ID not found");
+//     }
+//   } catch (error) {
+//     if (error.name === "CastError") {
+//       logger.error("Error while deleting Location");
+//       throw new Badrequesterror("Location unable to delete");
+//     }
+//   }
+// };
+
+
+
+
+ const deleteLocation = async (id) => {
+  const session=await Location.startSession();
+  session.startTransaction();
   try {
-    const deleteData = await Location.findByIdAndDelete(id);
-    if (deleteData) {
-      logger.info("Location Deleted Successfully");
-      return deleteData;
-    } else {
-      logger.error("Location ID not found");
-      throw new Notfounderror("Location ID not found");
-    }
-  } catch (error) {
-    if (error.name === "CastError") {
-      logger.error("Error while deleting Location");
-      throw new Badrequesterror("Location unable to delete");
-    }
-  }
+    const result=await Location.findByIdAndDelete(id).session(session)
+  
+    if ( result) {
+      await JobPost.deleteMany({'jobLocation.locationId':id}).session(session)
+      
+      await session.commitTransaction();
+      session.endSession();
+      logger.info("joblocation deleted successfully")
+
+    } 
+  } 
+  catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        if (error.name === "CastError") {
+          logger.error("invalid joblocation id");
+          throw new Badrequesterror("invalid joblocation id");
+        } else {
+          throw error;
+        }
+      }
 };
+
 
 export default {
   getAllLocations,

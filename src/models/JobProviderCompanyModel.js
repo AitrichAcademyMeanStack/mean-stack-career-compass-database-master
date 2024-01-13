@@ -10,7 +10,10 @@ const JobProviderCompanySchema = new Schema(
     phone: { type: Number, unique: true, required: true },
     address: { type: String, unique: true, required: true },
     website: { type: String, unique: true, required: true },
-    location: [{ type: String, unique: true, required: true }],
+    location:{
+      locationId:{type:mongoose.Schema.Types.ObjectId},  
+      name:{type : String}
+    }
   },
   { versionKey: false }
 );

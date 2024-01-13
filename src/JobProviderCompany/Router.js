@@ -35,9 +35,7 @@ const router = express.Router()
  *                  website:
  *                      type: string
  *                  location:
- *                      type: array
- *                      items:
- *                          type: string
+ *                      type: string
  * 
  * 
  */

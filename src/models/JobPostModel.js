@@ -21,7 +21,10 @@ const jobPostSchema = new Schema(
       phone: { type: String },
       address: { type: String },
       website: { type: String },
-      location: [String],
+      location:{
+        locationId:{type:mongoose.Schema.Types.ObjectId},  
+        name:{type : String}
+      },
     },
     category: String,
     qualifications: [String],
