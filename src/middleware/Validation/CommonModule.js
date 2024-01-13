@@ -4,7 +4,7 @@ const commonvalidation = Joi.object({
     name: Joi.string()
       .required()
       .min(3)
-      .pattern(/^[a-zA-Z\s]+$/)
+      .pattern(/^[a-zA-Z\s]/)
       .messages({
         "string.pattern.base": "Name field only contains alphabets.",
         "string.min": "Name field must be at least 3 characters long.",
@@ -13,7 +13,6 @@ const commonvalidation = Joi.object({
           "Name field should not be empty. Please provide a value for the name field.",
       }),
     description: Joi.string()
-      .required()
       .min(3)
       .pattern(/^[a-zA-Z\s]+$/)
       .messages({

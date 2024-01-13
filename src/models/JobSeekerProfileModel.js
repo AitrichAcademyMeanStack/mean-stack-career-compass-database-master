@@ -21,7 +21,10 @@ const jobSeekerProfileSchema = new Schema(
       enddate: Date
     }],
     workExperiences: [{
-       jobTitle: String,
+      jobTitle: {
+        Titleid:{type: mongoose.Schema.Types.ObjectId},
+        name:{type : String}
+      },
       companyName: String,
       summary: String,
       serviceStart: Date,

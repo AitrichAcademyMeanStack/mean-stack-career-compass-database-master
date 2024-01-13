@@ -23,9 +23,7 @@ const router = express.Router()
  *                  jobSummary:
  *                      type: string
  *                  jobLocation:
- *                      type: array
- *                      items:
- *                          type: string
+ *                      type: string
  *                  category:
  *                      type: array
  *                      items:

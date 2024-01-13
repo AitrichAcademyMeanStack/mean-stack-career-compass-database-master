@@ -57,6 +57,18 @@ const jobseekervalidation = Joi.object({
         "any.required": "Phone Number is required.",
         "number.positive": "Phone must be a positive number.",
         "number.empty": "Phone Number should not be empty. Please provide a value for the Phone field.",
+      }),
+      password: Joi.string()
+      .required()
+      .min(8)
+      .max(15)
+      .pattern(/^[a-zA-Z0-9@]+$/)
+      .messages({
+        "string.pattern.base": "password field only contains alphabets without spaces",
+        "string.min": "password should be minimum 8 characters long",
+        "string.max": "password should be maximum 15 characters long",
+        "any.required": "password field is required",
+        "string.empty": "password field should not be empty. Please provide a value for the password field.",
       })
     
   })
