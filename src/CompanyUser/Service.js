@@ -7,6 +7,8 @@ import systemuser from "../models/SystemUserModel.js";
 import AuthUser from "../models/AuthUserModel.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
 import { companyUserValidate } from "../middleware/Validation/CompanyUserValidation.js";
+import JobPost from "../models/JobPostModel.js";
+import JobInterview from "../models/JobInterviewModel.js"
 
 // Fetchng all CompanyUser
 const getAllCompanyUsers = async (id) => {
@@ -16,7 +18,7 @@ const getAllCompanyUsers = async (id) => {
       throw new NotFoundError("JobProviderCompany not found");
     } else {
       const users = await CompanyUser.find();
-      logger.info(users)
+      logger.info(users);
       return users;
     }
   } catch (error) {
@@ -43,13 +45,12 @@ const getCompanyUserById = async (id) => {
 // Adding new CompanyUser
 const addCompanyUser = async (companyId, data) => {
   try {
-    await companyUserValidate.validateAsync(data)
+    await companyUserValidate.validateAsync(data);
     const jobProvider = await JobProviderCompany.findById(companyId);
     if (!jobProvider) {
       logger.error("JobProvider not found with Id:", companyId);
       return { error: "JobProvider not found" };
-    }
-``
+    };
     data.company = {
       companyId: jobProvider._id,
       legalName: jobProvider.legalName,
@@ -118,17 +119,60 @@ const addCompanyUser = async (companyId, data) => {
 };
 
 // Updating companyUser
-const updateCompanyUser = async (id) => {
+const updateCompanyUser = async (companyId, userId, data) => {
   try {
-    const updateUser = await CompanyUser.findByIdAndUpdate(id);
-    if (updateUser) {
-      logger.info("CompanyUser updated Successfull");
+    const jobProvider = await JobProviderCompany.findById(companyId);
+    if (jobProvider) {
+      const companyUser = await CompanyUser.findById(userId);
+      if (companyUser) {
+        const updateUser = await CompanyUser.findOneAndUpdate(
+          { _id: userId },
+          { $set: data },
+          { new: true }
+        );
+        if (updateUser) {
+          logger.info("Company User Updated");
+          const systemUser = await systemuser.findOneAndUpdate(
+            { _id: userId },
+            { $set: data },
+            { new: true }
+          );
+          if (systemUser) {
+            logger.info(`System User with ${userId} updated Succesfully`);
+            const authUser = await AuthUser.findOneAndUpdate(
+              { _id: userId },
+              { $set: data },
+              { new: true }
+            );
+            if (authUser) {
+              const job = await JobPost.updateMany(
+                { "postedBy.companyuserId": userId },
+                {
+                  $set: {
+                    "postedBy.firstName": data.firstName,
+                    "postedBy.role": data.role,
+                    "postedBy.lastName": data.lastName,
+                    "postedBy.userName": data.userName,
+                    "postedBy.email": data.email,
+                  },
+                }
+              );
+              logger.info("Company User in JobPost")
+              if (job) {
+                return job
+              }
 
-      return updateUser;
+              // const interview = await JobInterview.updateMany(
+              //   {}
+              // )
+            } 
+          }
+        }
+      }
     } else {
       logger.error("CompanyUser not found");
 
-      throw new NotFoundError("CompanyUser ID not found");
+      throw new NotFoundError("CompanyUser with specific ID not found");
     }
   } catch (error) {
     if (error.name === "CastError") {
@@ -166,96 +210,97 @@ const deleteCompanyUser = async (jobProviderCompanyId, userId) => {
 };
 
 // CompanyUser Login
-const loginCompanyUser = async(jobProviderId , companyUserId , data) => {
+const loginCompanyUser = async (jobProviderId, companyUserId, data) => {
   try {
     const jobProvider = await JobProviderCompany.findById(jobProviderId);
     if (jobProvider) {
-      const companyUser = await CompanyUser.findById(companyUserId)
+      const companyUser = await CompanyUser.findById(companyUserId);
       if (companyUser) {
-        const authUser = await AuthUser.findById(companyUserId)
-        if (authUser && authUser.role === "Company Admin" || "Hiring Manager") {
+        const authUser = await AuthUser.findById(companyUserId);
+        if (
+          (authUser && authUser.role === "Company Admin") ||
+          "Hiring Manager"
+        ) {
           const existingAuthUser = await AuthUser.findOne({
-            _id:companyUserId,
-            email:data.email,
-            password:data.password
-          })
+            _id: companyUserId,
+            email: data.email,
+            password: data.password,
+          });
           if (existingAuthUser) {
-            logger.info("Login Successfull")
-            return existingAuthUser
-          }else {
-            logger.error("Login Failed")
-            throw new BadRequestError("Login failed , check Request Body")
+            logger.info("Login Successfull");
+            return existingAuthUser;
+          } else {
+            logger.error("Login Failed");
+            throw new BadRequestError("Login failed , check Request Body");
           }
-          
-        }else {
-          logger.error("Auth user with particular role not found")
-          throw new NotFoundError("Auth user with particular role not found")
+        } else {
+          logger.error("Auth user with particular role not found");
+          throw new NotFoundError("Auth user with particular role not found");
         }
-      }else {
-        logger.error("Company User Not Found  With Specific Id")
-        throw new NotFoundError("Company User Not Found  With Specific Id")
+      } else {
+        logger.error("Company User Not Found  With Specific Id");
+        throw new NotFoundError("Company User Not Found  With Specific Id");
       }
-    }else {
-      logger.error("JobProvider Not Found With Specific Id")
-      throw new NotFoundError("JobProvider Not Found With Specific Id")
+    } else {
+      logger.error("JobProvider Not Found With Specific Id");
+      throw new NotFoundError("JobProvider Not Found With Specific Id");
     }
   } catch (error) {
-    throw error
+    throw error;
   }
-
-}
+};
 
 // CompnayUser change password
-const changeUserPassword = async (jobProviderId , companyUserId , data) => {
+const changeUserPassword = async (jobProviderId, companyUserId, data) => {
   try {
     const jobProvider = await JobProviderCompany.findById(jobProviderId);
     if (jobProvider) {
-      const companyUser = await CompanyUser.findById(companyUserId)
+      const companyUser = await CompanyUser.findById(companyUserId);
       if (companyUser) {
-        const authUser = await AuthUser.findById(companyUserId)
-        if (authUser && authUser.role === "Company Admin" || "Hiring Manager") {
+        const authUser = await AuthUser.findById(companyUserId);
+        if (
+          (authUser && authUser.role === "Company Admin") ||
+          "Hiring Manager"
+        ) {
           if (data.OldPassword && data.OldPassword === authUser.password) {
-            authUser.password = data.NewPassword
+            authUser.password = data.NewPassword;
             if (authUser.password === data.ConfirmPassword) {
               const updatePassword = await AuthUser.findOneAndUpdate(
-                {_id: companyUserId},
-                {$set: {password: authUser.password}},
-                {new: true}
+                { _id: companyUserId },
+                { $set: { password: authUser.password } },
+                { new: true }
               );
               if (updatePassword) {
-                logger.info("Password Changed Successfully")
-                return updatePassword
-              }else {
-                logger.error("Error while changing password")
-                throw new BadRequestError("Error while changing password")
+                logger.info("Password Changed Successfully");
+                return updatePassword;
+              } else {
+                logger.error("Error while changing password");
+                throw new BadRequestError("Error while changing password");
               }
-              
-            }else {
-              logger.error("Password didn't Match")
-              throw new BadRequestError("Password didn't Match")
+            } else {
+              logger.error("Password didn't Match");
+              throw new BadRequestError("Password didn't Match");
             }
-          }else {
-            logger.error("Old Password did'nt Match")
-            throw new BadRequestError("Old Password did'nt Match")
+          } else {
+            logger.error("Old Password did'nt Match");
+            throw new BadRequestError("Old Password did'nt Match");
           }
-        }else {
-          logger.error("Auth user with particular role not found")
-          throw new NotFoundError("Auth user with particular role not found")
+        } else {
+          logger.error("Auth user with particular role not found");
+          throw new NotFoundError("Auth user with particular role not found");
         }
-      }else {
-        logger.error("Company User Not Found  With Specific Id")
-        throw new NotFoundError("Company User Not Found  With Specific Id")
+      } else {
+        logger.error("Company User Not Found  With Specific Id");
+        throw new NotFoundError("Company User Not Found  With Specific Id");
       }
-    }else {
-      logger.error("JobProvider Not Found With Specific Id")
-      throw new NotFoundError("JobProvider Not Found With Specific Id")
+    } else {
+      logger.error("JobProvider Not Found With Specific Id");
+      throw new NotFoundError("JobProvider Not Found With Specific Id");
     }
   } catch (error) {
-    throw error
+    throw error;
   }
-
-
-}
+};
 
 export default {
   getAllCompanyUsers,
@@ -264,5 +309,5 @@ export default {
   updateCompanyUser,
   deleteCompanyUser,
   loginCompanyUser,
-  changeUserPassword
+  changeUserPassword,
 };

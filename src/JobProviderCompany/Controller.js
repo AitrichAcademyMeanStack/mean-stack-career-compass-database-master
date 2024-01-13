@@ -29,7 +29,7 @@ const addJobProvider = asyncerrorhandler(async (req, res) => {
 const updateJobProvider = asyncerrorhandler(async (req, res) => {
   const jobProviderId = req.params.id;
   const provider = req.body;
-  const updateData = await jobProviderService.updateIndustry(
+  const updateData = await jobProviderService.updateJobProvider(
     jobProviderId,
     provider
   );

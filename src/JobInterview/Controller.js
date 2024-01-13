@@ -13,7 +13,7 @@ const getAllJobInterview = asyncHandler( async(req , res) => {
 
 
 // Scheduling JobInterview
-const addJobInterview = asyncHandler( async(req , res) => {
+const scheduleJobInterview = asyncHandler( async(req , res) => {
     const application = req.params.jobApplicationId
     const data = req.body;
     const interview = await jobInterviewService.scheduleInterview(application,data);
@@ -29,4 +29,4 @@ const deleteJobInterview  = asyncHandler( async(req , res) => {
     res.status(200).json(deleteInterview)
 })
 
-export default {getAllJobInterview , addJobInterview , deleteJobInterview}
+export default {getAllJobInterview , scheduleJobInterview , deleteJobInterview}

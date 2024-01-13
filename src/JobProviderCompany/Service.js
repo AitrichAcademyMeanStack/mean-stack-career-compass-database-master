@@ -1,5 +1,4 @@
 import Badrequesterror from "../Exceptions/BadRequestError.js";
-import Notfounderror from "../Exceptions/NotFoundError.js";
 import logger from "../middleware/logger.js";
 import JobProviderCompany from "../models/JobProviderCompanyModel.js";
 import { jobProviderValidate } from "../middleware/Validation/JobProviderValidation.js";
@@ -7,6 +6,7 @@ import ValidationError from "../Exceptions/ValidationError.js";
 import mongoose from "mongoose";
 import JobPost from "../models/JobPostModel.js";
 import CompanyUser from "../models/CompanyUserModel.js";
+import NotFoundError from "../Exceptions/NotFoundError.js";
 
 // fetching all JobProviderCompany
 const getAllJobProviders = async (page, limit) => {
@@ -15,7 +15,7 @@ const getAllJobProviders = async (page, limit) => {
     const totalPages = Math.ceil(totalPosts / limit);
     if (page > totalPages) {
       logger.error("Page Not Found");
-      throw new Notfounderror("Page Not Found");
+      throw new NotFoundError("Page Not Found");
     }
 
     const jobProviders = await JobProviderCompany.find()
@@ -25,10 +25,10 @@ const getAllJobProviders = async (page, limit) => {
     if (jobProviders) {
       return jobProviders;
     } else {
-      throw new Notfounderror("Job provider not found");
+      throw new NotFoundError("Job provider not found");
     }
   } catch (error) {
-    throw new Notfounderror("OOPS! something went wrong");
+    throw new NotFoundError("OOPS! something went wrong");
   }
 };
 
@@ -41,12 +41,12 @@ const getJobProviderById = async (id) => {
       return result;
     } else {
       logger.error("Error while fetching JobProviderCompany");
-      throw new Notfounderror("JobProviderCompany ID not found");
+      throw new NotFoundError("JobProviderCompany ID not found");
     }
   } catch (error) {
     if (error.name === "CastError") {
       logger.error("ID not JobProviderCompany");
-      throw new Notfounderror("JobProviderCompany ID not JobProviderCompany");
+      throw new NotFoundError("JobProviderCompany ID not JobProviderCompany");
     } else {
       throw error;
     }
@@ -83,32 +83,20 @@ const updateJobProvider = async (id, updateData) => {
 
   // Starting transaction
   session.startTransaction();
+
+  let update;
   try {
-    const update = await JobProviderCompany.findOneAndUpdate(
+     update = await JobProviderCompany.findOneAndUpdate(
       { _id: id },
       { $set: updateData },
       { new: true }
     );
     if (update) {
       logger.info("JobProviderCompany updated Successfull");
-      await JobPost.updateMany(
-        { "company._id": id },
-        {
-          $set: {
-            "company.legalName": updateData.legalName,
-            "company.summary": updateData.summary,
-            "company.industry": updateData.industry,
-            "company.email": updateData.email,
-            "company.phone": updateData.phone,
-            "company.address": updateData.address,
-            "company.website": updateData.website,
-            "company.location": updateData.location,
-          },
-        }
-      ).session(session);
 
-      await CompanyUser.updateMany(
-        { "company._id": id },
+      // updating JobProvider in JobPost
+      const job = await JobPost.updateMany(
+        { "company.companyId": id },
         {
           $set: {
             "company.legalName": updateData.legalName,
@@ -122,19 +110,44 @@ const updateJobProvider = async (id, updateData) => {
           },
         }
       ).session(session);
+      if (!job) {
+        throw new NotFoundError("Job not found with specific ID")
+      }
+      logger.info("JobProvider updated in jobPost")
+
+      // updating JobProvider in CompanyUser
+      const user = await CompanyUser.updateMany(
+        { "company.companyId": id },
+        {
+          $set: {
+            "company.legalName": updateData.legalName,
+            "company.summary": updateData.summary,
+            "company.industry": updateData.industry,
+            "company.email": updateData.email,
+            "company.phone": updateData.phone,
+            "company.address": updateData.address,
+            "company.website": updateData.website,
+            "company.location": updateData.location,
+          },
+        }
+      ).session(session);
+      if (!user) {
+        throw new NotFoundError("Company not found with specific ID")
+      } 
+      logger.info("JobProvider updated in companyUser")
+     
     
       // commiting session
       await session.commitTransaction();
       session.endSession();
-      return update;
     } else {
       logger.error("JobProviderCompany not found");
-      throw new Notfounderror("JobProviderCompany not found");
+      throw new NotFoundError("JobProviderCompany not found");
     }
   } catch (error) {
     if (error.name === "CastError") {
       logger.error(`JobProviderCompany not found`);
-      throw new Notfounderror("JobProviderCompany ID not found");
+      throw new NotFoundError("JobProviderCompany ID not found");
     } else if (error.name === "ValidationError") {
       logger.error(`validation error ${error.message}`);
       throw new ValidationError(error.message);
@@ -146,6 +159,8 @@ const updateJobProvider = async (id, updateData) => {
     // Aborting transaction
     session.endSession()
   }
+  return update;
+
 };
 
 // Deleting JobProviderCompany
@@ -157,7 +172,7 @@ const deleteJobProvider = async (id) => {
       return deleteData;
     } else {
       logger.error("JobProviderCompany ID not found");
-      throw new Notfounderror("JobProviderCompany ID not found");
+      throw new NotFoundError("JobProviderCompany ID not found");
     }
   } catch (error) {
     if (error.name === "CastError") {
