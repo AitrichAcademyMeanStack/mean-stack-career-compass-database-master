@@ -24,10 +24,10 @@ const jobPostvalidation=Joi.object({
       "any.required": "jobLocation field is required",
       "string.empty": "jobLocation field should not be empty. Please provide a value for the jobLocation field.",
     }),
-    category:Joi.array().items(Joi.string()).required(),
+    category:Joi.string().required(),
     qualifications:Joi.array().items(Joi.string()).required(),
     skills:Joi.array().items(Joi.string()).required(),
-    industry:Joi.array().items(Joi.string()).required(),
+    industry:Joi.string().required(),
     jobResponsibilities:Joi.string()
     .required()
     .min(10)

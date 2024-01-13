@@ -10,6 +10,7 @@ import JobTitle from "../models/JobTitle.js";
 import Jobapplication from "../models/JobApplicationModel.js";
 import savedjobs from "../models/SavedJobsModel.js";
 import location from "../models/LocationModel.js";
+import skill from "../models/SkillModel.js";
 
 
 // creating job post
@@ -22,7 +23,8 @@ const addJobPost = async (companyUserId, jobPost) => {
       // Find the JobTitle document based on the selected name
       const jobTitle = await JobTitle.findOne({ name: jobPost.jobTitle });
       const joblocation=await location.findOne({name:jobPost.jobLocation})
-      if (jobTitle && joblocation) {
+      const skilldata = await skill.findOne({name:jobPost.skills})
+      if (jobTitle && joblocation && skilldata) {
       
         // Embedding JobProviderCompany
         jobPost.company = {
@@ -55,6 +57,11 @@ const addJobPost = async (companyUserId, jobPost) => {
         jobPost.jobLocation={
           locationId:joblocation._id,
           name:joblocation.name
+        }
+
+        jobPost.skills = {
+          _id : skilldata._id,
+          name: skilldata.name
         }
 
         const createdJobPost = await JobPost.create(jobPost);
@@ -180,10 +187,20 @@ const updatePost = async (postId,companyUserId,updateData) => {
       const job = await JobPost.findById(postId);
       if (job) {
         const jobtitle = await JobTitle.findOne({name:updateData.jobTitle})
-        if (jobtitle) {
+        const joblocation=await location.findOne({name:updateData.jobLocation})
+        const skilldata = await skill.findOne({name:updateData.skills})
+        if (jobtitle && joblocation && skilldata) {
           updateData.jobTitle = {
             Titleid: jobtitle._id,
             name:jobtitle.name
+          }
+          updateData.jobLocation={
+            locationId:joblocation._id,
+            name:joblocation.name
+          }
+          updateData.skills = {
+            skillid : skilldata._id,
+            name: skilldata.name
           }
           const updatePost = await JobPost.findByIdAndUpdate(postId, updateData);
           if (updatePost) {
