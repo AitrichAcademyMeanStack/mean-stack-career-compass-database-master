@@ -4,6 +4,8 @@ import Notfounderror from '../Exceptions/NotFoundError.js' // importing notfound
 import ValidationError from '../Exceptions/ValidationError.js' // importing validation error handler
 import skill from '../models/SkillModel.js' // importing skill module schema
 import { commonvalidation } from '../middleware/Validation/CommonModule.js'
+import JobPost from '../models/JobPostModel.js'
+import seekerProfile from '../models/JobSeekerProfileModel.js'
 
 
 const getskills = async()=>{
@@ -68,10 +70,12 @@ const createskill = async(skilldata)=>{
 //update skill
 const updateskill = async(skillid,skilldata)=>{
     try {
-        await authschema.validateAsync(skilldata)
+        await commonvalidation.validateAsync(skilldata)
         const result = await skill.findByIdAndUpdate(skillid,skilldata,{new:true})
         if (result) {
             logger.info("skill updated successfully")
+            await JobPost.updateMany({'skills._id':skillid},{$set:{'skills.$.name':skilldata.name}},{new:true})
+            await seekerProfile.updateMany({'skills._id':skillid},{$set:{'skills.$.name':skilldata.name}},{new:true})
             return result
         } else {
             logger.error("skill not found with id")

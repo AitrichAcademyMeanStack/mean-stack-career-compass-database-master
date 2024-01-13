@@ -25,7 +25,10 @@ const jobPostSchema = new Schema(
     },
     category: String,
     qualifications: [String],
-    skills: [String],
+    skills: [{
+      _id:{type:mongoose.Schema.Types.ObjectId},  
+      name:{type : String}
+    }],
     industry: String,
     jobResponsibilities: String,
     postedBy: {

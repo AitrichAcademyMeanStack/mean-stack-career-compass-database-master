@@ -30,7 +30,10 @@ const jobSeekerProfileSchema = new Schema(
       serviceStart: Date,
       serviceEnd: Date
     }],
-    skills:[String],
+    skills: [{
+      _id:{type:mongoose.Schema.Types.ObjectId},  
+      name:{type : String}
+    }],
     jobSeeker: {
       seekerId: mongoose.Schema.Types.ObjectId,
       firstName: String,
