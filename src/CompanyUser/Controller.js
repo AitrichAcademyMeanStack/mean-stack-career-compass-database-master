@@ -25,8 +25,10 @@ const addCompanyUser = asyncerrorhandler(async (req, res) => {
 
 // Updating companyUser
 const updateCompanyUser = asyncerrorhandler(async (req, res) => {
-  const userId = req.params.id;
-  const updatedData = await userService.updateCompanyUser(userId);
+  const company = req.params.jobProviderCompanyId;
+  const user = req.params.companyUserId
+  const data = req.body;
+  const updatedData = await userService.updateCompanyUser(company,user,data);
   res.status(200).json(updatedData);
 });
 

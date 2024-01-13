@@ -17,10 +17,10 @@ const jobPostSchema = new Schema(
       website: { type: String },
       location: [String],
     },
-    category: [String],
+    category: String,
     qualifications: [String],
     skills: [String],
-    industry: [String],
+    industry: String,
     jobResponsibilities: String,
     postedBy: {
       companyuserId: mongoose.Schema.Types.ObjectId,

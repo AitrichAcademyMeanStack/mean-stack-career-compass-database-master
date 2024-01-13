@@ -190,18 +190,20 @@ router.delete("/:jobProviderCompanyId/companyUser/:companyUserId",userController
 
 /**
  * @swagger
- *  /api/v1/CompanyUsers/{id}:
+ *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers/{companyUserId}:
  *      put:
  *          summary:    Update CompanyUser by ID
  *          tags:
  *              - CompanyUser
  *          parameters:
  *              - in: path
- *                name: id
- *                required: true        
- *                schema:
- *                  type: string
- *                description: ID of the CompanyUser to update
+ *                name: jobProviderCompanyId
+ *                required: true
+ *                description: ID of the jobProviderCompany
+ *              - in: path
+ *                name: companyUserId
+ *                required: true
+ *                description: ID of the CompanyUser 
  *          requestBody:
  *                  required: true
  *                  content:
@@ -223,13 +225,13 @@ router.delete("/:jobProviderCompanyId/companyUser/:companyUserId",userController
  *  
  *       
  */
-router.put("/:id",userController.updateCompanyUser);
+router.put("/:jobProviderCompanyId/companyUser/:companyUserId",userController.updateCompanyUser);
 
 /**
  * @swagger
  *  /api/v1/jobProviderCompany/{jobProviderCompanyId}/CompanyUsers/{companyUserId}/change-password:
  *      put:
- *          summary:    Update CompanyUser by ID
+ *          summary:    Change Password of Company User
  *          tags:
  *              - CompanyUser
  *          parameters:

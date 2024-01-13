@@ -13,7 +13,7 @@ const router = express.Router()
  *                      - status
  *                  properties:
  *                      dateScheduled: 
- *                              type: string
+ *                          type: string
  *                      status:
  *                          type: enum
 */     
@@ -50,7 +50,7 @@ const router = express.Router()
  *                  description: Bad request , check request body
 */
 
-router.post('/:jobApplicationId/schedule-interview',Controller.addJobInterview)
+router.post('/:jobApplicationId/schedule-interview',Controller.scheduleJobInterview)
 
 /**
  * @swagger

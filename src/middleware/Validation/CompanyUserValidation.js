@@ -3,7 +3,7 @@ import Joi from "joi";
 
 // Validatng CompanyUser
 const companyUserValidate = Joi.object({
-    firstName: Joi.string().required().min(8).alphanum().pattern(/^[a-zA-Z\s]+$/)
+    firstName: Joi.string().required().min(5).alphanum().pattern(/^[a-zA-Z\s]+$/)
     .messages({
       "string.pattern.base": "firstName field only contains alphabets.",
         "string.min": "firstName must be at least 8 characters long.",
@@ -18,14 +18,14 @@ const companyUserValidate = Joi.object({
       "string.empty":
       "role should not be empty. Please provide a value for the role.",
     }),
-    lastName:Joi.string().min(8).required().pattern(/^[a-zA-Z\s]+$/)
+    lastName:Joi.string().min(5).required().pattern(/^[a-zA-Z\s]+$/)
     .messages({
       "string.pattern.base": "lastName only contains alphabets.",
       "any.required": "lastName is required.",
       "string.empty":
       "lastName should not be empty. Please provide a value for the lastName.",
     }),
-    userName:Joi.string().min(8).required().pattern(/^[a-zA-Z\s]+$/)
+    userName:Joi.string().min(5).required().pattern(/^[a-zA-Z\s]+$/)
     .messages({
       "string.pattern.base": "userName only contains alphabets.",
       "any.required": "userName is required.",
