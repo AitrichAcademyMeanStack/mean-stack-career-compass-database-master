@@ -5,6 +5,7 @@ import Location from "../models/LocationModel.js";
 import ValidationError from "../Exceptions/ValidationError.js";
 import { commonvalidation } from "../middleware/Validation/CommonModule.js";
 import JobPost from "../models/JobPostModel.js";
+import JobProviderCompany from "../models/JobProviderCompanyModel.js";
 import mongoose from "mongoose";
 
 // fetching all locations
@@ -69,7 +70,12 @@ const updateLocation = async (id, updateData) => {
     if (update) {
       logger.info("Location updated Successfull");
       await JobPost.updateMany({'jobLocation.locationId':id},{$set:{'jobLocation.name':updateData.name}},{new:true},session)
+      await JobProviderCompany.updateMany({'location.locationId':id},
+                                          {$set:{'location.name':updateData.name}},
+                                          {new:true},
+                                          session)
     } 
+
     await session.commitTransaction()
     session.endSession()
     return update;
