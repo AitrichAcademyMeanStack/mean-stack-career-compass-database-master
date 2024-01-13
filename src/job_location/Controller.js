@@ -34,7 +34,7 @@ const updateLocation = asyncerrorhandler ( async (req ,res) => {
 
 // Deleting location
 const deleteLocation = asyncerrorhandler (async (req,res) => {
-    const locationId = req.param.id;
+    const locationId = req.params.id;
     await locationService.deleteLocation(locationId)
     res.status(200).json({message: "Location deleted Successfully"})
 
